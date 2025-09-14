@@ -357,7 +357,20 @@ export default {
         ],
         remoteConfig: [
           {
-            label: "CM规则",
+            label: "自用规则",
+            options: [
+              {
+                label: "自用 多国家，TG,AI分流",
+                value: "https://raw.githubusercontent.com/featherhao/rules/refs/heads/main/Clash/ACL4SSR_Online_Full_CF.ini"
+              }
+                  ]
+            },
+          
+          
+          
+          {
+    
+             label: "CM规则",
             options: [
               {
                 label: "CM_Online 默认版 识别港美地区(与Github同步)",
@@ -1310,3 +1323,4 @@ export default {
   }
 };
 </script>
+
