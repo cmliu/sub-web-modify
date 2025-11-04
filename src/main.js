@@ -9,9 +9,10 @@ require(`@/plugins/device`)
 require(`@/plugins/particles`)
 
 
-import 'element-ui/lib/theme-chalk/index.css'
 import './assets/css/theme-tokens.css'
 import './assets/css/glass-background.css'
+import 'element-ui/lib/theme-chalk/index.css'
+import './assets/css/element-ui.scss'
 import './assets/css/layout-utilities.css'
 import './assets/css/light.min.css'
 import './assets/css/dark.min.css'

@@ -1,79 +1,890 @@
-// cover some element-ui styles
+/* Element UI Glassmorphism Component Overrides */
+
+/* ============================================
+   GLOBAL ELEMENT UI COMPONENT STYLING
+   ============================================ */
+
+* {
+  touch-action: manipulation;
+}
+
+/* ============================================
+   CARD COMPONENT
+   ============================================ */
+
+.el-card {
+  background: var(--glass-light) !important;
+  backdrop-filter: var(--backdrop-filter) !important;
+  border: 1px solid var(--border-color) !important;
+  border-radius: var(--radius-lg) !important;
+  box-shadow: var(--shadow-small) !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.el-card:hover {
+  box-shadow: var(--shadow-medium) !important;
+  border-color: var(--primary-color) !important;
+}
+
+.el-card__header {
+  padding: var(--spacing-lg) !important;
+  border-bottom: 1px solid var(--border-color) !important;
+}
+
+.el-card__body {
+  padding: var(--spacing-lg) !important;
+}
+
+/* ============================================
+   FORM COMPONENT
+   ============================================ */
+
+.el-form {
+  font-family: var(--font-family) !important;
+}
+
+.el-form-item {
+  margin-bottom: var(--spacing-lg) !important;
+}
+
+.el-form-item__label {
+  color: var(--text-primary) !important;
+  font-weight: 500 !important;
+  font-size: var(--font-size-body) !important;
+}
+
+.el-form-item__content {
+  line-height: 1.5 !important;
+}
+
+/* ============================================
+   INPUT COMPONENT
+   ============================================ */
+
+.el-input__inner,
+.el-textarea__inner {
+  background: var(--glass-light-secondary) !important;
+  backdrop-filter: var(--backdrop-filter) !important;
+  border: 1px solid var(--border-color) !important;
+  border-radius: var(--radius-md) !important;
+  color: var(--text-primary) !important;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  font-family: var(--font-family) !important;
+}
+
+.el-input__inner::placeholder,
+.el-textarea__inner::placeholder {
+  color: var(--text-tertiary) !important;
+}
+
+.el-input__inner:focus,
+.el-textarea__inner:focus {
+  background: var(--glass-light) !important;
+  border-color: var(--primary-color) !important;
+  box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.1) !important;
+  outline: none !important;
+}
+
+.el-input__inner:hover,
+.el-textarea__inner:hover {
+  border-color: var(--primary-color) !important;
+}
+
+.el-input__suffix-inner {
+  color: var(--text-tertiary) !important;
+}
+
+.el-input-number__increase,
+.el-input-number__decrease {
+  background: var(--glass-light-secondary) !important;
+  border-color: var(--border-color) !important;
+}
+
+.el-input-number__increase:hover,
+.el-input-number__decrease:hover {
+  background: var(--glass-light) !important;
+  border-color: var(--primary-color) !important;
+}
+
+/* ============================================
+   SELECT COMPONENT
+   ============================================ */
+
+.el-select .el-input__inner {
+  background: var(--glass-light-secondary) !important;
+  backdrop-filter: var(--backdrop-filter) !important;
+  border: 1px solid var(--border-color) !important;
+  border-radius: var(--radius-md) !important;
+}
+
+.el-select .el-input__inner:focus {
+  border-color: var(--primary-color) !important;
+  background: var(--glass-light) !important;
+  box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.1) !important;
+}
+
+.el-select-dropdown {
+  background: var(--glass-light) !important;
+  backdrop-filter: var(--backdrop-filter) !important;
+  border: 1px solid var(--border-color) !important;
+  border-radius: var(--radius-md) !important;
+  box-shadow: var(--shadow-large) !important;
+  max-width: 90vw !important;
+}
+
+.el-select-dropdown__item {
+  color: var(--text-primary) !important;
+  padding: var(--spacing-md) var(--spacing-lg) !important;
+  line-height: 1.5 !important;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.el-select-dropdown__item:hover {
+  background: rgba(0, 122, 255, 0.1) !important;
+  color: var(--primary-color) !important;
+}
+
+.el-select-dropdown__item.selected {
+  color: var(--primary-color) !important;
+  background: rgba(0, 122, 255, 0.15) !important;
+  font-weight: 500 !important;
+}
+
+.el-option-group__title {
+  color: var(--text-secondary) !important;
+  font-weight: 600 !important;
+  padding: var(--spacing-sm) var(--spacing-lg) !important;
+}
+
+/* ============================================
+   BUTTON COMPONENT
+   ============================================ */
+
+.el-button {
+  border-radius: var(--radius-md) !important;
+  font-weight: 500 !important;
+  font-family: var(--font-family) !important;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  border: none !important;
+}
+
+/* Primary Button */
+.el-button--primary {
+  background: var(--primary-color) !important;
+  color: #fff !important;
+  box-shadow: 0 4px 12px rgba(0, 122, 255, 0.3) !important;
+}
+
+.el-button--primary:hover {
+  background: #0057cc !important;
+  box-shadow: 0 6px 16px rgba(0, 122, 255, 0.4) !important;
+}
+
+.el-button--primary:active {
+  background: #0047a8 !important;
+}
+
+.el-button--primary.is-disabled {
+  background: rgba(0, 122, 255, 0.5) !important;
+  box-shadow: none !important;
+}
+
+/* Success Button */
+.el-button--success {
+  background: var(--secondary-color) !important;
+  color: #fff !important;
+  box-shadow: 0 4px 12px rgba(52, 199, 89, 0.3) !important;
+}
+
+.el-button--success:hover {
+  background: #2da645 !important;
+  box-shadow: 0 6px 16px rgba(52, 199, 89, 0.4) !important;
+}
+
+.el-button--success:active {
+  background: #248a3d !important;
+}
+
+/* Warning Button */
+.el-button--warning {
+  background: var(--tertiary-color) !important;
+  color: #000 !important;
+  box-shadow: 0 4px 12px rgba(255, 149, 0, 0.3) !important;
+}
+
+.el-button--warning:hover {
+  background: #e68a00 !important;
+  box-shadow: 0 6px 16px rgba(255, 149, 0, 0.4) !important;
+}
+
+.el-button--warning:active {
+  background: #cc7700 !important;
+}
+
+/* Danger Button */
+.el-button--danger {
+  background: var(--destructive-color) !important;
+  color: #fff !important;
+  box-shadow: 0 4px 12px rgba(255, 59, 48, 0.3) !important;
+}
+
+.el-button--danger:hover {
+  background: #e62e1f !important;
+  box-shadow: 0 6px 16px rgba(255, 59, 48, 0.4) !important;
+}
+
+.el-button--danger:active {
+  background: #cc1f0f !important;
+}
+
+/* Info Button */
+.el-button--info {
+  background: var(--primary-color) !important;
+  color: #fff !important;
+  box-shadow: 0 4px 12px rgba(0, 122, 255, 0.3) !important;
+}
+
+.el-button--info:hover {
+  background: #0057cc !important;
+  box-shadow: 0 6px 16px rgba(0, 122, 255, 0.4) !important;
+}
+
+/* Glass Button (default/plain style) */
+.el-button--default {
+  background: var(--glass-light-secondary) !important;
+  border: 1px solid var(--border-color) !important;
+  color: var(--text-primary) !important;
+  box-shadow: none !important;
+}
+
+.el-button--default:hover {
+  background: var(--glass-light) !important;
+  border-color: var(--primary-color) !important;
+  color: var(--primary-color) !important;
+}
+
+.el-button--default:active {
+  background: rgba(0, 122, 255, 0.1) !important;
+}
+
+/* Button sizes */
+.el-button--small {
+  padding: 8px 12px !important;
+  font-size: var(--font-size-footnote) !important;
+}
+
+.el-button--medium {
+  padding: 10px 16px !important;
+  font-size: var(--font-size-body) !important;
+}
+
+/* ============================================
+   CHECKBOX COMPONENT
+   ============================================ */
+
+.el-checkbox__input.is-checked .el-checkbox__inner {
+  background: var(--primary-color) !important;
+  border-color: var(--primary-color) !important;
+}
+
+.el-checkbox__inner {
+  border: 1.5px solid var(--border-color) !important;
+  border-radius: var(--radius-sm) !important;
+  background: var(--glass-light-secondary) !important;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.el-checkbox__inner:hover {
+  border-color: var(--primary-color) !important;
+}
+
+.el-checkbox:hover .el-checkbox__inner {
+  border-color: var(--primary-color) !important;
+}
+
+.el-checkbox.is-bordered {
+  border: 1px solid var(--border-color) !important;
+  border-radius: var(--radius-md) !important;
+  padding: var(--spacing-sm) var(--spacing-md) !important;
+  background: var(--glass-light-secondary) !important;
+}
+
+.el-checkbox.is-bordered.is-checked {
+  background: rgba(0, 122, 255, 0.1) !important;
+  border-color: var(--primary-color) !important;
+}
+
+.el-checkbox__label {
+  color: var(--text-primary) !important;
+}
+
+/* ============================================
+   RADIO COMPONENT
+   ============================================ */
+
+.el-radio__input.is-checked .el-radio__inner {
+  background: var(--primary-color) !important;
+  border-color: var(--primary-color) !important;
+}
+
+.el-radio__inner {
+  border: 1.5px solid var(--border-color) !important;
+  background: var(--glass-light-secondary) !important;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.el-radio:hover .el-radio__inner {
+  border-color: var(--primary-color) !important;
+}
+
+.el-radio__label {
+  color: var(--text-primary) !important;
+}
+
+/* ============================================
+   DIALOG COMPONENT
+   ============================================ */
+
+.el-dialog {
+  border: 1px solid var(--border-color) !important;
+  border-radius: var(--radius-lg) !important;
+  background: var(--glass-light) !important;
+  backdrop-filter: var(--backdrop-filter) !important;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15) !important;
+}
+
+.el-dialog__header {
+  border-bottom: 1px solid var(--border-color) !important;
+  background: transparent !important;
+}
+
+.el-dialog__title {
+  color: var(--text-primary) !important;
+  font-weight: 600 !important;
+  font-size: var(--font-size-headline) !important;
+}
+
+.el-dialog__close {
+  color: var(--text-tertiary) !important;
+}
+
+.el-dialog__close:hover {
+  color: var(--primary-color) !important;
+}
+
+.el-dialog__body {
+  background: transparent !important;
+  color: var(--text-primary) !important;
+}
+
+.el-dialog__footer {
+  border-top: 1px solid var(--border-color) !important;
+  background: transparent !important;
+  text-align: right !important;
+}
+
+/* ============================================
+   TABS COMPONENT
+   ============================================ */
+
+.el-tabs__header {
+  border-bottom: 1px solid var(--border-color) !important;
+  background: transparent !important;
+}
+
+.el-tabs__item {
+  color: var(--text-secondary) !important;
+  height: 40px !important;
+  line-height: 40px !important;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.el-tabs__item:hover {
+  color: var(--primary-color) !important;
+}
+
+.el-tabs__item.is-active {
+  color: var(--primary-color) !important;
+  font-weight: 600 !important;
+}
+
+.el-tabs__active-bar {
+  background: var(--primary-color) !important;
+  height: 3px !important;
+}
+
+.el-tabs--card > .el-tabs__header .el-tabs__item {
+  border: 1px solid var(--border-color) !important;
+  background: var(--glass-light-secondary) !important;
+  margin-right: 4px !important;
+  border-radius: var(--radius-md) var(--radius-md) 0 0 !important;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.el-tabs--card > .el-tabs__header .el-tabs__item:hover {
+  background: var(--glass-light) !important;
+  border-color: var(--primary-color) !important;
+}
+
+.el-tabs--card > .el-tabs__header .el-tabs__item.is-active {
+  background: var(--glass-light) !important;
+  border-color: var(--primary-color) !important;
+  border-bottom-color: var(--glass-light) !important;
+}
+
+.el-tabs--card > .el-tabs__header {
+  border-bottom: 1px solid var(--border-color) !important;
+}
+
+.el-tabs--card > .el-tabs__content {
+  background: var(--glass-light-secondary) !important;
+  border: 1px solid var(--border-color) !important;
+  border-top: none !important;
+  border-radius: 0 0 var(--radius-md) var(--radius-md) !important;
+}
+
+/* ============================================
+   COLLAPSE COMPONENT
+   ============================================ */
+
+.el-collapse {
+  border: 1px solid var(--border-color) !important;
+  border-radius: var(--radius-md) !important;
+  background: transparent !important;
+}
+
+.el-collapse-item {
+  border-bottom: 1px solid var(--border-color) !important;
+}
+
+.el-collapse-item:last-child {
+  border-bottom: none !important;
+}
+
+.el-collapse-item__header {
+  height: 48px !important;
+  line-height: 48px !important;
+  background: var(--glass-light-secondary) !important;
+  color: var(--text-primary) !important;
+  border: none !important;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.el-collapse-item__header:hover {
+  background: var(--glass-light) !important;
+  color: var(--primary-color) !important;
+}
+
+.el-collapse-item.is-active .el-collapse-item__header {
+  background: rgba(0, 122, 255, 0.05) !important;
+  border-color: var(--primary-color) !important;
+}
+
+.el-collapse-item__arrow {
+  color: var(--text-tertiary) !important;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.el-collapse-item.is-active .el-collapse-item__arrow {
+  color: var(--primary-color) !important;
+}
+
+.el-collapse-item__content {
+  background: var(--glass-light-secondary) !important;
+  padding: var(--spacing-lg) !important;
+  color: var(--text-primary) !important;
+}
+
+/* ============================================
+   POPOVER COMPONENT
+   ============================================ */
+
+.el-popover {
+  background: var(--glass-light) !important;
+  backdrop-filter: var(--backdrop-filter) !important;
+  border: 1px solid var(--border-color) !important;
+  border-radius: var(--radius-md) !important;
+  box-shadow: var(--shadow-large) !important;
+  color: var(--text-primary) !important;
+}
+
+.popper.popover-inner {
+  background: var(--glass-light) !important;
+}
+
+/* ============================================
+   DROPDOWN COMPONENT
+   ============================================ */
+
+.el-dropdown-menu {
+  background: var(--glass-light) !important;
+  backdrop-filter: var(--backdrop-filter) !important;
+  border: 1px solid var(--border-color) !important;
+  border-radius: var(--radius-md) !important;
+  box-shadow: var(--shadow-large) !important;
+}
+
+.el-dropdown-menu__item {
+  color: var(--text-primary) !important;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  padding: var(--spacing-md) var(--spacing-lg) !important;
+}
+
+.el-dropdown-menu__item:hover {
+  background: rgba(0, 122, 255, 0.1) !important;
+  color: var(--primary-color) !important;
+}
+
+.el-dropdown-menu__item.is-disabled {
+  color: var(--text-tertiary) !important;
+  cursor: not-allowed !important;
+}
+
+/* ============================================
+   BREADCRUMB COMPONENT
+   ============================================ */
 
 .el-breadcrumb__inner,
 .el-breadcrumb__inner a {
-    font-weight: 400 !important;
+  font-weight: 400 !important;
+  color: var(--text-primary) !important;
 }
 
-.el-upload {
-    input[type="file"] {
-        display: none !important;
-    }
+.el-breadcrumb__separator {
+  color: var(--text-tertiary) !important;
 }
+
+.el-breadcrumb__inner a:hover {
+  color: var(--primary-color) !important;
+}
+
+/* ============================================
+   LINK COMPONENT
+   ============================================ */
+
+.el-link {
+  color: var(--primary-color) !important;
+  font-weight: 500 !important;
+  text-decoration: none !important;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.el-link:hover {
+  opacity: 0.8 !important;
+  text-decoration: underline !important;
+}
+
+.el-link.is-underline:hover::after {
+  background: var(--primary-color) !important;
+  content: '' !important;
+}
+
+.el-link--primary {
+  color: var(--primary-color) !important;
+}
+
+.el-link--success {
+  color: var(--secondary-color) !important;
+}
+
+.el-link--warning {
+  color: var(--tertiary-color) !important;
+}
+
+.el-link--danger {
+  color: var(--destructive-color) !important;
+}
+
+/* ============================================
+   DIVIDER COMPONENT
+   ============================================ */
+
+.el-divider {
+  border-top-color: var(--border-color) !important;
+}
+
+.el-divider__text {
+  padding: 0 var(--spacing-md) !important;
+  background: transparent !important;
+  color: var(--text-secondary) !important;
+  border: 1px solid var(--border-color) !important;
+  border-radius: var(--radius-sm) !important;
+}
+
+/* ============================================
+   MESSAGE BOX & NOTIFICATION
+   ============================================ */
+
+.el-message-box {
+  background: var(--glass-light) !important;
+  backdrop-filter: var(--backdrop-filter) !important;
+  border: 1px solid var(--border-color) !important;
+  border-radius: var(--radius-lg) !important;
+  box-shadow: var(--shadow-large) !important;
+}
+
+.el-message-box__title {
+  color: var(--text-primary) !important;
+  font-weight: 600 !important;
+}
+
+.el-message-box__content {
+  color: var(--text-secondary) !important;
+}
+
+.el-message {
+  background: var(--glass-light) !important;
+  backdrop-filter: var(--backdrop-filter) !important;
+  border: 1px solid var(--border-color) !important;
+  border-radius: var(--radius-md) !important;
+  box-shadow: var(--shadow-large) !important;
+}
+
+.el-notification {
+  background: var(--glass-light) !important;
+  backdrop-filter: var(--backdrop-filter) !important;
+  border: 1px solid var(--border-color) !important;
+  border-radius: var(--radius-lg) !important;
+  box-shadow: var(--shadow-large) !important;
+}
+
+.el-notification__title {
+  color: var(--text-primary) !important;
+  font-weight: 600 !important;
+}
+
+.el-notification__content {
+  color: var(--text-secondary) !important;
+}
+
+/* ============================================
+   PAGINATION COMPONENT
+   ============================================ */
+
+.el-pagination .btn-prev,
+.el-pagination .btn-next,
+.el-pager li {
+  background: var(--glass-light-secondary) !important;
+  border: 1px solid var(--border-color) !important;
+  color: var(--text-primary) !important;
+  min-width: 32px !important;
+  height: 32px !important;
+  line-height: 32px !important;
+  border-radius: var(--radius-sm) !important;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.el-pagination .btn-prev:hover,
+.el-pagination .btn-next:hover,
+.el-pager li:hover {
+  background: var(--glass-light) !important;
+  border-color: var(--primary-color) !important;
+  color: var(--primary-color) !important;
+}
+
+.el-pagination .btn-prev.disabled,
+.el-pagination .btn-next.disabled {
+  color: var(--text-tertiary) !important;
+  background: var(--glass-light-tertiary) !important;
+  border-color: var(--border-color) !important;
+  cursor: not-allowed !important;
+}
+
+.el-pager li.active {
+  color: var(--primary-color) !important;
+  background: rgba(0, 122, 255, 0.15) !important;
+  border-color: var(--primary-color) !important;
+  font-weight: 600 !important;
+}
+
+/* ============================================
+   TOOLTIP COMPONENT
+   ============================================ */
+
+.el-tooltip__popper {
+  background: var(--glass-light) !important;
+  backdrop-filter: var(--backdrop-filter) !important;
+  border: 1px solid var(--border-color) !important;
+  border-radius: var(--radius-sm) !important;
+  color: var(--text-primary) !important;
+  box-shadow: var(--shadow-medium) !important;
+}
+
+.el-tooltip__popper[x-placement^="top"]::after {
+  border-top-color: var(--border-color) !important;
+}
+
+.el-tooltip__popper[x-placement^="bottom"]::after {
+  border-bottom-color: var(--border-color) !important;
+}
+
+.el-tooltip__popper[x-placement^="left"]::after {
+  border-left-color: var(--border-color) !important;
+}
+
+.el-tooltip__popper[x-placement^="right"]::after {
+  border-right-color: var(--border-color) !important;
+}
+
+/* ============================================
+   TABLE COMPONENT
+   ============================================ */
+
+.el-table {
+  background: transparent !important;
+  color: var(--text-primary) !important;
+}
+
+.el-table th {
+  background: var(--glass-light-secondary) !important;
+  border-bottom: 1px solid var(--border-color) !important;
+}
+
+.el-table td {
+  border-bottom: 1px solid var(--border-color) !important;
+}
+
+.el-table--border td {
+  border-right: 1px solid var(--border-color) !important;
+}
+
+.el-table__body tr:hover > td {
+  background: var(--glass-light-tertiary) !important;
+}
+
+/* ============================================
+   UPLOAD COMPONENT
+   ============================================ */
 
 .el-upload__input {
-    display: none;
+  display: none !important;
 }
 
-.cell {
-    .el-tag {
-        margin-right: 0px;
-    }
+.el-upload-dragger {
+  background: var(--glass-light-secondary) !important;
+  border: 2px dashed var(--border-color) !important;
+  border-radius: var(--radius-md) !important;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
 }
 
-.small-padding {
-    .cell {
-        padding-left: 5px;
-        padding-right: 5px;
-    }
+.el-upload-dragger:hover {
+  border-color: var(--primary-color) !important;
+  background: var(--glass-light) !important;
 }
 
-.fixed-width {
-    .el-button--mini {
-        padding: 7px 10px;
-        width: 60px;
-    }
+.el-upload-dragger.is-dragover {
+  background: rgba(0, 122, 255, 0.1) !important;
+  border-color: var(--primary-color) !important;
 }
 
-.status-col {
-    .cell {
-        padding: 0 10px;
-        text-align: center;
+/* ============================================
+   SWITCH COMPONENT
+   ============================================ */
 
-        .el-tag {
-            margin-right: 0px;
-        }
-    }
+.el-switch {
+  border: 1px solid var(--border-color) !important;
 }
 
-// to fixed https://github.com/ElemeFE/element/issues/2461
-.el-dialog {
-    transform: none;
-    left: 0;
-    position: relative;
-    margin: 0 auto;
+.el-switch.is-checked {
+  background: var(--primary-color) !important;
+  border-color: var(--primary-color) !important;
 }
 
-// refine element ui upload
-.upload-container {
-    .el-upload {
-        width: 100%;
+/* ============================================
+   TAG COMPONENT
+   ============================================ */
 
-        .el-upload-dragger {
-            width: 100%;
-            height: 200px;
-        }
-    }
+.el-tag {
+  background: rgba(0, 122, 255, 0.1) !important;
+  border: 1px solid rgba(0, 122, 255, 0.3) !important;
+  color: var(--primary-color) !important;
+  border-radius: var(--radius-sm) !important;
 }
 
-// dropdown
-.el-dropdown-menu {
-    a {
-        display: block
-    }
+.el-tag--success {
+  background: rgba(52, 199, 89, 0.1) !important;
+  border-color: rgba(52, 199, 89, 0.3) !important;
+  color: var(--secondary-color) !important;
 }
 
-// fix date-picker ui bug in filter-item
-.el-range-editor.el-input__inner {
-    display: inline-flex !important;
+.el-tag--warning {
+  background: rgba(255, 149, 0, 0.1) !important;
+  border-color: rgba(255, 149, 0, 0.3) !important;
+  color: var(--tertiary-color) !important;
+}
+
+.el-tag--danger {
+  background: rgba(255, 59, 48, 0.1) !important;
+  border-color: rgba(255, 59, 48, 0.3) !important;
+  color: var(--destructive-color) !important;
+}
+
+/* ============================================
+   RESPONSIVE ADJUSTMENTS
+   ============================================ */
+
+@media (max-width: 768px) {
+  .el-select-dropdown {
+    max-width: 95vw !important;
+  }
+
+  .el-dialog {
+    width: 90% !important;
+    margin: 0 auto !important;
+  }
+
+  .el-tabs__item {
+    padding: 0 12px !important;
+    font-size: var(--font-size-footnote) !important;
+  }
+
+  .el-button--small {
+    padding: 6px 10px !important;
+    font-size: var(--font-size-caption) !important;
+  }
+
+  .el-form-item__label {
+    font-size: var(--font-size-subheadline) !important;
+  }
+
+  .el-input__inner,
+  .el-textarea__inner {
+    font-size: var(--font-size-body) !important;
+  }
+}
+
+/* ============================================
+   FOCUS & ACCESSIBILITY
+   ============================================ */
+
+.el-input__inner:focus,
+.el-textarea__inner:focus,
+.el-select .el-input__inner:focus,
+.el-button:focus {
+  outline: 2px solid transparent !important;
+  outline-offset: 2px !important;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: more) {
+  .el-button,
+  .el-input__inner,
+  .el-select .el-input__inner,
+  .el-checkbox__inner {
+    border-width: 2px !important;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .el-button,
+  .el-input__inner,
+  .el-textarea__inner,
+  .el-select .el-input__inner,
+  .el-checkbox__inner,
+  .el-tabs__item,
+  .el-collapse-item__header,
+  .el-dropdown-menu__item {
+    transition: none !important;
+  }
 }

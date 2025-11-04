@@ -1,23 +1,43 @@
 /**
-* I think element-ui's default theme color is too light for long-term use.
-* So I modified the default color and you can modify it to your liking.
-**/
+ * iOS-inspired Element UI Theme Variables with Glassmorphism Support
+ * Harmonizes with glass tokens from theme-tokens.css
+ **/
 
-/* theme color */
-$--color-primary: #304156;
-$--color-success: #65C934;
-$--color-warning: #E6A23C;
-$--color-danger: #F56C6C;
-// $--color-info: #1E1E1E;
+/* iOS-inspired Primary Colors */
+$--color-primary: #007AFF;
+$--color-success: #34C759;
+$--color-warning: #FF9500;
+$--color-danger: #FF3B30;
+$--color-info: #30B0C0;
 
-$--button-font-weight: 400;
+/* Light and Dark Mode Variants */
+$--color-primary-light: #5AC8FA;
+$--color-primary-dark: #0A84FF;
 
-// $--color-text-regular: #1f2d3d;
+/* Button and Typography */
+$--button-font-weight: 500;
+$--font-size-base: 14px;
 
-$--border-color-light: #dfe4ed;
-$--border-color-lighter: #e6ebf5;
+/* Borders and Dividers */
+$--border-radius-base: 12px;
+$--border-color-base: rgba(0, 0, 0, 0.1);
+$--border-color-light: rgba(0, 0, 0, 0.06);
+$--border-color-lighter: rgba(0, 0, 0, 0.03);
 
-$--table-border:1px solid#dfe6ec;
+/* Component-specific overrides */
+$--input-border-color: rgba(0, 0, 0, 0.1);
+$--input-focus-color: #007AFF;
+$--input-focus-border-color: #007AFF;
+
+$--checkbox-input-border-color: rgba(0, 0, 0, 0.1);
+$--checkbox-input-border-color-hover: #007AFF;
+
+$--select-border-color: rgba(0, 0, 0, 0.1);
+
+$--dialog-border-color: rgba(0, 0, 0, 0.1);
+
+/* Table Borders */
+$--table-border: 1px solid rgba(0, 0, 0, 0.1);
 
 /* icon font path, required */
 $--font-path: '~element-ui/lib/theme-chalk/fonts';
