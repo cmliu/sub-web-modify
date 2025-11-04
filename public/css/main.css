@@ -5,7 +5,9 @@ html {
 }
 
 body {
-    margin: 0
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Segoe UI', Roboto, sans-serif;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 article,

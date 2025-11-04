@@ -1,0 +1,183 @@
+/* Glass Background - Gradient + Blob */
+body {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Main gradient background */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--bg-primary);
+  z-index: -2;
+}
+
+/* Animated gradient blob background */
+body::after {
+  content: '';
+  position: fixed;
+  top: -50%;
+  right: -50%;
+  width: 200%;
+  height: 200%;
+  background: var(--gradient-primary);
+  opacity: 0.1;
+  filter: blur(100px);
+  z-index: -1;
+  pointer-events: none;
+  animation: gradient-shift 15s ease-in-out infinite;
+}
+
+@keyframes gradient-shift {
+  0% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  25% {
+    transform: translate(-10%, -10%) rotate(90deg);
+  }
+  50% {
+    transform: translate(-20%, 0) rotate(180deg);
+  }
+  75% {
+    transform: translate(-10%, 10%) rotate(270deg);
+  }
+  100% {
+    transform: translate(0, 0) rotate(360deg);
+  }
+}
+
+/* Hide the old canvas background */
+#canvas-show,
+.canvas-wrap,
+#canvas.gradient {
+  display: none !important;
+}
+
+/* Glass Surface Utilities */
+.glass-surface {
+  background: var(--glass-light);
+  backdrop-filter: var(--backdrop-filter);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+}
+
+.glass-surface-secondary {
+  background: var(--glass-light-secondary);
+  backdrop-filter: var(--backdrop-filter);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+}
+
+.glass-surface-tertiary {
+  background: var(--glass-light-tertiary);
+  backdrop-filter: var(--backdrop-filter);
+  border: 1px solid rgba(128, 128, 128, 0.1);
+  border-radius: var(--radius-sm);
+}
+
+.glass-input {
+  background: var(--glass-light-secondary) !important;
+  backdrop-filter: var(--backdrop-filter) !important;
+  border: 1px solid var(--border-color) !important;
+  border-radius: var(--radius-md) !important;
+}
+
+.glass-input:focus,
+.glass-input:active {
+  background: var(--glass-light) !important;
+  border-color: var(--primary-color) !important;
+}
+
+/* Frosted border effect */
+.frosted-border {
+  border: 1px solid;
+  border-color: var(--border-color);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+}
+
+/* Typography utilities */
+.text-primary {
+  color: var(--text-primary);
+  font-family: var(--font-family);
+}
+
+.text-secondary {
+  color: var(--text-secondary);
+  font-family: var(--font-family);
+}
+
+.text-tertiary {
+  color: var(--text-tertiary);
+  font-family: var(--font-family);
+}
+
+/* Font sizes */
+.text-large {
+  font-size: var(--font-size-large);
+  font-weight: 700;
+}
+
+.text-title-1 {
+  font-size: var(--font-size-title-1);
+  font-weight: 700;
+}
+
+.text-title-2 {
+  font-size: var(--font-size-title-2);
+  font-weight: 700;
+}
+
+.text-title-3 {
+  font-size: var(--font-size-title-3);
+  font-weight: 600;
+}
+
+.text-headline {
+  font-size: var(--font-size-headline);
+  font-weight: 600;
+}
+
+.text-body {
+  font-size: var(--font-size-body);
+  font-weight: 400;
+}
+
+.text-subheadline {
+  font-size: var(--font-size-subheadline);
+  font-weight: 400;
+}
+
+.text-footnote {
+  font-size: var(--font-size-footnote);
+  font-weight: 400;
+}
+
+.text-caption {
+  font-size: var(--font-size-caption);
+  font-weight: 400;
+  opacity: 0.75;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  body::after {
+    width: 250%;
+    height: 250%;
+  }
+
+  .text-large {
+    font-size: 24px;
+  }
+
+  .text-title-1 {
+    font-size: 22px;
+  }
+
+  .text-title-2 {
+    font-size: 18px;
+  }
+}
