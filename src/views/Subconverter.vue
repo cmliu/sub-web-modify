@@ -788,7 +788,7 @@ export default {
       form: {
         sourceSubUrl: "",
         clientType: "",
-        customBackend: this.getUrlParam() == "" ? "https://url.v1.mk" : this.getUrlParam(),
+        customBackend: "https://url.v1.mk",
         shortType: "https://v1.mk/short",
         remoteConfig: "https://raw.githubusercontent.com/cmliu/ACL4SSR/main/Clash/config/ACL4SSR_Online.ini",
         excludeRemarks: "",
@@ -845,21 +845,37 @@ export default {
     this.isPC = this.$getOS().isPc;
   },
   mounted() {
-    //this.tanchuang();
-    this.form.clientType = "clash";
-    this.getBackendVersion();
-    this.anhei();
-    let lightMedia = window.matchMedia('(prefers-color-scheme: light)');
-    let darkMedia = window.matchMedia('(prefers-color-scheme: dark)');
-    let callback = (e) => {
-      if (e.matches) {
-        this.anhei();
+    try {
+      //this.tanchuang();
+      this.form.clientType = "clash";
+      
+      // Handle URL parameters for backend
+      const urlBackend = this.getUrlParam();
+      if (urlBackend !== "") {
+        this.form.customBackend = urlBackend;
       }
-    };
-    if (typeof darkMedia.addEventListener === 'function' || typeof lightMedia.addEventListener === 'function') {
-      lightMedia.addEventListener('change', callback);
-      darkMedia.addEventListener('change', callback);
-    } //监听系统主题，自动切换！
+      
+      // Initialize theme first
+      this.anhei();
+      
+      // Then get backend version
+      this.getBackendVersion();
+      
+      // Set up theme change listeners
+      let lightMedia = window.matchMedia('(prefers-color-scheme: light)');
+      let darkMedia = window.matchMedia('(prefers-color-scheme: dark)');
+      let callback = (e) => {
+        if (e.matches) {
+          this.anhei();
+        }
+      };
+      if (typeof darkMedia.addEventListener === 'function' || typeof lightMedia.addEventListener === 'function') {
+        lightMedia.addEventListener('change', callback);
+        darkMedia.addEventListener('change', callback);
+      } //监听系统主题，自动切换！
+    } catch (error) {
+      console.error('Error in mounted hook:', error);
+    }
   },
   methods: {
     selectChanged() {
@@ -880,31 +896,32 @@ export default {
       const getLocalTheme = window.localStorage.getItem("localTheme");
       const lightMode = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)');
       const darkMode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)');
-      if (getLocalTheme) {
-        document.getElementsByTagName('body')[0].className = getLocalTheme;
+      
+      if (getLocalTheme && getLocalTheme !== null && getLocalTheme !== "undefined" && getLocalTheme !== "") {
+        document.body.className = getLocalTheme;
       } //读取localstorage，优先级最高！
-      else if (getLocalTheme == null || getLocalTheme == "undefined" || getLocalTheme == "") {
+      else {
         if (new Date().getHours() >= 19 || new Date().getHours() < 7) {
-          document.getElementsByTagName('body')[0].setAttribute('class', 'dark-mode');
+          document.body.className = 'dark-mode';
         } else {
-          document.getElementsByTagName('body')[0].setAttribute('class', 'light-mode');
+          document.body.className = 'light-mode';
         } //根据当前时间来判断，用来对付QQ等不支持媒体变量查询的浏览器
         if (lightMode && lightMode.matches) {
-          document.getElementsByTagName('body')[0].setAttribute('class', 'light-mode');
+          document.body.className = 'light-mode';
         }
         if (darkMode && darkMode.matches) {
-          document.getElementsByTagName('body')[0].setAttribute('class', 'dark-mode');
+          document.body.className = 'dark-mode';
         } //根据窗口主题来判断当前主题！
       }
     },
     change() {
-      var zhuti = document.getElementsByTagName('body')[0].className;
+      var zhuti = document.body.className;
       if (zhuti === 'light-mode') {
-        document.getElementsByTagName('body')[0].setAttribute('class', 'dark-mode');
+        document.body.className = 'dark-mode';
         window.localStorage.setItem('localTheme', 'dark-mode');
       }
       if (zhuti === 'dark-mode') {
-        document.getElementsByTagName('body')[0].setAttribute('class', 'light-mode');
+        document.body.className = 'light-mode';
         window.localStorage.setItem('localTheme', 'light-mode');
       }
     },
