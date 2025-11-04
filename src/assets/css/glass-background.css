@@ -2,6 +2,14 @@
 body {
   position: relative;
   overflow: hidden;
+  /* Fallback values in case CSS variables aren't loaded */
+  --bg-primary: #FFFFFF;
+  --bg-secondary: #F5F5F5;
+  --text-primary: #000000;
+  --text-secondary: #3C3C43;
+  --border-color: rgba(0, 0, 0, 0.1);
+  --glass-light: rgba(255, 255, 255, 0.8);
+  --backdrop-filter: blur(20px) saturate(180%);
 }
 
 /* Main gradient background */
