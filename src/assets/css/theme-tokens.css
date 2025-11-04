@@ -1,0 +1,129 @@
+/* iOS 26 Design Token Layer - Light Mode */
+body.light-mode {
+  /* Primary Colors */
+  --primary-color: #007AFF;
+  --secondary-color: #5AC8FA;
+  --tertiary-color: #FFCC00;
+  --destructive-color: #FF3B30;
+  
+  /* Semantic Colors */
+  --bg-primary: #FFFFFF;
+  --bg-secondary: #F5F5F5;
+  --bg-tertiary: #EBEBF0;
+  --text-primary: #000000;
+  --text-secondary: #3C3C43;
+  --text-tertiary: #8E8E93;
+  --border-color: rgba(0, 0, 0, 0.1);
+  
+  /* Glass/Frosted Colors */
+  --glass-light: rgba(255, 255, 255, 0.8);
+  --glass-light-secondary: rgba(255, 255, 255, 0.6);
+  --glass-light-tertiary: rgba(255, 255, 255, 0.4);
+  
+  /* Gradients */
+  --gradient-primary: linear-gradient(135deg, #FF6B9D, #00B4DB);
+  --gradient-secondary: linear-gradient(135deg, #667EEA, #764BA2);
+  --gradient-tertiary: linear-gradient(135deg, #F093FB, #F5576C);
+  
+  /* Typography */
+  --font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Segoe UI', Roboto, sans-serif;
+  --font-size-large: 34px;
+  --font-size-title-1: 28px;
+  --font-size-title-2: 22px;
+  --font-size-title-3: 20px;
+  --font-size-headline: 17px;
+  --font-size-body: 16px;
+  --font-size-callout: 16px;
+  --font-size-subheadline: 15px;
+  --font-size-footnote: 13px;
+  --font-size-caption: 12px;
+  
+  /* Shadows */
+  --shadow-small: 0 2px 4px rgba(0, 0, 0, 0.08);
+  --shadow-medium: 0 4px 12px rgba(0, 0, 0, 0.12);
+  --shadow-large: 0 12px 24px rgba(0, 0, 0, 0.15);
+  
+  /* Spacing */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 12px;
+  --spacing-lg: 16px;
+  --spacing-xl: 24px;
+  --spacing-xxl: 32px;
+  
+  /* Border Radius */
+  --radius-xs: 4px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+  
+  /* Backdrop */
+  --backdrop-filter: blur(20px) saturate(180%);
+  --backdrop-intensity: 0.8;
+}
+
+/* iOS 26 Design Token Layer - Dark Mode */
+body.dark-mode {
+  /* Primary Colors */
+  --primary-color: #0A84FF;
+  --secondary-color: #5AC8FA;
+  --tertiary-color: #FFD60A;
+  --destructive-color: #FF453A;
+  
+  /* Semantic Colors */
+  --bg-primary: #1C1C1E;
+  --bg-secondary: #2C2C2E;
+  --bg-tertiary: #3A3A3C;
+  --text-primary: #FFFFFF;
+  --text-secondary: #EBEBF0;
+  --text-tertiary: #8E8E93;
+  --border-color: rgba(255, 255, 255, 0.1);
+  
+  /* Glass/Frosted Colors */
+  --glass-light: rgba(255, 255, 255, 0.1);
+  --glass-light-secondary: rgba(255, 255, 255, 0.08);
+  --glass-light-tertiary: rgba(255, 255, 255, 0.06);
+  
+  /* Gradients */
+  --gradient-primary: linear-gradient(135deg, #667EEA, #764BA2);
+  --gradient-secondary: linear-gradient(135deg, #F093FB, #F5576C);
+  --gradient-tertiary: linear-gradient(135deg, #4C1D95, #7C3AED);
+  
+  /* Typography */
+  --font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Segoe UI', Roboto, sans-serif;
+  --font-size-large: 34px;
+  --font-size-title-1: 28px;
+  --font-size-title-2: 22px;
+  --font-size-title-3: 20px;
+  --font-size-headline: 17px;
+  --font-size-body: 16px;
+  --font-size-callout: 16px;
+  --font-size-subheadline: 15px;
+  --font-size-footnote: 13px;
+  --font-size-caption: 12px;
+  
+  /* Shadows */
+  --shadow-small: 0 2px 4px rgba(0, 0, 0, 0.3);
+  --shadow-medium: 0 4px 12px rgba(0, 0, 0, 0.4);
+  --shadow-large: 0 12px 24px rgba(0, 0, 0, 0.5);
+  
+  /* Spacing */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 12px;
+  --spacing-lg: 16px;
+  --spacing-xl: 24px;
+  --spacing-xxl: 32px;
+  
+  /* Border Radius */
+  --radius-xs: 4px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+  
+  /* Backdrop */
+  --backdrop-filter: blur(20px) saturate(180%);
+  --backdrop-intensity: 0.9;
+}

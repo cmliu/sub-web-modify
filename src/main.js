@@ -10,6 +10,8 @@ require(`@/plugins/particles`)
 
 
 import 'element-ui/lib/theme-chalk/index.css'
+import './assets/css/theme-tokens.css'
+import './assets/css/glass-background.css'
 import './assets/css/light.min.css'
 import './assets/css/dark.min.css'
 import '@/icons' // icon
