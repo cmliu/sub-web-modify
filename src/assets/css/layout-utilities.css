@@ -1,0 +1,188 @@
+/* Layout Utilities - Semantic Wrappers and Layout Spacing */
+
+/* Shell - Main Container */
+.layout-shell {
+  margin-top: 10px;
+}
+
+/* Header Bar - Icon Cluster and Title */
+.layout-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  gap: 10px;
+}
+
+.layout-header-icons-left {
+  display: flex;
+  gap: 10px;
+  margin-right: auto;
+}
+
+.layout-header-icons-right {
+  display: flex;
+  gap: 10px;
+  margin-left: auto;
+}
+
+.layout-header-title {
+  text-align: center;
+  font-size: 15px;
+  flex: 1;
+}
+
+.layout-header-icon {
+  display: inline-flex;
+  cursor: pointer;
+}
+
+.layout-header-icon.float-left {
+  float: left;
+}
+
+.layout-header-icon.float-right {
+  float: right;
+}
+
+/* Content Form Section */
+.layout-form-container {
+  width: 100%;
+}
+
+/* Select/Input Fields */
+.layout-select-full {
+  width: 100%;
+}
+
+.layout-input-full {
+  width: 100%;
+}
+
+/* Advanced Options Section */
+.layout-advanced-section {
+  width: 100%;
+}
+
+.layout-advanced-button {
+  width: 100%;
+}
+
+/* Advanced Options Popover - Checkbox Grid */
+.layout-popover-content {
+  margin-left: 35%;
+}
+
+/* Spacing - Divider Margin */
+.layout-divider-spacing {
+  margin-top: 30px;
+}
+
+/* Action Buttons Sections */
+.layout-action-buttons {
+  margin-top: 40px;
+  text-align: center;
+}
+
+.layout-button-row {
+  text-align: center;
+}
+
+.layout-button {
+  width: 120px;
+}
+
+.layout-button-wide {
+  width: 250px;
+}
+
+.layout-button-dialog {
+  width: 200px;
+}
+
+/* Form Items */
+.layout-form-item-center {
+  label-width: 0px;
+  text-align: center;
+}
+
+.layout-form-item-spacing {
+  margin-top: 40px;
+}
+
+/* Dialog Styling */
+.layout-dialog-content {
+  text-align: center;
+}
+
+.layout-dialog-buttons {
+  text-align: center;
+  margin: 0;
+}
+
+.layout-dialog-button-spacing {
+  text-align: center;
+  margin: 3vh 0 2vh 0;
+}
+
+/* Dialog Footer */
+.layout-dialog-footer {
+  float: right;
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+/* Dialog Title */
+.layout-dialog-title {
+  text-align: left;
+}
+
+/* Link Spacing */
+.layout-link-spacing {
+  margin-bottom: 15px;
+}
+
+/* Copy Content Input */
+.layout-copy-content {
+  width: 100%;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .layout-header {
+    flex-wrap: wrap;
+  }
+
+  .layout-header-icons-left,
+  .layout-header-icons-right {
+    margin: auto;
+    width: 100%;
+    justify-content: center;
+  }
+
+  .layout-button {
+    width: 100%;
+  }
+
+  .layout-button-wide {
+    width: 100%;
+  }
+
+  .layout-button-dialog {
+    width: 100%;
+  }
+
+  .layout-action-buttons {
+    margin-top: 24px;
+  }
+
+  .layout-dialog-footer {
+    flex-direction: column;
+    float: none;
+  }
+
+  .layout-popover-content {
+    margin-left: 0;
+  }
+}

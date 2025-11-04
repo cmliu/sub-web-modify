@@ -1,45 +1,47 @@
 <template>
   <div>
-    <el-row style="margin-top: 10px">
+    <el-row class="layout-shell">
       <el-col>
         <el-card>
-          <div slot="header">
-            <svg-icon class="gayhub" icon-class="github" style="float:left" @click="goToProject" />
-            <svg-icon class="dianbao" icon-class="telegram" style="float:left;margin-left: 10px"
-              @click="gotoTgChannel" />
-            <!--
-              <svg-icon class="bilibili" icon-class="bilibili" style="float:right;margin-left:10px"
-              @click="gotoBiliBili" /> -->
-            <svg-icon class="youguan" icon-class="youtube" style="float:right;margin-left:10px" @click="gotoYouTuBe" />
-            <svg-icon class="channel" icon-class="telegram" style="float:right;margin-left: 10px"
-              @click="gotoTgChannel" />
-            <div style="text-align:center;font-size:15px">订 阅 转 换</div>
+          <div slot="header" class="layout-header">
+            <div class="layout-header-icons-left">
+              <svg-icon class="gayhub" icon-class="github" @click="goToProject" />
+              <svg-icon class="dianbao" icon-class="telegram" @click="gotoTgChannel" />
+            </div>
+            <div class="layout-header-title">订 阅 转 换</div>
+            <div class="layout-header-icons-right">
+              <!--
+                <svg-icon class="bilibili" icon-class="bilibili"
+                @click="gotoBiliBili" /> -->
+              <svg-icon class="youguan" icon-class="youtube" @click="gotoYouTuBe" />
+              <svg-icon class="channel" icon-class="telegram" @click="gotoTgChannel" />
+            </div>
           </div>
           <el-container>
-            <el-form :model="form" label-width="80px" label-position="left" style="width: 100%">
+            <el-form :model="form" label-width="80px" label-position="left" class="layout-form-container">
               <el-form-item label="订阅链接:">
                 <el-input v-model="form.sourceSubUrl" type="textarea" rows="3"
                   placeholder="支持各种订阅链接或单节点链接，多个链接每行一个或用 | 分隔" />
               </el-form-item>
               <el-form-item label="生成类型:">
-                <el-select v-model="form.clientType" style="width: 100%">
+                <el-select v-model="form.clientType" class="layout-select-full">
                   <el-option v-for="(v, k) in options.clientTypes" :key="k" :label="k" :value="v"></el-option>
                 </el-select>
               </el-form-item>
               <el-form-item label="后端地址:">
                 <el-select v-model="form.customBackend" allow-create filterable @change="selectChanged"
-                  placeholder="可输入自己的后端" style="width: 100%">
+                  placeholder="可输入自己的后端" class="layout-select-full">
                   <el-option v-for="(v, k) in options.customBackend" :key="k" :label="k" :value="v"></el-option>
                 </el-select>
               </el-form-item>
               <el-form-item label="短链选择:">
                 <el-select v-model="form.shortType" allow-create filterable placeholder="可输入其他可用短链API"
-                  style="width: 100%">
+                  class="layout-select-full">
                   <el-option v-for="(v, k) in options.shortTypes" :key="k" :label="k" :value="v"></el-option>
                 </el-select>
               </el-form-item>
               <el-form-item label="远程配置:">
-                <el-select v-model="form.remoteConfig" allow-create filterable placeholder="请选择" style="width: 100%">
+                <el-select v-model="form.remoteConfig" allow-create filterable placeholder="请选择" class="layout-select-full">
                   <el-option-group v-for="group in options.remoteConfig" :key="group.label" :label="group.label">
                     <el-option v-for="item in group.options" :key="item.value" :label="item.label"
                       :value="item.value"></el-option>
@@ -50,8 +52,8 @@
                 <el-collapse>
                   <el-collapse-item>
                     <template slot="title">
-                      <el-form-item label="高级功能:" style="width: 100%;">
-                        <el-button type="limr" style="width: 100%;" icon="el-icon-more-outline">点击显示/隐藏
+                      <el-form-item label="高级功能:" class="layout-advanced-section">
+                        <el-button type="limr" class="layout-advanced-button" icon="el-icon-more-outline">点击显示/隐藏
                         </el-button>
                       </el-form-item>
                     </template>
@@ -137,7 +139,7 @@
                           </el-row>
                           <el-row :gutter="10">
                             <el-col :span="12">
-                              <div style="margin-left: 35%">
+                              <div class="layout-popover-content">
                                 <el-checkbox v-model="form.tpl.singbox.ipv6" label="Sing-Box支持IPV6"></el-checkbox>
                               </div>
                             </el-col>
@@ -149,7 +151,7 @@
                   </el-collapse-item>
                 </el-collapse>
               </el-form-item>
-              <div style="margin-top: 30px"></div>
+              <div class="layout-divider-spacing"></div>
               <el-divider content-position="center">
                 <el-button type="zhuti" @click="change">
                   <i id="rijian" class="el-icon-sunny"></i>
@@ -170,24 +172,24 @@
                   </el-button>
                 </el-input>
               </el-form-item>
-              <el-form-item label-width="0px" style="margin-top: 40px; text-align: center">
-                <el-button style="width: 120px" type="danger" @click="makeUrl"
+              <el-form-item label-width="0px" class="layout-form-item-center layout-form-item-spacing">
+                <el-button class="layout-button" type="danger" @click="makeUrl"
                   :disabled="form.sourceSubUrl.length === 0 || btnBoolean">生成订阅链接
                 </el-button>
-                <el-button style="width: 120px" type="danger" @click="makeShortUrl" :loading="loading1"
+                <el-button class="layout-button" type="danger" @click="makeShortUrl" :loading="loading1"
                   :disabled="customSubUrl.length === 0">生成短链接
                 </el-button>
               </el-form-item>
-              <el-form-item label-width="0px" style="text-align: center">
-                <el-button style="width: 120px" type="primary" @click="dialogUploadConfigVisible = true"
+              <el-form-item label-width="0px" class="layout-form-item-center">
+                <el-button class="layout-button" type="primary" @click="dialogUploadConfigVisible = true"
                   icon="el-icon-upload" :loading="loading2">自定义配置
                 </el-button>
-                <el-button style="width: 120px" type="primary" @click="dialogLoadConfigVisible = true"
+                <el-button class="layout-button" type="primary" @click="dialogLoadConfigVisible = true"
                   icon="el-icon-copy-document" :loading="loading3">从URL解析
                 </el-button>
               </el-form-item>
-              <el-form-item label-width="0px" style="text-align: center">
-                <el-button style="width: 250px;" type="success" icon="el-icon-video-play"
+              <el-form-item label-width="0px" class="layout-form-item-center">
+                <el-button class="layout-button-wide" type="success" icon="el-icon-video-play"
                   @click="centerDialogVisible = true">视频教程
                 </el-button>
               </el-form-item>
@@ -198,18 +200,18 @@
     </el-row>
     <el-dialog title="请选择需要观看的视频教程" :visible.sync="centerDialogVisible" :show-close="false" width="40vh" top="30vh"
       center>
-      <div label-width="0px" style="text-align: center">
-        <el-button style="width: 200px;" type="primary" icon="el-icon-video-play"
+      <div label-width="0px" class="layout-form-item-center">
+        <el-button class="layout-button-dialog" type="primary" icon="el-icon-video-play"
           @click="gotoBasicVideo(); centerDialogVisible = false">基础视频教程
         </el-button>
       </div>
-      <div label-width="0px" style="text-align: center;margin: 3vh 0 2vh">
-        <el-button style="width: 200px;" type="danger" icon="el-icon-video-play"
+      <div label-width="0px" class="layout-dialog-button-spacing">
+        <el-button class="layout-button-dialog" type="danger" icon="el-icon-video-play"
           @click="gotoAdvancedVideo(); centerDialogVisible = false">进阶视频教程
         </el-button>
       </div>
-      <div label-width="0px" style="text-align: center;margin: 3vh 0 2vh">
-        <el-button style="width: 200px;" type="warning" icon="el-icon-download" @click="toolsDown">代理工具集合
+      <div label-width="0px" class="layout-dialog-button-spacing">
+        <el-button class="layout-button-dialog" type="warning" icon="el-icon-download" @click="toolsDown">代理工具集合
         </el-button>
       </div>
     </el-dialog>
@@ -217,7 +219,7 @@
       :close-on-press-escape="false" width="80%">
       <el-tabs v-model="activeName" type="card">
         <el-tab-pane label="远程配置上传" name="first">
-          <el-link type="danger" :href="sampleConfig" style="margin-bottom: 15px" target="_blank" icon="el-icon-info">
+          <el-link type="danger" :href="sampleConfig" class="layout-link-spacing" target="_blank" icon="el-icon-info">
             参考案例
           </el-link>
           <el-form label-position="left">
@@ -226,14 +228,14 @@
                 maxlength="50000" show-word-limit></el-input>
             </el-form-item>
           </el-form>
-          <div style="float: right">
+          <div class="layout-dialog-footer">
             <el-button type="primary" @click="uploadConfig = ''; dialogUploadConfigVisible = false">取 消</el-button>
             <el-button type="primary" @click="confirmUploadConfig" :disabled="uploadConfig.length === 0">确 定
             </el-button>
           </div>
         </el-tab-pane>
         <el-tab-pane label="JS排序节点" name="second">
-          <el-link type="success" :href="scriptConfig" style="margin-bottom: 15px" target="_blank" icon="el-icon-info">
+          <el-link type="success" :href="scriptConfig" class="layout-link-spacing" target="_blank" icon="el-icon-info">
             参考案例
           </el-link>
           <el-form label-position="left">
@@ -242,14 +244,14 @@
                 :autosize="{ minRows: 15, maxRows: 15 }" maxlength="50000" show-word-limit></el-input>
             </el-form-item>
           </el-form>
-          <div style="float: right">
+          <div class="layout-dialog-footer">
             <el-button type="primary" @click="uploadScript = ''; dialogUploadConfigVisible = false">取 消</el-button>
             <el-button type="primary" @click="confirmUploadScript" :disabled="uploadScript.length === 0">确 定
             </el-button>
           </div>
         </el-tab-pane>
         <el-tab-pane label="JS筛选节点" name="third">
-          <el-link type="warning" :href="filterConfig" style="margin-bottom: 15px" target="_blank" icon="el-icon-info">
+          <el-link type="warning" :href="filterConfig" class="layout-link-spacing" target="_blank" icon="el-icon-info">
             参考案例
           </el-link>
           <el-form label-position="left">
@@ -258,7 +260,7 @@
                 :autosize="{ minRows: 15, maxRows: 15 }" maxlength="50000" show-word-limit></el-input>
             </el-form-item>
           </el-form>
-          <div style="float: right">
+          <div class="layout-dialog-footer">
             <el-button type="primary" @click="uploadFilter = ''; dialogUploadConfigVisible = false">取 消</el-button>
             <el-button type="primary" @click="confirmUploadScript" :disabled="uploadFilter.length === 0">确 定
             </el-button>
