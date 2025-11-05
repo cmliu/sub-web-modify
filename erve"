@@ -1,0 +1,20 @@
+[33m885f5ee[m[33m ([m[1;34mgrafted[m[33m, [m[1;36mHEAD[m[33m -> [m[1;32memergency-restore-site-from-pr11[m[33m, [m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmaster[m[33m)[m Merge pull request #13 from xytxg/hotfix/ui-refactor-site-white-screen
+[33m8971905[m[33m ([m[1;31morigin/hotfix/ui-refactor-site-white-screen[m[33m)[m fix(subconverter): fix site crash due to missing comma in data object
+[33md68a353[m Merge pull request #12 from xytxg/feat-ui-refactor-ios26-big-glass-responsive
+[33m38cf487[m[33m ([m[1;31morigin/feat-ui-refactor-ios26-big-glass-responsive[m[33m)[m feat(ui): complete UI refactor to iOS 26 big glass style with full responsive design
+[33m3ad9621[m Merge pull request #11 from xytxg/feat/ios26-glass-ui-fix-copy-remove-video-optimize
+[33mfd33db9[m[33m ([m[1;31morigin/feat/ios26-glass-ui-fix-copy-remove-video-optimize[m[33m)[m feat(ui): comprehensive iOS 26 glass UI redesign and major visual overhaul
+[33m1cb597e[m Merge pull request #10 from xytxg/fix-scroll-remove-header-icons-glass-ios26
+[33mc54860e[m[33m ([m[1;31morigin/fix-scroll-remove-header-icons-glass-ios26[m[33m)[m fix(ui,scroll,glass): fix scrolling bug and enhance glassmorphism with iOS 26 gradients
+[33m6a6fa8c[m Merge pull request #9 from xytxg/fix/site-loading-vue-runtime
+[33md6381a2[m[33m ([m[1;31morigin/fix/site-loading-vue-runtime[m[33m)[m fix(deploy): add Cloudflare Pages _redirects file to support Vue Router history mode
+[33mb9d2d3f[m Merge pull request #8 from xytxg/hotfix/remove-yarn-enforce-npm
+[33m6529166[m[33m ([m[1;31morigin/hotfix/remove-yarn-enforce-npm[m[33m)[m ci(build): permanently remove Yarn and enforce npm for deployment
+[33m7a98050[m Merge pull request #7 from xytxg/fix/ios26-ui-runtime-issues-compare-refactor
+[33me68615b[m[33m ([m[1;31morigin/fix/ios26-ui-runtime-issues-compare-refactor[m[33m)[m fix(runtime): resolve theme and initialization issues post iOS 26 UI refactor
+[33m503566d[m Merge pull request #6 from xytxg/force-npm-lock-remove-yarn-cloudflare-pages
+[33m7bc65ca[m[33m ([m[1;31morigin/force-npm-lock-remove-yarn-cloudflare-pages[m[33m)[m fix(ci): force npm usage by removing Yarn lockfiles for Cloudflare Pages
+[33m2bd984d[m Merge pull request #5 from xytxg/fix-cf-pages-lockfile-sync
+[33m4449ab9[m[33m ([m[1;31morigin/fix-cf-pages-lockfile-sync[m[33m)[m fix(ci): remove outdated .yarn.lock to resolve CF Pages deployment errors
+[33m9dd6446[m Merge pull request #4 from xytxg/feat/download-page-ios26-redesign-extract-inline-css-frosted-glass-sweetalert-static-e01
+[33mc57d9e6[m[33m ([m[1;31morigin/feat/download-page-ios26-redesign-extract-inline-css-frosted-glass-sweetalert-static-e01[m[33m)[m feat(public/download): redesign download page with iOS 26 glassmorphism and extract inline styles

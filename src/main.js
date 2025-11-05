@@ -1,12 +1,12 @@
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
-require(`@/plugins/element-ui`)
-require(`@/plugins/clipboard`)
-require(`@/plugins/base64`)
-require(`@/plugins/axios`)
-require(`@/plugins/device`)
-require(`@/plugins/particles`)
+import './plugins/element-ui'
+import './plugins/clipboard'
+import './plugins/base64'
+import './plugins/axios'
+import './plugins/device'
+import './plugins/particles'
 
 
 import './assets/css/theme-tokens.css'
