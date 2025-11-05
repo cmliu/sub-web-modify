@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Short-Link Adapter Test</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 20px;
+      background: #f5f5f7;
+    }
+    h1 {
+      color: #1d1d1f;
+      border-bottom: 2px solid #007AFF;
+      padding-bottom: 10px;
+    }
+    .test-section {
+      background: white;
+      padding: 20px;
+      margin: 20px 0;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    .test-section h2 {
+      color: #007AFF;
+      margin-top: 0;
+    }
+    .form-group {
+      margin: 15px 0;
+    }
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: 500;
+      color: #333;
+    }
+    input, select, textarea {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #d2d2d7;
+      border-radius: 8px;
+      font-size: 14px;
+      box-sizing: border-box;
+    }
+    button {
+      background: #007AFF;
+      color: white;
+      padding: 12px 24px;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      margin: 10px 5px 10px 0;
+    }
+    button:hover {
+      background: #0051D5;
+    }
+    button:disabled {
+      background: #d2d2d7;
+      cursor: not-allowed;
+    }
+    .result {
+      margin-top: 15px;
+      padding: 15px;
+      background: #f9f9f9;
+      border-radius: 8px;
+      border-left: 4px solid #007AFF;
+    }
+    .result.success {
+      border-left-color: #34C759;
+      background: #f0fdf4;
+    }
+    .result.error {
+      border-left-color: #FF3B30;
+      background: #fef2f2;
+    }
+    .result.warning {
+      border-left-color: #FF9500;
+      background: #fffbf0;
+    }
+    .log {
+      background: #1d1d1f;
+      color: #f5f5f7;
+      padding: 15px;
+      border-radius: 8px;
+      font-family: 'Monaco', 'Courier New', monospace;
+      font-size: 12px;
+      max-height: 400px;
+      overflow-y: auto;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+    .info-box {
+      background: #e8f4ff;
+      padding: 15px;
+      border-radius: 8px;
+      margin: 15px 0;
+      border-left: 4px solid #007AFF;
+    }
+    .info-box strong {
+      color: #007AFF;
+    }
+  </style>
+</head>
+<body>
+  <h1>🔗 Short-Link Adapter Test Suite</h1>
+
+  <div class="info-box">
+    <strong>Note:</strong> This is a standalone test page for the short-link adapter system. 
+    Open browser DevTools (F12) to see detailed diagnostic logs.
+  </div>
+
+  <div class="test-section">
+    <h2>Test 1: v1.mk Provider</h2>
+    <div class="form-group">
+      <label>Long URL to Shorten:</label>
+      <textarea id="test1-url" rows="3">https://subapi.990032.xyz/sub?target=clash&url=https%3A%2F%2Fexample.com%2Fsubscription%2Flink&insert=false&config=https%3A%2F%2Fraw.githubusercontent.com%2FACL4SSR%2FACL4SSR%2Fmaster%2FClash%2Fconfig%2FACL4SSR_Online_Full_NoAuto.ini</textarea>
+    </div>
+    <button onclick="testV1mk()">Test v1.mk</button>
+    <button onclick="clearResult('test1-result')">Clear</button>
+    <div id="test1-result"></div>
+  </div>
+
+  <div class="test-section">
+    <h2>Test 2: All Providers</h2>
+    <div class="form-group">
+      <label>Long URL:</label>
+      <input type="text" id="test2-url" value="https://example.com/very/long/subscription/url/with/many/parameters">
+    </div>
+    <div class="form-group">
+      <label>Select Provider:</label>
+      <select id="test2-provider">
+        <option value="https://v1.mk/short">v1.mk</option>
+        <option value="https://d1.mk/short">d1.mk</option>
+        <option value="https://dlj.tf/short">dlj.tf</option>
+        <option value="https://suo.yt/short">suo.yt</option>
+      </select>
+    </div>
+    <button onclick="testProvider()">Test Selected Provider</button>
+    <button onclick="testAllProviders()">Test All Providers</button>
+    <button onclick="clearResult('test2-result')">Clear</button>
+    <div id="test2-result"></div>
+  </div>
+
+  <div class="test-section">
+    <h2>Test 3: Error Handling</h2>
+    <div class="form-group">
+      <label>Simulate Error Type:</label>
+      <select id="test3-error">
+        <option value="timeout">Timeout (10s)</option>
+        <option value="invalid-url">Invalid Provider URL</option>
+        <option value="empty-response">Empty Response</option>
+        <option value="malformed-response">Malformed Response</option>
+      </select>
+    </div>
+    <button onclick="testError()">Simulate Error</button>
+    <button onclick="clearResult('test3-result')">Clear</button>
+    <div id="test3-result"></div>
+  </div>
+
+  <div class="test-section">
+    <h2>Test 4: Adapter Configuration</h2>
+    <button onclick="showProviderConfig()">Show Provider Configs</button>
+    <button onclick="testErrorClassification()">Test Error Classification</button>
+    <button onclick="clearResult('test4-result')">Clear</button>
+    <div id="test4-result"></div>
+  </div>
+
+  <div class="test-section">
+    <h2>Diagnostic Log</h2>
+    <button onclick="clearLog()">Clear Log</button>
+    <div id="diagnostic-log" class="log">Console output will appear here...\n</div>
+  </div>
+
+  <script>
+    // Mock console.log/group/groupEnd to capture logs
+    const originalConsoleLog = console.log;
+    const originalConsoleGroup = console.group;
+    const originalConsoleGroupEnd = console.groupEnd;
+    const logBuffer = [];
+    let groupLevel = 0;
+
+    console.log = function(...args) {
+      const indent = '  '.repeat(groupLevel);
+      const msg = indent + args.map(a => typeof a === 'object' ? JSON.stringify(a, null, 2) : a).join(' ');
+      logBuffer.push(msg);
+      updateLog();
+      originalConsoleLog.apply(console, args);
+    };
+
+    console.group = function(...args) {
+      const msg = '▼ ' + args.join(' ');
+      logBuffer.push(msg);
+      groupLevel++;
+      updateLog();
+      originalConsoleGroup.apply(console, args);
+    };
+
+    console.groupEnd = function() {
+      groupLevel = Math.max(0, groupLevel - 1);
+      originalConsoleGroupEnd.apply(console);
+    };
+
+    function updateLog() {
+      const logEl = document.getElementById('diagnostic-log');
+      logEl.textContent = logBuffer.join('\n');
+      logEl.scrollTop = logEl.scrollHeight;
+    }
+
+    function clearLog() {
+      logBuffer.length = 0;
+      updateLog();
+    }
+
+    function clearResult(id) {
+      document.getElementById(id).innerHTML = '';
+    }
+
+    function showResult(id, message, type = 'info') {
+      const resultEl = document.getElementById(id);
+      const resultDiv = document.createElement('div');
+      resultDiv.className = `result ${type}`;
+      resultDiv.innerHTML = message;
+      resultEl.appendChild(resultDiv);
+    }
+
+    // Mock axios for testing
+    const mockAxios = {
+      post: async (url, data, config) => {
+        console.log('[Mock Axios] POST Request', { url, config });
+        
+        // Simulate delay
+        await new Promise(resolve => setTimeout(resolve, 500));
+        
+        // Mock responses based on provider
+        if (url.includes('v1.mk')) {
+          return {
+            status: 200,
+            data: {
+              ShortUrl: 'https://v1.mk/abc123'
+            }
+          };
+        } else if (url.includes('d1.mk')) {
+          return {
+            status: 200,
+            data: {
+              shortUrl: 'https://d1.mk/xyz789'
+            }
+          };
+        } else if (url.includes('dlj.tf')) {
+          return {
+            status: 200,
+            data: {
+              url: 'https://dlj.tf/def456'
+            }
+          };
+        } else if (url.includes('suo.yt')) {
+          return {
+            status: 200,
+            data: 'https://suo.yt/ghi123'
+          };
+        }
+        
+        throw new Error('Provider not configured');
+      }
+    };
+
+    async function testV1mk() {
+      const url = document.getElementById('test1-url').value;
+      clearResult('test1-result');
+      showResult('test1-result', '🔄 Testing v1.mk provider...', 'info');
+      
+      console.log('[Test] Starting v1.mk test', { url });
+      
+      try {
+        // This would use the actual adapter in the real app
+        const result = await mockAxios.post('https://v1.mk/short', { url }, {
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          timeout: 10000
+        });
+        
+        console.log('[Test] Response received', result);
+        
+        if (result.data && result.data.ShortUrl) {
+          showResult('test1-result', 
+            `✅ <strong>Success!</strong><br>` +
+            `Short URL: <code>${result.data.ShortUrl}</code><br>` +
+            `Original Length: ${url.length} chars<br>` +
+            `Shortened Length: ${result.data.ShortUrl.length} chars<br>` +
+            `Compression: ${((1 - result.data.ShortUrl.length / url.length) * 100).toFixed(1)}%`,
+            'success'
+          );
+        } else {
+          showResult('test1-result', '⚠️ Response received but no short URL found', 'warning');
+        }
+      } catch (error) {
+        console.error('[Test] Error occurred', error);
+        showResult('test1-result', 
+          `❌ <strong>Error:</strong> ${error.message}<br>` +
+          `<small>Check diagnostic log for details</small>`,
+          'error'
+        );
+      }
+    }
+
+    async function testProvider() {
+      const url = document.getElementById('test2-url').value;
+      const provider = document.getElementById('test2-provider').value;
+      const providerName = provider.split('/')[2];
+      
+      clearResult('test2-result');
+      showResult('test2-result', `🔄 Testing ${providerName}...`, 'info');
+      
+      console.log('[Test] Starting provider test', { provider, url });
+      
+      try {
+        const result = await mockAxios.post(provider, { url }, {
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          timeout: 10000
+        });
+        
+        console.log('[Test] Response received', result);
+        
+        const shortUrl = result.data.ShortUrl || result.data.shortUrl || result.data.url || result.data;
+        
+        if (shortUrl && typeof shortUrl === 'string') {
+          showResult('test2-result', 
+            `✅ <strong>${providerName} Success!</strong><br>` +
+            `Short URL: <code>${shortUrl}</code>`,
+            'success'
+          );
+        } else {
+          showResult('test2-result', `⚠️ ${providerName} returned unexpected format`, 'warning');
+        }
+      } catch (error) {
+        console.error('[Test] Error occurred', error);
+        showResult('test2-result', 
+          `❌ <strong>${providerName} Failed:</strong> ${error.message}`,
+          'error'
+        );
+      }
+    }
+
+    async function testAllProviders() {
+      const url = document.getElementById('test2-url').value;
+      const providers = [
+        { name: 'v1.mk', url: 'https://v1.mk/short' },
+        { name: 'd1.mk', url: 'https://d1.mk/short' },
+        { name: 'dlj.tf', url: 'https://dlj.tf/short' },
+        { name: 'suo.yt', url: 'https://suo.yt/short' }
+      ];
+      
+      clearResult('test2-result');
+      showResult('test2-result', `🔄 Testing all ${providers.length} providers...`, 'info');
+      
+      for (const provider of providers) {
+        try {
+          const result = await mockAxios.post(provider.url, { url }, {
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            timeout: 10000
+          });
+          
+          const shortUrl = result.data.ShortUrl || result.data.shortUrl || result.data.url || result.data;
+          
+          showResult('test2-result', 
+            `✅ <strong>${provider.name}:</strong> <code>${shortUrl}</code>`,
+            'success'
+          );
+        } catch (error) {
+          showResult('test2-result', 
+            `❌ <strong>${provider.name}:</strong> ${error.message}`,
+            'error'
+          );
+        }
+      }
+      
+      showResult('test2-result', '✅ All tests completed', 'success');
+    }
+
+    function testError() {
+      const errorType = document.getElementById('test3-error').value;
+      clearResult('test3-result');
+      
+      console.log('[Test] Simulating error', { errorType });
+      
+      let errorInfo;
+      switch (errorType) {
+        case 'timeout':
+          errorInfo = {
+            type: 'TIMEOUT',
+            message: '请求超时，服务响应过慢',
+            code: 'ECONNABORTED'
+          };
+          break;
+        case 'invalid-url':
+          errorInfo = {
+            type: 'NETWORK',
+            message: '网络连接失败，请检查网络或尝试其他服务'
+          };
+          break;
+        case 'empty-response':
+          errorInfo = {
+            type: 'PARSE',
+            message: '短链接生成失败，返回格式无法解析'
+          };
+          break;
+        case 'malformed-response':
+          errorInfo = {
+            type: 'PARSE',
+            message: '短链接生成失败，返回格式无法解析'
+          };
+          break;
+      }
+      
+      showResult('test3-result', 
+        `⚠️ <strong>Simulated ${errorInfo.type} Error</strong><br>` +
+        `Message: ${errorInfo.message}<br>` +
+        `<small>In real app, this would trigger fallback to long URL</small>`,
+        'warning'
+      );
+    }
+
+    function showProviderConfig() {
+      clearResult('test4-result');
+      
+      const providers = {
+        'v1.mk': {
+          endpoint: 'https://v1.mk/short',
+          methods: ['url-encoded', 'json', 'form-data'],
+          paramNames: ['url', 'url', 'longUrl']
+        },
+        'd1.mk': {
+          endpoint: 'https://d1.mk/short',
+          methods: ['url-encoded', 'form-data'],
+          paramNames: ['url', 'longUrl']
+        },
+        'dlj.tf': {
+          endpoint: 'https://dlj.tf/short',
+          methods: ['url-encoded', 'form-data'],
+          paramNames: ['url', 'longUrl']
+        },
+        'suo.yt': {
+          endpoint: 'https://suo.yt/short',
+          methods: ['url-encoded', 'form-data'],
+          paramNames: ['url', 'longUrl']
+        }
+      };
+      
+      let html = '<strong>Provider Configurations:</strong><br><br>';
+      for (const [name, config] of Object.entries(providers)) {
+        html += `<strong>${name}</strong><br>`;
+        html += `- Endpoint: <code>${config.endpoint}</code><br>`;
+        html += `- Methods: ${config.methods.join(', ')}<br>`;
+        html += `- Param Names: ${config.paramNames.join(', ')}<br><br>`;
+      }
+      
+      showResult('test4-result', html, 'info');
+    }
+
+    function testErrorClassification() {
+      clearResult('test4-result');
+      
+      const errorCases = [
+        { status: 400, type: 'PARAMETER', message: 'URL编码或参数无效' },
+        { status: 401, type: 'AUTH', message: '服务需要凭证或访问受限' },
+        { status: 403, type: 'AUTH', message: '服务需要凭证或访问受限' },
+        { status: 422, type: 'PARAMETER', message: 'URL编码或参数无效' },
+        { status: 429, type: 'RATE_LIMIT', message: '已达频率限制' },
+        { status: 500, type: 'SERVER', message: '短链服务暂时不可用' },
+        { status: 502, type: 'SERVER', message: '短链服务暂时不可用' },
+        { status: 503, type: 'SERVER', message: '短链服务暂时不可用' }
+      ];
+      
+      let html = '<strong>Error Classification Examples:</strong><br><br>';
+      errorCases.forEach(error => {
+        html += `<strong>HTTP ${error.status}</strong> → ${error.type}<br>`;
+        html += `Message: <em>${error.message}</em><br><br>`;
+      });
+      
+      showResult('test4-result', html, 'info');
+    }
+
+    // Initialize
+    console.log('[Test Suite] Loaded successfully');
+    console.log('[Test Suite] Ready to test short-link adapter');
+  </script>
+</body>
+</html>

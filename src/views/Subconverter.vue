@@ -81,7 +81,9 @@
                   :value="v">
                 </el-option>
               </el-select>
-              <div class="form-helper-text" v-if="form.shortType && form.shortType.includes('v1.mk')"></div>
+              <div class="form-helper-text" v-if="form.shortType">
+                注意：若生成失败（CORS/限流/服务异常），系统将自动回退复制原始链接
+              </div>
             </el-form-item>
 
             <el-form-item label="远程配置">
@@ -371,6 +373,7 @@
 
 <script>
 import { autoEnablePerformanceMode, PerformanceMonitor } from '@/utils/performance';
+import { generateShortUrl, classifyError, logDiagnostics } from '@/utils/shortlink-adapter';
 
 const project = process.env.VUE_APP_PROJECT
 const configScriptBackend = process.env.VUE_APP_CONFIG_UPLOAD_BACKEND + '/api.php'
@@ -1243,27 +1246,31 @@ export default {
       this.showShortResult = false;
       this.customShortSubUrl = "";
 
+      logDiagnostics('Short-link Generation Started', {
+        provider,
+        longUrl: this.customSubUrl,
+        urlLength: this.customSubUrl.length
+      });
+
       try {
-        const payload = new FormData();
-        payload.append("longUrl", this.customSubUrl);
-
-        const response = await this.$axios.post(provider, payload, {
-          headers: {
-            "Content-Type": "multipart/form-data"
-          },
-          timeout: 10000
-        });
-
-        let shortUrl = "";
-        if (response && response.data && typeof response.data === "object") {
-          shortUrl = response.data.ShortUrl || response.data.shortUrl || response.data.url || response.data.data || response.data.short || "";
-        } else if (response && typeof response.data === "string") {
-          shortUrl = response.data;
-        }
+        const shortUrl = await generateShortUrl(
+          this.$axios,
+          this.customSubUrl,
+          provider,
+          10000
+        );
 
         if (shortUrl && /^https?:\/\//i.test(shortUrl)) {
           this.customShortSubUrl = shortUrl;
           this.showShortResult = true;
+          
+          logDiagnostics('Short-link Generated Successfully', {
+            shortUrl,
+            originalLength: this.customSubUrl.length,
+            shortenedLength: shortUrl.length,
+            compressionRatio: ((1 - shortUrl.length / this.customSubUrl.length) * 100).toFixed(1) + '%'
+          });
+
           try {
             await this.$copyText(shortUrl);
             this.$message.success("短链接已复制到剪贴板");
@@ -1274,28 +1281,26 @@ export default {
             this.$message.warning("短链接已生成，请手动复制");
           }
         } else {
-          await this.handleShortlinkFallback("短链接生成失败");
+          logDiagnostics('Short-link Parse Failed', {
+            result: shortUrl,
+            message: 'No valid URL returned from provider'
+          });
+          await this.handleShortlinkFallback("短链接生成失败，返回格式无法解析");
         }
       } catch (error) {
-        if (process.env.NODE_ENV !== 'production') {
-          console.error("短链接生成失败:", error);
-        }
+        const errorInfo = classifyError(error);
+        
+        logDiagnostics('Short-link Generation Failed', {
+          errorType: errorInfo.type,
+          errorMessage: errorInfo.message,
+          status: error.response?.status,
+          statusText: error.response?.statusText,
+          responseData: error.response?.data,
+          errorCode: error.code,
+          errorDetails: error.message
+        });
 
-        let fallbackMessage = "短链接生成失败";
-        if (error && error.response && error.response.status) {
-          const status = error.response.status;
-          if (status === 429) {
-            fallbackMessage = "请求过于频繁";
-          } else if (status >= 500) {
-            fallbackMessage = "短链服务暂时不可用";
-          }
-        } else if (error && error.code === "ECONNABORTED") {
-          fallbackMessage = "短链服务请求超时";
-        } else {
-          fallbackMessage = "短链服务连接失败";
-        }
-
-        await this.handleShortlinkFallback(fallbackMessage);
+        await this.handleShortlinkFallback(errorInfo.message);
       } finally {
         this.shortLoading = false;
       }
