@@ -38,16 +38,17 @@
   --gutter-mobile: 16px;
 
   /* Effects */
-  --glass-blur: blur(30px);
-  --glass-saturate: saturate(200%);
-  --glass-shadow-color: rgba(31, 38, 135, 0.2);
-  --shadow-glass: 0 8px 32px var(--glass-shadow-color), inset 0 2px 4px rgba(255, 255, 255, 0.5);
-  --shadow-glass-hover: 0 16px 48px rgba(31, 38, 135, 0.3), inset 0 2px 4px rgba(255, 255, 255, 0.6);
-  --shadow-soft: 0 4px 16px rgba(17, 25, 40, 0.1);
-  --shadow-ring: 0 0 0 4px rgba(0, 122, 255, 0.12);
-  --transition-fast: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-  --transition-base: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  --transition-slow: all 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+  --glass-blur: blur(18px);
+  --glass-blur-heavy: blur(22px);
+  --glass-saturate: saturate(180%);
+  --glass-shadow-color: rgba(31, 38, 135, 0.15);
+  --shadow-glass: 0 6px 20px var(--glass-shadow-color), inset 0 1px 2px rgba(255, 255, 255, 0.3);
+  --shadow-glass-hover: 0 12px 32px rgba(31, 38, 135, 0.2), inset 0 1px 2px rgba(255, 255, 255, 0.4);
+  --shadow-soft: 0 2px 8px rgba(17, 25, 40, 0.08);
+  --shadow-ring: 0 0 0 3px rgba(0, 122, 255, 0.1);
+  --transition-fast: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-base: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 
   /* Gradients */
   --gradient-light: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);

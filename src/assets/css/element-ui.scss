@@ -14,23 +14,18 @@
 
 .el-card {
   background: var(--glass-light) !important;
-  backdrop-filter: blur(30px) saturate(200%) !important;
+  backdrop-filter: var(--glass-blur) !important;
   border: 1.5px solid var(--border-glass) !important;
   border-radius: 24px !important;
-  box-shadow: 
-    0 8px 32px rgba(31, 38, 135, 0.2),
-    inset 0 2px 4px var(--glass-highlight),
-    inset 0 -2px 4px rgba(0, 0, 0, 0.05) !important;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  box-shadow: var(--shadow-glass) !important;
+  transition: var(--transition-base) !important;
   padding: 8px !important;
+  will-change: transform, box-shadow;
 }
 
 .el-card:hover {
-  transform: translateY(-4px) !important;
-  box-shadow: 
-    0 16px 48px rgba(31, 38, 135, 0.3),
-    inset 0 2px 4px rgba(255, 255, 255, 0.6),
-    inset 0 -2px 4px rgba(0, 0, 0, 0.05) !important;
+  transform: translateY(-2px) !important;
+  box-shadow: var(--shadow-glass-hover) !important;
   border-color: var(--primary-color) !important;
 }
 
@@ -75,15 +70,14 @@
 .el-input__inner,
 .el-textarea__inner {
   background: rgba(255, 255, 255, 0.12) !important;
-  backdrop-filter: blur(20px) saturate(180%) !important;
+  backdrop-filter: var(--glass-blur) !important;
   border: 1px solid var(--border-glass-subtle) !important;
   border-radius: var(--radius-md) !important;
   color: var(--text-primary) !important;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  transition: var(--transition-fast) !important;
   font-family: var(--font-family) !important;
-  box-shadow: 
-    inset 0 1px 2px rgba(0, 0, 0, 0.05),
-    0 1px 3px rgba(0, 0, 0, 0.05) !important;
+  box-shadow: var(--shadow-soft) !important;
+  will-change: transform, box-shadow;
 }
 
 .el-input__inner::placeholder,
@@ -96,10 +90,7 @@
 .el-textarea__inner:focus {
   background: rgba(255, 255, 255, 0.2) !important;
   border-color: rgba(0, 122, 255, 0.5) !important;
-  box-shadow: 
-    0 0 0 4px rgba(0, 122, 255, 0.1),
-    inset 0 1px 2px rgba(255, 255, 255, 0.3),
-    0 4px 12px rgba(0, 122, 255, 0.15) !important;
+  box-shadow: var(--shadow-ring) !important;
   outline: none !important;
   transform: translateY(-1px) !important;
 }
@@ -138,17 +129,14 @@
   border-radius: 0 var(--radius-input) var(--radius-input) 0 !important;
   padding: 0 !important;
   transition: var(--transition-fast) !important;
-  box-shadow:
-    inset 0 1px 0 var(--glass-highlight),
-    0 6px 18px rgba(0, 122, 255, 0.16) !important;
+  box-shadow: var(--shadow-soft) !important;
+  will-change: transform, box-shadow;
 }
 
 .el-input-group__append:hover {
   background: var(--glass-bg-strong) !important;
   border-color: rgba(0, 122, 255, 0.35) !important;
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.35),
-    0 10px 24px rgba(0, 122, 255, 0.22) !important;
+  box-shadow: var(--shadow-glass-hover) !important;
   transform: translateY(-1px) !important;
 }
 
@@ -197,25 +185,26 @@
 
 .el-select .el-input__inner {
   background: var(--glass-light-secondary) !important;
-  backdrop-filter: var(--backdrop-filter) !important;
+  backdrop-filter: var(--glass-blur) !important;
   border: 1px solid var(--border-color) !important;
   border-radius: var(--radius-md) !important;
+  transition: var(--transition-fast) !important;
+  box-shadow: var(--shadow-soft) !important;
+  will-change: transform, box-shadow;
 }
 
 .el-select .el-input__inner:focus {
   border-color: var(--primary-color) !important;
   background: var(--glass-light) !important;
-  box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.1) !important;
+  box-shadow: var(--shadow-ring) !important;
 }
 
 .el-select-dropdown {
   background: var(--glass-light) !important;
-  backdrop-filter: blur(30px) saturate(200%) !important;
+  backdrop-filter: var(--glass-blur) !important;
   border: 1.5px solid var(--border-glass) !important;
   border-radius: var(--radius-lg) !important;
-  box-shadow: 
-    0 12px 40px rgba(0, 0, 0, 0.15),
-    inset 0 1px 0 var(--glass-highlight) !important;
+  box-shadow: var(--shadow-glass) !important;
   max-width: 90vw !important;
   padding: 8px !important;
 }
@@ -225,21 +214,22 @@
   padding: var(--spacing-md) var(--spacing-lg) !important;
   line-height: 1.5 !important;
   border-radius: var(--radius-sm) !important;
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  transition: var(--transition-fast) !important;
   margin: 2px 0 !important;
+  will-change: transform, background;
 }
 
 .el-select-dropdown__item:hover {
   background: linear-gradient(135deg, rgba(0, 122, 255, 0.15), rgba(10, 132, 255, 0.2)) !important;
   color: var(--primary-color) !important;
-  transform: translateX(4px) !important;
+  transform: translateX(2px) !important;
 }
 
 .el-select-dropdown__item.selected {
   color: var(--primary-color) !important;
   background: linear-gradient(135deg, rgba(0, 122, 255, 0.2), rgba(10, 132, 255, 0.25)) !important;
   font-weight: 600 !important;
-  box-shadow: 0 2px 8px rgba(0, 122, 255, 0.2) !important;
+  box-shadow: var(--shadow-soft) !important;
 }
 
 .el-option-group__title {
@@ -256,38 +246,33 @@
   border-radius: var(--radius-md) !important;
   font-weight: 500 !important;
   font-family: var(--font-family) !important;
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  transition: var(--transition-fast) !important;
   border: none !important;
+  will-change: transform, box-shadow;
 }
 
 /* Primary Button - Enhanced Glass Effect */
 .el-button--primary {
   background: linear-gradient(135deg, rgba(0, 122, 255, 0.9), rgba(10, 132, 255, 0.95)) !important;
-  backdrop-filter: blur(20px) saturate(180%) !important;
+  backdrop-filter: var(--glass-blur) !important;
   border: 1px solid rgba(255, 255, 255, 0.3) !important;
   color: #fff !important;
   border-radius: 14px !important;
-  box-shadow: 
-    0 4px 16px rgba(0, 122, 255, 0.4),
-    inset 0 1px 0 rgba(255, 255, 255, 0.4) !important;
+  box-shadow: var(--shadow-glass) !important;
   font-weight: 600 !important;
   letter-spacing: 0.3px !important;
 }
 
 .el-button--primary:hover {
   background: linear-gradient(135deg, rgba(0, 87, 204, 0.95), rgba(0, 122, 255, 1)) !important;
-  box-shadow: 
-    0 8px 24px rgba(0, 122, 255, 0.5),
-    inset 0 1px 0 rgba(255, 255, 255, 0.5) !important;
-  transform: translateY(-2px) scale(1.02) !important;
+  box-shadow: var(--shadow-glass-hover) !important;
+  transform: translateY(-1px) scale(1.01) !important;
 }
 
 .el-button--primary:active {
   background: linear-gradient(135deg, rgba(0, 71, 168, 1), rgba(0, 87, 204, 1)) !important;
-  transform: translateY(0) scale(0.98) !important;
-  box-shadow: 
-    0 2px 8px rgba(0, 122, 255, 0.3),
-    inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
+  transform: translateY(0) scale(0.99) !important;
+  box-shadow: var(--shadow-soft) !important;
 }
 
 .el-button--primary.is-disabled {
@@ -489,11 +474,8 @@
   border: 1.5px solid var(--border-glass) !important;
   border-radius: 24px !important;
   background: var(--glass-light) !important;
-  backdrop-filter: blur(30px) saturate(200%) !important;
-  box-shadow: 
-    0 20px 60px rgba(0, 0, 0, 0.25),
-    inset 0 2px 4px var(--glass-highlight),
-    inset 0 -2px 4px rgba(0, 0, 0, 0.05) !important;
+  backdrop-filter: var(--glass-blur-heavy) !important;
+  box-shadow: var(--shadow-glass-hover) !important;
   overflow: hidden !important;
 }
 
@@ -514,12 +496,12 @@
 .el-dialog__close {
   color: var(--text-tertiary) !important;
   font-size: 20px !important;
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  transition: var(--transition-fast) !important;
 }
 
 .el-dialog__close:hover {
   color: var(--primary-color) !important;
-  transform: scale(1.2) !important;
+  transform: scale(1.1) !important;
 }
 
 .el-dialog__body {
@@ -531,14 +513,14 @@
 .el-dialog__footer {
   border-top: 1px solid var(--border-glass) !important;
   background: linear-gradient(0deg, var(--glass-light-secondary) 0%, transparent 100%) !important;
-  backdrop-filter: blur(10px) !important;
+  backdrop-filter: blur(8px) !important;
   text-align: right !important;
   padding: var(--spacing-xl) var(--spacing-xxl) !important;
 }
 
 .el-dialog__wrapper {
-  backdrop-filter: blur(8px) !important;
-  background: rgba(0, 0, 0, 0.4) !important;
+  backdrop-filter: blur(4px) !important;
+  background: rgba(0, 0, 0, 0.3) !important;
 }
 
 /* ============================================
@@ -1408,4 +1390,68 @@ body.dark-mode .el-checkbox:focus-visible .el-checkbox__inner {
   .el-dropdown-menu__item {
     transition: none !important;
   }
+}
+
+/* Mobile optimizations */
+@media (max-width: 768px) {
+  .el-card {
+    backdrop-filter: blur(12px) !important;
+    box-shadow: var(--shadow-soft) !important;
+  }
+  
+  .el-input__inner,
+  .el-textarea__inner,
+  .el-select .el-input__inner {
+    backdrop-filter: blur(12px) !important;
+  }
+  
+  .el-dialog {
+    backdrop-filter: blur(15px) !important;
+    box-shadow: var(--shadow-soft) !important;
+  }
+  
+  .el-dialog__wrapper {
+    backdrop-filter: blur(2px) !important;
+  }
+  
+  .el-button--primary {
+    backdrop-filter: blur(12px) !important;
+  }
+}
+
+/* Performance mode optimizations */
+body.performance-mode {
+  /* Reduce all blur effects for better performance */
+}
+
+body.performance-mode .el-card {
+  backdrop-filter: blur(8px) !important;
+  box-shadow: var(--shadow-soft) !important;
+}
+
+body.performance-mode .el-input__inner,
+body.performance-mode .el-textarea__inner,
+body.performance-mode .el-select .el-input__inner {
+  backdrop-filter: blur(8px) !important;
+}
+
+body.performance-mode .el-dialog {
+  backdrop-filter: blur(10px) !important;
+  box-shadow: var(--shadow-soft) !important;
+}
+
+body.performance-mode .el-dialog__wrapper {
+  backdrop-filter: blur(1px) !important;
+}
+
+body.performance-mode .el-button--primary {
+  backdrop-filter: blur(8px) !important;
+}
+
+body.performance-mode .el-input-group__append {
+  backdrop-filter: blur(8px) !important;
+}
+
+body.performance-mode .el-select-dropdown {
+  backdrop-filter: blur(8px) !important;
 }
