@@ -41,7 +41,7 @@
             </el-form-item>
 
             <el-form-item label="生成类型">
-              <el-select v-model="form.clientType" filterable placeholder="请选择客户端类型" disabled>
+              <el-select v-model="form.clientType" filterable placeholder="请选择客户端类型" clearable>
                 <el-option
                   v-for="(v, k) in options.clientTypes"
                   :key="k"
@@ -49,33 +49,31 @@
                   :value="v">
                 </el-option>
               </el-select>
-              <div class="form-helper-text">通过生成操作自动填充</div>
             </el-form-item>
 
             <el-form-item label="后端地址">
               <el-select
                 v-model="form.customBackend"
-                allow-create
                 filterable
-                placeholder="可输入自定义后端地址"
-                disabled>
+                placeholder="请选择后端地址"
+                @change="handleBackendChange"
+                clearable>
                 <el-option
                   v-for="(v, k) in options.customBackend"
                   :key="k"
                   :label="k"
                   :value="v">
                 </el-option>
+                <el-option label="自定义..." value="__custom__"></el-option>
               </el-select>
-              <div class="form-helper-text">通过生成操作自动填充</div>
             </el-form-item>
 
             <el-form-item label="短链选择">
               <el-select
                 v-model="form.shortType"
-                allow-create
                 filterable
-                placeholder="可输入其他可用短链服务"
-                disabled>
+                placeholder="请选择短链服务"
+                clearable>
                 <el-option
                   v-for="(v, k) in options.shortTypes"
                   :key="k"
@@ -83,16 +81,16 @@
                   :value="v">
                 </el-option>
               </el-select>
-              <div class="form-helper-text">通过生成操作自动填充</div>
+              <div class="form-helper-text" v-if="form.shortType && form.shortType.includes('v1.mk')">该服务可能需要token</div>
             </el-form-item>
 
             <el-form-item label="远程配置">
               <el-select
                 v-model="form.remoteConfig"
-                allow-create
                 filterable
                 placeholder="请选择远程配置"
-                disabled>
+                @change="handleRemoteConfigChange"
+                clearable>
                 <el-option-group v-for="group in options.remoteConfig" :key="group.label" :label="group.label">
                   <el-option
                     v-for="item in group.options"
@@ -101,8 +99,8 @@
                     :value="item.value">
                   </el-option>
                 </el-option-group>
+                <el-option label="管理配置..." value="__manage__"></el-option>
               </el-select>
-              <div class="form-helper-text">通过生成操作自动填充</div>
             </el-form-item>
 
             <div class="advanced-panel">
@@ -286,6 +284,78 @@
         </div>
       </div>
     </div>
+
+    <!-- Custom Backend Dialog -->
+    <el-dialog
+      title="自定义后端地址"
+      :visible.sync="dialogCustomBackendVisible"
+      width="500px"
+      :close-on-click-modal="false">
+      <el-form>
+        <el-form-item label="后端地址">
+          <el-input
+            v-model="customBackendInput"
+            placeholder="请输入自定义后端地址，例如：https://your-backend.com"
+            clearable>
+          </el-input>
+          <div class="form-helper-text">
+            请输入完整的SubConverter后端地址，例如：https://sub.yourdomain.com
+          </div>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="dialogCustomBackendVisible = false">取消</el-button>
+        <el-button type="primary" @click="confirmCustomBackend">确定</el-button>
+      </div>
+    </el-dialog>
+
+    <!-- Manage Config Dialog -->
+    <el-dialog
+      title="管理远程配置"
+      :visible.sync="dialogManageConfigVisible"
+      width="600px"
+      :close-on-click-modal="false">
+      <div class="config-management">
+        <el-tabs>
+          <el-tab-pane label="上传配置">
+            <el-form>
+              <el-form-item label="配置内容">
+                <el-input
+                  v-model="uploadConfig"
+                  type="textarea"
+                  :rows="8"
+                  placeholder="请粘贴配置文件内容">
+                </el-input>
+              </el-form-item>
+            </el-form>
+            <div style="text-align: center; margin-top: 20px;">
+              <el-button type="primary" @click="confirmUploadConfig" :loading="loading2">
+                上传配置
+              </el-button>
+            </div>
+          </el-tab-pane>
+          
+          <el-tab-pane label="从链接解析">
+            <el-form>
+              <el-form-item label="订阅链接">
+                <el-input
+                  v-model="loadConfig"
+                  placeholder="请输入已有的订阅链接，将自动解析配置">
+                  <template slot="append">
+                    <el-button @click="confirmLoadConfig" :loading="loading3">
+                      解析
+                    </el-button>
+                  </template>
+                </el-input>
+              </el-form-item>
+            </el-form>
+          </el-tab-pane>
+        </el-tabs>
+      </div>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="closeManageConfig">关闭</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
@@ -844,7 +914,11 @@ export default {
       sampleConfig: remoteConfigSample,
       isAdvancedDrawerOpen: false,
       showSubscribeResult: false,
-      showShortResult: false
+      showShortResult: false,
+      // Custom dialogs
+      dialogCustomBackendVisible: false,
+      customBackendInput: "",
+      dialogManageConfigVisible: false
     };
   },
   created() {
@@ -1422,6 +1496,54 @@ export default {
       if (event.target === event.currentTarget) {
         this.closeAdvancedDrawer();
       }
+    },
+    
+    // Handle backend change - show custom dialog if needed
+    handleBackendChange(value) {
+      if (value === "__custom__") {
+        this.dialogCustomBackendVisible = true;
+        this.customBackendInput = "";
+        // Reset to previous value
+        this.form.customBackend = "https://url.v1.mk";
+      } else {
+        // Get backend version when backend changes
+        this.getBackendVersion();
+      }
+    },
+    
+    // Confirm custom backend
+    confirmCustomBackend() {
+      if (this.customBackendInput.trim() === "") {
+        this.$message.error("请输入自定义后端地址");
+        return;
+      }
+      
+      // Validate URL format
+      try {
+        new URL(this.customBackendInput.trim());
+      } catch (error) {
+        this.$message.error("请输入有效的URL地址");
+        return;
+      }
+      
+      this.form.customBackend = this.customBackendInput.trim();
+      this.dialogCustomBackendVisible = false;
+      this.$message.success("自定义后端地址已设置");
+      this.getBackendVersion();
+    },
+    
+    // Handle remote config change - show manage dialog if needed
+    handleRemoteConfigChange(value) {
+      if (value === "__manage__") {
+        this.dialogManageConfigVisible = true;
+        // Reset to previous value
+        this.form.remoteConfig = "https://raw.githubusercontent.com/cmliu/ACL4SSR/main/Clash/config/ACL4SSR_Online.ini";
+      }
+    },
+    
+    // Close manage config dialog
+    closeManageConfig() {
+      this.dialogManageConfigVisible = false;
     }
   }
 };
