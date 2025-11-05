@@ -598,6 +598,14 @@
     inset 0 2px 4px var(--glass-highlight),
     inset 0 -2px 4px rgba(0, 0, 0, 0.05) !important;
   border: 1.5px solid var(--border-glass) !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+/* Smooth height transition for collapse content */
+.el-collapse-item__wrap {
+  transition: height 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  background: transparent !important;
+  border: none !important;
 }
 
 .el-collapse-item {
@@ -667,18 +675,30 @@
 }
 
 .el-collapse-item__content {
-  background: rgba(255, 255, 255, 0.18) !important;
+  background: rgba(255, 255, 255, 0.16) !important;
   backdrop-filter: blur(30px) saturate(200%) !important;
   padding: var(--spacing-xxl) var(--spacing-xl) !important;
   color: var(--text-primary) !important;
-  border-top: 1px solid var(--border-glass) !important;
   border: 1px solid var(--border-glass) !important;
-  border-radius: 12px !important;
+  border-radius: 24px !important;
   margin: 8px 16px 16px 16px !important;
   box-shadow: 
     inset 0 2px 4px var(--glass-highlight),
     inset 0 -2px 4px rgba(0, 0, 0, 0.05),
-    0 4px 16px rgba(31, 38, 135, 0.1) !important;
+    0 8px 32px rgba(31, 38, 135, 0.15) !important;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  animation: collapseExpand 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+@keyframes collapseExpand {
+  from {
+    opacity: 0;
+    transform: translateY(-10px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }
 
 /* Advanced toggle styling */
@@ -1097,41 +1117,88 @@
   opacity: 0.7 !important;
 }
 
-/* Rule Options Button Group */
+/* Rule Options Button Group - Enhanced Glass Design */
 .rule-options-group {
   display: flex;
   flex-wrap: wrap;
   gap: var(--spacing-md);
-  padding: var(--spacing-md) 0;
+  padding: var(--spacing-lg) !important;
   background: rgba(255, 255, 255, 0.06) !important;
   border-radius: 12px !important;
-  padding: var(--spacing-lg) !important;
   border: 1px solid var(--border-glass-subtle) !important;
-  backdrop-filter: blur(15px) !important;
+  backdrop-filter: blur(15px) saturate(180%) !important;
+  box-shadow: 
+    inset 0 1px 2px rgba(255, 255, 255, 0.08),
+    0 4px 12px rgba(31, 38, 135, 0.08) !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.rule-options-group:hover {
+  background: rgba(255, 255, 255, 0.10) !important;
+  box-shadow: 
+    inset 0 1px 2px rgba(255, 255, 255, 0.12),
+    0 6px 20px rgba(31, 38, 135, 0.12) !important;
+}
+
+.rule-option {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 12px !important;
+  border-radius: 12px !important;
+  border: 1px solid var(--border-glass-subtle) !important;
+  background: rgba(255, 255, 255, 0.04) !important;
+  backdrop-filter: blur(10px) !important;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  cursor: pointer;
+}
+
+.rule-option:hover {
+  background: rgba(255, 255, 255, 0.12) !important;
+  border-color: rgba(0, 122, 255, 0.3) !important;
+  transform: translateY(-2px) scale(1.02) !important;
+  box-shadow: 
+    0 4px 12px rgba(31, 38, 135, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
 }
 
 .rule-options-group .el-checkbox {
   margin: 0 !important;
-  padding: 4px 8px !important;
-  border-radius: 8px !important;
+  padding: 0 !important;
+  border-radius: 12px !important;
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
 }
 
 .rule-options-group .el-checkbox:hover {
-  background: rgba(255, 255, 255, 0.08) !important;
-  transform: translateY(-1px) !important;
+  background: transparent !important;
+  transform: none !important;
 }
 
-/* Focus-visible support for accessibility */
+/* Focus-visible support for accessibility - Enhanced */
 .el-checkbox:focus-visible {
   outline: none !important;
 }
 
 .el-checkbox:focus-visible .el-checkbox__inner {
   box-shadow: 
-    0 0 0 3px rgba(0, 122, 255, 0.15),
+    0 0 0 4px rgba(0, 122, 255, 0.15),
     inset 0 1px 2px rgba(0, 0, 0, 0.05),
     0 2px 8px rgba(31, 38, 135, 0.12) !important;
+  transform: scale(1.05) !important;
+}
+
+.rule-option:focus-visible {
+  outline: none !important;
+  box-shadow: 
+    0 0 0 3px rgba(0, 122, 255, 0.2),
+    0 4px 12px rgba(31, 38, 135, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
+  border-color: rgba(0, 122, 255, 0.5) !important;
+}
+
+.el-collapse-item__header:focus-visible {
+  outline: none !important;
+  box-shadow: inset 0 0 0 2px rgba(0, 122, 255, 0.3) !important;
 }
 
 /* ============================================
@@ -1312,12 +1379,12 @@ body.dark-mode {
    ============================================ */
 
 body.dark-mode .el-collapse-item__content {
-  background: rgba(0, 0, 0, 0.32) !important;
+  background: rgba(0, 0, 0, 0.30) !important;
   border-color: var(--glass-border) !important;
   box-shadow: 
     inset 0 2px 4px rgba(255, 255, 255, 0.08),
     inset 0 -2px 4px rgba(0, 0, 0, 0.15),
-    0 4px 16px rgba(0, 0, 0, 0.25) !important;
+    0 8px 32px rgba(0, 0, 0, 0.35) !important;
 }
 
 body.dark-mode .el-checkbox__inner {
@@ -1342,6 +1409,58 @@ body.dark-mode .rule-options-group {
 
 body.dark-mode .rule-options-group .el-checkbox:hover {
   background: rgba(0, 0, 0, 0.25) !important;
+}
+
+/* Mobile Advanced Drawer Dark Mode */
+body.dark-mode .advanced-drawer {
+  background: rgba(0, 0, 0, 0.6) !important;
+}
+
+body.dark-mode .advanced-drawer-content {
+  background: rgba(0, 0, 0, 0.85) !important;
+  border-color: var(--glass-border) !important;
+  box-shadow: 
+    0 -8px 32px rgba(0, 0, 0, 0.4),
+    inset 0 2px 4px rgba(255, 255, 255, 0.05) !important;
+}
+
+body.dark-mode .advanced-drawer-header {
+  border-bottom-color: var(--glass-border-subtle) !important;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.03) 0%, transparent 100%) !important;
+}
+
+body.dark-mode .advanced-drawer-title {
+  color: var(--text-primary) !important;
+}
+
+body.dark-mode .advanced-drawer-close {
+  background: rgba(255, 255, 255, 0.05) !important;
+  border-color: var(--glass-border-subtle) !important;
+  color: var(--text-secondary) !important;
+}
+
+body.dark-mode .advanced-drawer-close:hover {
+  background: rgba(255, 255, 255, 0.1) !important;
+  color: var(--text-primary) !important;
+}
+
+body.dark-mode .advanced-drawer-handle {
+  background: var(--glass-border) !important;
+}
+
+body.dark-mode .advanced-mobile-toggle {
+  background: rgba(0, 0, 0, 0.3) !important;
+  border-color: var(--glass-border) !important;
+  color: var(--text-primary) !important;
+}
+
+body.dark-mode .advanced-mobile-toggle:hover {
+  background: rgba(0, 0, 0, 0.45) !important;
+  border-color: var(--color-primary-light) !important;
+}
+
+body.dark-mode .advanced-mobile-toggle i {
+  color: var(--color-primary) !important;
 }
 
 body.dark-mode .el-checkbox__input.is-disabled .el-checkbox__inner {

@@ -101,6 +101,7 @@
 
             <div class="advanced-panel">
               <el-form-item label-width="0px">
+                <!-- Desktop Collapse -->
                 <el-collapse>
                   <el-collapse-item>
                     <template #title>
@@ -130,19 +131,41 @@
 
                       <el-form-item label="规则选项">
                         <div class="rule-options-group">
-                          <el-checkbox v-model="form.emoji">使用 Emoji</el-checkbox>
-                          <el-checkbox v-model="form.nodeList">输出节点列表</el-checkbox>
-                          <el-checkbox v-model="form.udp">启用 UDP</el-checkbox>
-                          <el-checkbox v-model="form.tfo">启用 TCP Fast Open</el-checkbox>
-                          <el-checkbox v-model="form.sort">节点排序</el-checkbox>
-                          <el-checkbox v-model="form.expand">展开规则</el-checkbox>
-                          <el-checkbox v-model="form.scv">跳过证书验证</el-checkbox>
-                          <el-checkbox v-model="form.fdn">过滤非法节点</el-checkbox>
+                          <div class="rule-option">
+                            <el-checkbox v-model="form.emoji">使用 Emoji</el-checkbox>
+                          </div>
+                          <div class="rule-option">
+                            <el-checkbox v-model="form.nodeList">输出节点列表</el-checkbox>
+                          </div>
+                          <div class="rule-option">
+                            <el-checkbox v-model="form.udp">启用 UDP</el-checkbox>
+                          </div>
+                          <div class="rule-option">
+                            <el-checkbox v-model="form.tfo">启用 TCP Fast Open</el-checkbox>
+                          </div>
+                          <div class="rule-option">
+                            <el-checkbox v-model="form.sort">节点排序</el-checkbox>
+                          </div>
+                          <div class="rule-option">
+                            <el-checkbox v-model="form.expand">展开规则</el-checkbox>
+                          </div>
+                          <div class="rule-option">
+                            <el-checkbox v-model="form.scv">跳过证书验证</el-checkbox>
+                          </div>
+                          <div class="rule-option">
+                            <el-checkbox v-model="form.fdn">过滤非法节点</el-checkbox>
+                          </div>
                         </div>
                       </el-form-item>
                     </div>
                   </el-collapse-item>
                 </el-collapse>
+
+                <!-- Mobile Toggle Button -->
+                <div class="advanced-mobile-toggle" @click="openAdvancedDrawer">
+                  <i class="el-icon-setting"></i>
+                  高级功能
+                </div>
               </el-form-item>
             </div>
 
@@ -189,6 +212,70 @@
             <!-- Footer content removed for cleaner design -->
           </div>
         </footer>
+      </div>
+    </div>
+
+    <!-- Mobile Advanced Panel Drawer -->
+    <div class="advanced-drawer" :class="{ 'is-open': isAdvancedDrawerOpen }" @click="closeAdvancedDrawerOnBackdrop">
+      <div class="advanced-drawer-content" @click.stop>
+        <div class="advanced-drawer-handle"></div>
+        <div class="advanced-drawer-header">
+          <div class="advanced-drawer-title">
+            <i class="el-icon-setting"></i>
+            高级功能
+          </div>
+          <div class="advanced-drawer-close" @click="closeAdvancedDrawer">
+            <i class="el-icon-close"></i>
+          </div>
+        </div>
+        <div class="advanced-drawer-body">
+          <el-form label-width="108px" label-position="left" class="form-stack">
+            <el-form-item label="包含节点">
+              <el-input v-model="form.includeRemarks" placeholder="包含节点关键字，用|分隔"></el-input>
+            </el-form-item>
+
+            <el-form-item label="排除节点">
+              <el-input v-model="form.excludeRemarks" placeholder="排除节点关键字，用|分隔"></el-input>
+            </el-form-item>
+
+            <el-form-item label="节点命名">
+              <el-input v-model="form.rename" placeholder="节点重命名规则"></el-input>
+            </el-form-item>
+
+            <el-form-item label="更新间隔">
+              <el-input v-model.number="form.interval" placeholder="订阅更新间隔（天）"></el-input>
+            </el-form-item>
+
+            <el-form-item label="规则选项">
+              <div class="rule-options-group">
+                <div class="rule-option">
+                  <el-checkbox v-model="form.emoji">使用 Emoji</el-checkbox>
+                </div>
+                <div class="rule-option">
+                  <el-checkbox v-model="form.nodeList">输出节点列表</el-checkbox>
+                </div>
+                <div class="rule-option">
+                  <el-checkbox v-model="form.udp">启用 UDP</el-checkbox>
+                </div>
+                <div class="rule-option">
+                  <el-checkbox v-model="form.tfo">启用 TCP Fast Open</el-checkbox>
+                </div>
+                <div class="rule-option">
+                  <el-checkbox v-model="form.sort">节点排序</el-checkbox>
+                </div>
+                <div class="rule-option">
+                  <el-checkbox v-model="form.expand">展开规则</el-checkbox>
+                </div>
+                <div class="rule-option">
+                  <el-checkbox v-model="form.scv">跳过证书验证</el-checkbox>
+                </div>
+                <div class="rule-option">
+                  <el-checkbox v-model="form.fdn">过滤非法节点</el-checkbox>
+                </div>
+              </div>
+            </el-form-item>
+          </el-form>
+        </div>
       </div>
     </div>
   </div>
@@ -746,7 +833,8 @@ export default {
       myBot: tgBotLink,
       filterConfig: filterConfigSample,
       scriptConfig: scriptConfigSample,
-      sampleConfig: remoteConfigSample
+      sampleConfig: remoteConfigSample,
+      isAdvancedDrawerOpen: false
     };
   },
   created() {
@@ -1305,6 +1393,23 @@ export default {
         .catch(() => {
           this.$message.error("请求SubConverter版本号返回数据失败，该后端不可用！");
         });
+    },
+    
+    // Mobile Advanced Panel Drawer Methods
+    openAdvancedDrawer() {
+      this.isAdvancedDrawerOpen = true;
+      document.body.style.overflow = 'hidden';
+    },
+    
+    closeAdvancedDrawer() {
+      this.isAdvancedDrawerOpen = false;
+      document.body.style.overflow = '';
+    },
+    
+    closeAdvancedDrawerOnBackdrop(event) {
+      if (event.target === event.currentTarget) {
+        this.closeAdvancedDrawer();
+      }
     }
   }
 };
