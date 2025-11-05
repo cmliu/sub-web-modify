@@ -1494,7 +1494,7 @@ export default {
         this.dialogCustomBackendVisible = true;
         this.customBackendInput = "";
         // Reset to previous value
-        this.form.customBackend = "https://url.v1.mk";
+        this.form.customBackend = "";
       } else {
         // Get backend version when backend changes
         this.getBackendVersion();
