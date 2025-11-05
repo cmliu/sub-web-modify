@@ -10,7 +10,8 @@
 
 .app-container {
   width: 100%;
-  max-width: var(--container-max-width);
+  max-width: 960px;
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
   gap: var(--space-xl);
@@ -64,12 +65,6 @@
   letter-spacing: 2px;
 }
 
-.header-subtitle {
-  font-size: var(--font-size-body);
-  color: var(--text-secondary);
-  margin: 0;
-}
-
 .header-meta {
   display: flex;
   flex-direction: column;
@@ -77,35 +72,16 @@
   align-items: flex-end;
 }
 
-.version-tag,
-.header-link-button {
+.version-tag {
   backdrop-filter: blur(12px) saturate(160%);
   border-radius: var(--radius-button);
 }
 
-.header-link-button {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 10px 16px;
-  font-weight: var(--font-weight-medium);
-  color: var(--color-primary);
-  background: var(--glass-bg-medium);
-  border: 1px solid var(--glass-border);
-  cursor: pointer;
-  transition: var(--transition-fast);
-}
-
-.header-link-button:hover {
-  color: var(--color-primary-dark);
-  transform: translateX(2px);
-}
-
 .glass-main {
-  display: grid;
-  grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+  display: flex;
+  flex-direction: column;
   gap: var(--space-xl);
-  align-items: flex-start;
+  align-items: stretch;
 }
 
 .form-section,
@@ -265,7 +241,7 @@
 
 .glass-footer {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   gap: var(--space-lg);
   color: var(--text-tertiary);
   font-size: var(--font-size-small);
@@ -274,6 +250,8 @@
   backdrop-filter: blur(20px);
   background: var(--glass-bg-medium);
   border: 1px solid var(--glass-border-subtle);
+  min-height: 60px;
+  align-items: center;
 }
 
 .footer-links {
@@ -341,10 +319,6 @@
 }
 
 @media (max-width: 1024px) {
-  .glass-main {
-    grid-template-columns: 1fr;
-  }
-
   .header-meta {
     flex-direction: row;
     align-items: center;
@@ -405,10 +379,8 @@
   }
 
   .glass-footer {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: var(--space-sm);
     padding: var(--space-md) var(--space-lg);
+    min-height: 50px;
   }
 }
 
@@ -416,10 +388,5 @@
   .header-meta {
     flex-direction: column;
     align-items: flex-start;
-  }
-
-  .header-link-button {
-    width: 100%;
-    justify-content: center;
   }
 }

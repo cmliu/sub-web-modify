@@ -8,7 +8,6 @@
       <header class="glass-header glass-card">
         <div class="header-content">
           <h1 class="header-title">订阅转换</h1>
-          <p class="header-subtitle">全新的 iOS 26 大玻璃界面，保留全部转换能力与高级功能</p>
         </div>
         <div class="header-meta">
           <el-tag v-if="backendVersion" size="medium" effect="dark" class="version-tag">
@@ -17,10 +16,6 @@
           <el-tag v-else size="medium" effect="dark" class="version-tag">
             正在检测后端版本…
           </el-tag>
-          <el-button type="default" class="header-link-button" @click="openDownload">
-            <i class="el-icon-download"></i>
-            下载工具合集
-          </el-button>
         </div>
       </header>
 
@@ -186,7 +181,7 @@
         <!-- 底部信息 -->
         <footer class="glass-footer">
           <div class="footer-content">
-            <p>基于 SubConverter 技术构建 | iOS 26 玻璃界面设计</p>
+            <!-- Footer content removed for cleaner design -->
           </div>
         </footer>
       </div>
@@ -208,7 +203,6 @@ const advancedVideo = process.env.VUE_APP_ADVANCED_VIDEO
 const tgBotLink = process.env.VUE_APP_BOT_LINK
 const yglink = process.env.VUE_APP_YOUTUBE_LINK
 const bzlink = process.env.VUE_APP_BILIBILI_LINK
-const downld = 'http://' + window.location.host + '/download.html'
 export default {
   data() {
     return {
@@ -864,9 +858,6 @@ export default {
     },
     gotoYouTuBe() {
       window.open(yglink);
-    },
-    openDownload() {
-      window.open(downld);
     },
     makeUrl() {
       if (this.form.sourceSubUrl === "" || this.form.clientType === "") {
