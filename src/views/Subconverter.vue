@@ -126,14 +126,16 @@
                       </el-form-item>
 
                       <el-form-item label="规则选项">
-                        <el-checkbox v-model="form.emoji">使用 Emoji</el-checkbox>
-                        <el-checkbox v-model="form.nodeList">输出节点列表</el-checkbox>
-                        <el-checkbox v-model="form.udp">启用 UDP</el-checkbox>
-                        <el-checkbox v-model="form.tfo">启用 TCP Fast Open</el-checkbox>
-                        <el-checkbox v-model="form.sort">节点排序</el-checkbox>
-                        <el-checkbox v-model="form.expand">展开规则</el-checkbox>
-                        <el-checkbox v-model="form.scv">跳过证书验证</el-checkbox>
-                        <el-checkbox v-model="form.fdn">过滤非法节点</el-checkbox>
+                        <div class="rule-options-group">
+                          <el-checkbox v-model="form.emoji">使用 Emoji</el-checkbox>
+                          <el-checkbox v-model="form.nodeList">输出节点列表</el-checkbox>
+                          <el-checkbox v-model="form.udp">启用 UDP</el-checkbox>
+                          <el-checkbox v-model="form.tfo">启用 TCP Fast Open</el-checkbox>
+                          <el-checkbox v-model="form.sort">节点排序</el-checkbox>
+                          <el-checkbox v-model="form.expand">展开规则</el-checkbox>
+                          <el-checkbox v-model="form.scv">跳过证书验证</el-checkbox>
+                          <el-checkbox v-model="form.fdn">过滤非法节点</el-checkbox>
+                        </div>
                       </el-form-item>
                     </div>
                   </el-collapse-item>
@@ -955,37 +957,84 @@ export default {
       this.$message.success("定制订阅已复制到剪贴板");
     },
     makeShortUrl() {
+      if (!this.customSubUrl) {
+        this.$message.error("请先生成订阅链接");
+        return;
+      }
+
       let duan =
         this.form.shortType === ""
           ? shortUrlBackend
           : this.form.shortType;
       this.loading1 = true;
-      let data = new FormData();
-      data.append("longUrl", btoa(this.customSubUrl));
-      if (this.customShortSubUrl.trim() != "") {
-        data.append("shortKey", this.customShortSubUrl.trim().indexOf("http") < 0 ? this.customShortSubUrl.trim() : "");
+      
+      try {
+        // Use proper URL encoding instead of btoa for better compatibility
+        let data = new FormData();
+        data.append("longUrl", encodeURIComponent(this.customSubUrl));
+        
+        if (this.customShortSubUrl.trim() != "") {
+          data.append("shortKey", this.customShortSubUrl.trim().indexOf("http") < 0 ? this.customShortSubUrl.trim() : "");
+        }
+        
+        this.$axios
+          .post(duan, data, {
+            headers: {
+              "Content-Type": "multipart/form-data"
+            },
+            timeout: 10000 // 10 second timeout
+          })
+          .then(res => {
+            // Handle different response formats
+            let shortUrl = "";
+            if (res.data && typeof res.data === 'object') {
+              // Try different possible response formats
+              shortUrl = res.data.ShortUrl || res.data.shortUrl || res.data.url || res.data.data || "";
+            } else if (typeof res.data === 'string') {
+              shortUrl = res.data;
+            }
+            
+            if (shortUrl && shortUrl.startsWith('http')) {
+              this.customShortSubUrl = shortUrl;
+              this.$copyText(shortUrl);
+              this.$message.success("短链接已复制到剪贴板");
+            } else {
+              // Fallback: copy the original long URL
+              this.$copyText(this.customSubUrl);
+              this.$message.warning("短链接生成失败，已复制原始订阅链接");
+            }
+          })
+          .catch(error => {
+            console.error('Short URL generation error:', error);
+            // Fallback: copy the original long URL
+            this.$copyText(this.customSubUrl);
+            
+            // Provide more specific error messages
+            if (error.response) {
+              const status = error.response.status;
+              if (status === 429) {
+                this.$message.warning("请求过于频繁，已复制原始订阅链接");
+              } else if (status >= 500) {
+                this.$message.warning("短链服务暂时不可用，已复制原始订阅链接");
+              } else {
+                this.$message.warning("短链接生成失败，已复制原始订阅链接");
+              }
+            } else if (error.code === 'ECONNABORTED') {
+              this.$message.warning("请求超时，已复制原始订阅链接");
+            } else {
+              this.$message.warning("网络连接失败，已复制原始订阅链接");
+            }
+          })
+          .finally(() => {
+            this.loading1 = false;
+          });
+      } catch (error) {
+        console.error('Error in makeShortUrl:', error);
+        // Fallback: copy the original long URL
+        this.$copyText(this.customSubUrl);
+        this.$message.warning("生成短链时出错，已复制原始订阅链接");
+        this.loading1 = false;
       }
-      this.$axios
-        .post(duan, data, {
-          header: {
-            "Content-Type": "application/form-data; charset=utf-8"
-          }
-        })
-        .then(res => {
-          if (res.data.Code === 1 && res.data.ShortUrl !== "") {
-            this.customShortSubUrl = res.data.ShortUrl;
-            this.$copyText(res.data.ShortUrl);
-            this.$message.success("短链接已复制到剪贴板（IOS设备和Safari浏览器不支持自动复制API，需手动点击复制按钮）");
-          } else {
-            this.$message.error("短链接获取失败：" + res.data.Message);
-          }
-        })
-        .catch(() => {
-          this.$message.error("短链接获取失败");
-        })
-        .finally(() => {
-          this.loading1 = false;
-        });
     },
     confirmUploadConfig() {
       this.loading2 = true;

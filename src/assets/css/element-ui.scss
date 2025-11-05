@@ -602,18 +602,25 @@
 }
 
 /* ============================================
-   COLLAPSE COMPONENT - GLASS ACCORDION
+   COLLAPSE COMPONENT - iOS 26 BIG GLASS ACCORDION
    ============================================ */
 
 .el-collapse {
-  border: 1.5px solid var(--border-glass) !important;
-  border-radius: var(--radius-lg) !important;
-  background: transparent !important;
+  border: none !important;
+  border-radius: 24px !important;
+  background: var(--glass-light) !important;
+  backdrop-filter: blur(30px) saturate(200%) !important;
   overflow: hidden !important;
+  box-shadow: 
+    0 8px 32px rgba(31, 38, 135, 0.2),
+    inset 0 2px 4px var(--glass-highlight),
+    inset 0 -2px 4px rgba(0, 0, 0, 0.05) !important;
+  border: 1.5px solid var(--border-glass) !important;
 }
 
 .el-collapse-item {
   border-bottom: 1px solid var(--border-glass-subtle) !important;
+  margin: 0 !important;
 }
 
 .el-collapse-item:last-child {
@@ -621,46 +628,83 @@
 }
 
 .el-collapse-item__header {
-  height: 56px !important;
-  line-height: 56px !important;
-  background: var(--glass-light-secondary) !important;
-  backdrop-filter: blur(15px) !important;
+  height: 64px !important;
+  line-height: 64px !important;
+  background: transparent !important;
+  backdrop-filter: blur(20px) !important;
   color: var(--text-primary) !important;
   border: none !important;
-  font-weight: 500 !important;
-  padding: 0 var(--spacing-lg) !important;
+  font-weight: 600 !important;
+  font-size: var(--font-size-body) !important;
+  padding: 0 var(--spacing-xl) !important;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  border-radius: 0 !important;
+  position: relative !important;
+}
+
+.el-collapse-item__header::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, transparent 0%, rgba(255, 255, 255, 0.05) 100%) !important;
+  opacity: 0;
+  transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
 }
 
 .el-collapse-item__header:hover {
-  background: linear-gradient(135deg, var(--glass-light) 0%, var(--glass-light-secondary) 100%) !important;
+  background: linear-gradient(135deg, rgba(0, 122, 255, 0.08), rgba(10, 132, 255, 0.12)) !important;
   color: var(--primary-color) !important;
-  transform: translateX(4px) !important;
+  transform: translateX(2px) !important;
+}
+
+.el-collapse-item__header:hover::before {
+  opacity: 1 !important;
 }
 
 .el-collapse-item.is-active .el-collapse-item__header {
-  background: linear-gradient(135deg, rgba(0, 122, 255, 0.1), rgba(10, 132, 255, 0.15)) !important;
-  border-color: var(--primary-color) !important;
-  font-weight: 600 !important;
+  background: linear-gradient(135deg, rgba(0, 122, 255, 0.12), rgba(10, 132, 255, 0.18)) !important;
+  color: var(--primary-color) !important;
+  font-weight: 700 !important;
+  box-shadow: inset 0 2px 4px rgba(0, 122, 255, 0.1) !important;
+}
+
+.el-collapse-item.is-active .el-collapse-item__header::before {
+  opacity: 1 !important;
 }
 
 .el-collapse-item__arrow {
   color: var(--text-tertiary) !important;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
-  font-size: 14px !important;
+  font-size: 16px !important;
+  margin-right: var(--spacing-md) !important;
 }
 
 .el-collapse-item.is-active .el-collapse-item__arrow {
   color: var(--primary-color) !important;
-  transform: scale(1.2) !important;
+  transform: scale(1.2) rotate(90deg) !important;
 }
 
 .el-collapse-item__content {
-  background: var(--glass-light-tertiary) !important;
-  backdrop-filter: blur(10px) !important;
-  padding: var(--spacing-xl) !important;
+  background: var(--glass-light-secondary) !important;
+  backdrop-filter: blur(25px) !important;
+  padding: var(--spacing-xxl) var(--spacing-xl) !important;
   color: var(--text-primary) !important;
   border-top: 1px solid var(--border-glass-subtle) !important;
+  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.05) !important;
+}
+
+/* Advanced toggle styling */
+.advanced-toggle {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  font-weight: 600 !important;
+  font-size: var(--font-size-body) !important;
+}
+
+.advanced-toggle i {
+  font-size: 18px !important;
+  color: var(--primary-color) !important;
 }
 
 /* ============================================
@@ -973,6 +1017,102 @@
 }
 
 /* ============================================
+   CHECKBOX COMPONENT - iOS 26 GLASS CHECKBOXES
+   ============================================ */
+
+.el-checkbox {
+  margin-right: var(--spacing-md) !important;
+  margin-bottom: var(--spacing-sm) !important;
+}
+
+.el-checkbox__input {
+  line-height: 1 !important;
+}
+
+.el-checkbox__inner {
+  width: 20px !important;
+  height: 20px !important;
+  border-radius: 6px !important;
+  background: var(--glass-light-secondary) !important;
+  backdrop-filter: blur(15px) !important;
+  border: 2px solid var(--border-glass-subtle) !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  box-shadow: 
+    inset 0 1px 2px rgba(0, 0, 0, 0.05),
+    0 1px 3px rgba(0, 0, 0, 0.05) !important;
+}
+
+.el-checkbox__inner:hover {
+  border-color: var(--primary-color) !important;
+  background: var(--glass-light) !important;
+  transform: scale(1.05) !important;
+}
+
+.el-checkbox__input.is-checked .el-checkbox__inner {
+  background: linear-gradient(135deg, var(--primary-color), rgba(10, 132, 255, 0.9)) !important;
+  border-color: var(--primary-color) !important;
+  box-shadow: 
+    0 2px 8px rgba(0, 122, 255, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
+}
+
+.el-checkbox__input.is-checked .el-checkbox__inner::after {
+  border-color: #fff !important;
+  border-width: 2px !important;
+  height: 10px !important;
+  left: 6px !important;
+  top: 2px !important;
+  width: 5px !important;
+  transform: rotate(45deg) scaleY(1) !important;
+}
+
+.el-checkbox__input.is-indeterminate .el-checkbox__inner::before {
+  background-color: #fff !important;
+  height: 2px !important;
+  top: 8px !important;
+  transform: scale(0.8) !important;
+}
+
+.el-checkbox__label {
+  color: var(--text-primary) !important;
+  font-weight: 500 !important;
+  font-size: var(--font-size-body) !important;
+  padding-left: var(--spacing-sm) !important;
+  transition: color 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.el-checkbox__input.is-checked + .el-checkbox__label {
+  color: var(--primary-color) !important;
+  font-weight: 600 !important;
+}
+
+.el-checkbox__input.is-disabled .el-checkbox__inner {
+  background: var(--glass-light-tertiary) !important;
+  border-color: var(--border-glass-subtle) !important;
+  opacity: 0.6 !important;
+}
+
+.el-checkbox__input.is-disabled .el-checkbox__inner::after {
+  border-color: var(--text-tertiary) !important;
+}
+
+.el-checkbox__input.is-disabled + .el-checkbox__label {
+  color: var(--text-tertiary) !important;
+}
+
+/* Rule Options Button Group */
+.rule-options-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-md) 0;
+}
+
+.rule-options-group .el-checkbox {
+  margin: 0 !important;
+}
+
+/* ============================================
    SWITCH COMPONENT
    ============================================ */
 
@@ -1061,6 +1201,53 @@ body.dark-mode {
 
   .el-select-dropdown__item.selected {
     background: linear-gradient(135deg, rgba(10, 132, 255, 0.25), rgba(0, 122, 255, 0.3)) !important;
+  }
+
+  /* Dark mode collapse styling */
+  .el-collapse {
+    background: var(--glass-light-secondary) !important;
+    border-color: rgba(255, 255, 255, 0.1) !important;
+    box-shadow: 
+      0 8px 32px rgba(0, 0, 0, 0.6),
+      inset 0 2px 4px rgba(255, 255, 255, 0.05),
+      inset 0 -2px 4px rgba(0, 0, 0, 0.2) !important;
+  }
+
+  .el-collapse-item__header {
+    color: var(--text-primary) !important;
+  }
+
+  .el-collapse-item__header:hover {
+    background: linear-gradient(135deg, rgba(10, 132, 255, 0.15), rgba(0, 122, 255, 0.2)) !important;
+  }
+
+  .el-collapse-item.is-active .el-collapse-item__header {
+    background: linear-gradient(135deg, rgba(10, 132, 255, 0.2), rgba(0, 122, 255, 0.25)) !important;
+    box-shadow: inset 0 2px 4px rgba(10, 132, 255, 0.15) !important;
+  }
+
+  .el-collapse-item__content {
+    background: var(--glass-light-tertiary) !important;
+    border-top-color: rgba(255, 255, 255, 0.1) !important;
+  }
+
+  /* Dark mode checkbox styling */
+  .el-checkbox__inner {
+    background: rgba(0, 0, 0, 0.4) !important;
+    border-color: rgba(255, 255, 255, 0.2) !important;
+  }
+
+  .el-checkbox__inner:hover {
+    background: rgba(0, 0, 0, 0.5) !important;
+    border-color: rgba(10, 132, 255, 0.6) !important;
+  }
+
+  .el-checkbox__input.is-checked .el-checkbox__inner {
+    background: linear-gradient(135deg, rgba(10, 132, 255, 0.9), rgba(0, 122, 255, 1)) !important;
+    border-color: rgba(10, 132, 255, 0.8) !important;
+    box-shadow: 
+      0 2px 8px rgba(10, 132, 255, 0.5),
+      inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
   }
 }
 
