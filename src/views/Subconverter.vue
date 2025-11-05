@@ -3,6 +3,9 @@
     <button class="theme-toggle-glass" type="button" @click="change" aria-label="切换主题">
       <i :class="currentTheme === 'dark-mode' ? 'el-icon-sunny' : 'el-icon-moon'"></i>
     </button>
+    <button class="performance-toggle-glass" :class="{ active: performanceMode }" type="button" @click="togglePerformanceMode" aria-label="性能模式">
+      <i :class="performanceMode ? 'el-icon-cpu' : 'el-icon-connection'"></i>
+    </button>
 
     <div class="app-container">
       <header class="glass-header glass-card">
@@ -192,6 +195,8 @@
 </template>
 
 <script>
+import { debounce, throttle, isLowEndDevice, autoEnablePerformanceMode, PerformanceMonitor } from '@/utils/performance';
+
 const project = process.env.VUE_APP_PROJECT
 const configScriptBackend = process.env.VUE_APP_CONFIG_UPLOAD_BACKEND + '/api.php'
 const remoteConfigSample = process.env.VUE_APP_SUBCONVERTER_REMOTE_CONFIG
@@ -210,6 +215,7 @@ export default {
     return {
       backendVersion: "",
       currentTheme: "light-mode",
+      performanceMode: false,
       activeName: 'first',
       // 是否为 PC 端
       isPC: true,
@@ -762,6 +768,24 @@ export default {
       this.anhei();
       this.currentTheme = document.body.className || "light-mode";
       
+      // Initialize performance mode
+      const savedPerfMode = window.localStorage.getItem('performanceMode');
+      if (savedPerfMode === 'true') {
+        this.performanceMode = true;
+        document.body.classList.add('performance-mode');
+      } else if (autoEnablePerformanceMode()) {
+        // Auto-enable on low-end devices
+        this.performanceMode = true;
+        document.body.classList.add('performance-mode');
+        window.localStorage.setItem('performanceMode', 'true');
+      }
+      
+      // Initialize performance monitoring (only in development or if not in performance mode)
+      if (process.env.NODE_ENV === 'development' || !this.performanceMode) {
+        this.performanceMonitor = new PerformanceMonitor();
+        this.performanceMonitor.startMonitoring();
+      }
+      
       // Then get backend version
       this.getBackendVersion();
       
@@ -781,10 +805,16 @@ export default {
       console.error('Error in mounted hook:', error);
     }
   },
+  beforeDestroy() {
+    // Clean up performance monitoring
+    if (this.performanceMonitor) {
+      this.performanceMonitor.stopMonitoring();
+    }
+  },
   methods: {
-    selectChanged() {
+    selectChanged: debounce(function() {
       this.getBackendVersion();
-    },
+    }, 300),
     getUrlParam() {
       let query = window.location.search.substring(1);
       let vars = query.split('&');
@@ -832,6 +862,20 @@ export default {
       }
       this.currentTheme = document.body.className || 'light-mode';
     },
+    togglePerformanceMode() {
+      this.performanceMode = !this.performanceMode;
+      const body = document.body;
+      
+      if (this.performanceMode) {
+        body.classList.add('performance-mode');
+        window.localStorage.setItem('performanceMode', 'true');
+        this.$message.success('性能模式已开启 - UI效果已优化');
+      } else {
+        body.classList.remove('performance-mode');
+        window.localStorage.setItem('performanceMode', 'false');
+        this.$message.info('性能模式已关闭 - 恢复完整视觉效果');
+      }
+    },
     tanchuang() {
       this.$alert(`<div style="text-align:center;font-size:15px"><strong><span style="font-size:20px;color:red">apiurl.v1.mk已被蔷，请更换最新的url.v1.mk</span></strong></br><strong><span style="font-size:20px">本站官方TG交流群：</span><span><a href="https://t.me/feiyangdigital" target="_blank" style="color:red;font-size:20px;text-decoration:none">点击加入</a></span></strong></br><strong><span style="font-size:20px">IEPL高端机场（<span style="color:blue">原生支持奈飞非自制剧、Disney Plus、HBO等各种流媒体，支持Chat-GPT和ISP住宅IP助力Tiktok等跨境贸易使用</span>）：</span><span><a href="https://www.mcwy.org" style="color:red;font-size:20px;text-decoration:none">点击注册</a></span></strong></br><strong><span style="font-size:20px">奈飞、ChatGPT合租（<span style="color:blue">优惠码：feiyang</span>）：</span><span><a href="https://hezu.v1.mk/" style="color:red;font-size:20px;text-decoration:none">点击上车</a></span></strong></br><strong><span style="font-size:20px">115蓝光4K原盘内部资源群：</span><span><a href="https://115.metshop.top" target="_blank" style="color:red;font-size:20px;text-decoration:none">点击查看</a></span></strong></br>本站服务器赞助机场-牧场物语，是一家拥有BGP中继+IEPL企业级内网专线的高端机场，适合各个价位要求的用户，牧场物语采用最新的奈飞非自制剧解决方案，出口随机更换IP，确保尽可能的每个用户可以用上独立IP，以此来稳定解决奈飞非自制剧的封锁，并推出7*24小时奈飞非自制剧节点自动检测系统，用户再也不用自己手动一个个的乱试节点了，目前牧场的新加坡，台湾等节区域点均可做到24H稳定非自制剧观看，支持Chat-GPT和ISP住宅IP助力Tiktok等跨境贸易使用！</br></div>`, '信息面板', {
         confirmButtonText: '确定',
@@ -861,7 +905,7 @@ export default {
     gotoYouTuBe() {
       window.open(yglink);
     },
-    makeUrl() {
+    makeUrl: debounce(function() {
       if (this.form.sourceSubUrl === "" || this.form.clientType === "") {
         this.$message.error("订阅链接与客户端为必填项");
         return false;
@@ -955,7 +999,7 @@ export default {
       }
       this.$copyText(this.customSubUrl);
       this.$message.success("定制订阅已复制到剪贴板");
-    },
+    }, 300),
     makeShortUrl() {
       if (!this.customSubUrl) {
         this.$message.error("请先生成订阅链接");

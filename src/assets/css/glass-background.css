@@ -33,11 +33,12 @@ body::before {
 body::after {
   z-index: -9;
   background: radial-gradient(circle, rgba(255, 255, 255, 0.55) 0%, transparent 70%);
-  filter: blur(80px);
+  filter: blur(40px);
   transform: translate3d(0, 0, 0);
-  animation: orbFloat 18s ease-in-out infinite;
+  animation: orbFloat 12s ease-in-out infinite;
   mix-blend-mode: screen;
-  opacity: 0.45;
+  opacity: 0.35;
+  will-change: transform, opacity;
 }
 
 body.dark-mode::after {
@@ -58,9 +59,10 @@ body.dark-mode::after {
   z-index: -8;
   pointer-events: none;
   background: radial-gradient(circle, rgba(255, 255, 255, 0.35) 0%, transparent 70%);
-  filter: blur(90px);
+  filter: blur(50px);
   mix-blend-mode: screen;
-  animation: orbFloatReverse 22s ease-in-out infinite;
+  animation: orbFloatReverse 15s ease-in-out infinite;
+  will-change: transform, opacity;
 }
 
 body.dark-mode .glass-orb-secondary {
@@ -96,4 +98,34 @@ body.dark-mode .glass-orb-secondary {
   .glass-orb-secondary {
     animation: none;
   }
+}
+
+/* Mobile optimizations */
+@media (max-width: 768px) {
+  body::after {
+    filter: blur(25px);
+    opacity: 0.25;
+  }
+  
+  .glass-orb-secondary {
+    filter: blur(30px);
+    opacity: 0.2;
+  }
+}
+
+/* Performance mode optimizations */
+body.performance-mode {
+  /* Reduce background effects for better performance */
+}
+
+body.performance-mode::after {
+  filter: blur(20px);
+  opacity: 0.2;
+  animation-duration: 20s;
+}
+
+body.performance-mode .glass-orb-secondary {
+  filter: blur(25px);
+  opacity: 0.15;
+  animation-duration: 25s;
 }
