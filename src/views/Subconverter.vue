@@ -177,33 +177,11 @@
                   icon="el-icon-copy-document" :loading="loading3">从URL解析
                 </el-button>
               </el-form-item>
-              <el-form-item label-width="0px" class="layout-form-item-center">
-                <el-button class="layout-button-wide" type="success" icon="el-icon-video-play"
-                  @click="centerDialogVisible = true">视频教程
-                </el-button>
-              </el-form-item>
             </el-form>
           </el-container>
         </el-card>
       </el-col>
     </el-row>
-    <el-dialog title="请选择需要观看的视频教程" :visible.sync="centerDialogVisible" :show-close="false" width="40vh" top="30vh"
-      center>
-      <div label-width="0px" class="layout-form-item-center">
-        <el-button class="layout-button-dialog" type="primary" icon="el-icon-video-play"
-          @click="gotoBasicVideo(); centerDialogVisible = false">基础视频教程
-        </el-button>
-      </div>
-      <div label-width="0px" class="layout-dialog-button-spacing">
-        <el-button class="layout-button-dialog" type="danger" icon="el-icon-video-play"
-          @click="gotoAdvancedVideo(); centerDialogVisible = false">进阶视频教程
-        </el-button>
-      </div>
-      <div label-width="0px" class="layout-dialog-button-spacing">
-        <el-button class="layout-button-dialog" type="warning" icon="el-icon-download" @click="toolsDown">代理工具集合
-        </el-button>
-      </div>
-    </el-dialog>
     <el-dialog :visible.sync="dialogUploadConfigVisible" :show-close="false" :close-on-click-modal="false"
       :close-on-press-escape="false" width="80%">
       <el-tabs v-model="activeName" type="card">
@@ -295,7 +273,6 @@ export default {
   data() {
     return {
       backendVersion: "",
-      centerDialogVisible: false,
       activeName: 'first',
       // 是否为 PC 端
       isPC: true,
@@ -935,31 +912,6 @@ export default {
     },
     gotoYouTuBe() {
       window.open(yglink);
-    },
-    toolsDown() {
-      window.open(downld);
-    },
-    gotoBasicVideo() {
-      this.$alert("别忘了关注友善的肥羊哦！", {
-        type: "warning",
-        confirmButtonText: '确定',
-        customClass: 'msgbox',
-        showClose: false,
-      })
-        .then(() => {
-          window.open(basicVideo);
-        });
-    },
-    gotoAdvancedVideo() {
-      this.$alert("别忘了关注友善的肥羊哦！", {
-        type: "warning",
-        confirmButtonText: '确定',
-        customClass: 'msgbox',
-        showClose: false,
-      })
-        .then(() => {
-          window.open(advancedVideo);
-        });
     },
     makeUrl() {
       if (this.form.sourceSubUrl === "" || this.form.clientType === "") {
