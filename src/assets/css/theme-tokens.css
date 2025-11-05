@@ -1,149 +1,181 @@
-/* iOS 26 Design Token Layer - Light Mode */
-body.light-mode {
-  /* Primary Colors */
-  --primary-color: #007AFF;
+/* iOS 26 Big Glass Design Token System */
+:root {
+  /* Typography */
+  --font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Segoe UI', Roboto, sans-serif;
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  --font-size-h1: 32px;
+  --font-size-h2: 24px;
+  --font-size-h3: 20px;
+  --font-size-body: 16px;
+  --font-size-small: 13px;
+
+  /* Spacing */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  --space-xxl: 48px;
+
+  /* Radii */
+  --radius-sm: 10px;
+  --radius-md: 14px;
+  --radius-lg: 18px;
+  --radius-xl: 24px;
+  --radius-card: 24px;
+  --radius-button: 12px;
+  --radius-input: 12px;
+  --radius-full: 999px;
+
+  /* Layout */
+  --container-max-width: 1200px;
+  --container-medium-width: 960px;
+  --gutter-desktop: 32px;
+  --gutter-tablet: 24px;
+  --gutter-mobile: 16px;
+
+  /* Effects */
+  --glass-blur: blur(30px);
+  --glass-saturate: saturate(200%);
+  --glass-shadow-color: rgba(31, 38, 135, 0.2);
+  --shadow-glass: 0 8px 32px var(--glass-shadow-color), inset 0 2px 4px rgba(255, 255, 255, 0.5);
+  --shadow-glass-hover: 0 16px 48px rgba(31, 38, 135, 0.3), inset 0 2px 4px rgba(255, 255, 255, 0.6);
+  --shadow-soft: 0 4px 16px rgba(17, 25, 40, 0.1);
+  --shadow-ring: 0 0 0 4px rgba(0, 122, 255, 0.12);
+  --transition-fast: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-base: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: all 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Gradients */
+  --gradient-light: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+  --gradient-dark: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+  --gradient-accent-blue: linear-gradient(135deg, rgba(0, 122, 255, 0.75), rgba(10, 132, 255, 0.95));
+  --gradient-accent-pink: linear-gradient(135deg, rgba(255, 85, 127, 0.8), rgba(244, 114, 182, 0.9));
+  --gradient-accent-green: linear-gradient(135deg, rgba(48, 219, 91, 0.8), rgba(36, 199, 76, 0.9));
+
+  /* Accessibility */
+  --focus-ring-color: rgba(0, 122, 255, 0.18);
+  --focus-ring-width: 3px;
+
+  /* Legacy variable aliases for backward compatibility */
+  --primary-color: var(--color-primary);
   --secondary-color: #5AC8FA;
   --tertiary-color: #FFCC00;
-  --destructive-color: #FF3B30;
-  
-  /* Semantic Colors */
-  --bg-primary: #FFFFFF;
-  --bg-secondary: #F5F5F5;
-  --bg-tertiary: #EBEBF0;
-  --text-primary: #000000;
-  --text-secondary: #3C3C43;
-  --text-tertiary: #8E8E93;
-  --border-color: rgba(0, 0, 0, 0.1);
-  
-  /* Glass/Frosted Colors */
-  --glass-light: rgba(255, 255, 255, 0.15);
-  --glass-light-secondary: rgba(255, 255, 255, 0.1);
-  --glass-light-tertiary: rgba(255, 255, 255, 0.08);
-  --glass-highlight: rgba(255, 255, 255, 0.5);
-  --border-glass: rgba(255, 255, 255, 0.3);
-  --border-glass-subtle: rgba(255, 255, 255, 0.2);
-  
-  /* Beautiful iOS-style Gradients */
-  --gradient-background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
-  --gradient-primary: linear-gradient(135deg, #667eea, #764ba2);
-  --gradient-secondary: linear-gradient(135deg, #f093fb, #f5576c);
-  --gradient-tertiary: linear-gradient(135deg, #4facfe, #00f2fe);
-  
-  /* Gradient Color Stops for Radial Blobs */
+  --destructive-color: var(--color-danger);
+  --backdrop-filter: var(--glass-blur) var(--glass-saturate);
+  --font-size-large: var(--font-size-h1);
+  --font-size-title-1: var(--font-size-h2);
+  --font-size-title-2: var(--font-size-h3);
+  --font-size-title-3: 18px;
+  --font-size-headline: 17px;
+  --font-size-callout: 16px;
+  --font-size-subheadline: 15px;
+  --font-size-footnote: 13px;
+  --font-size-caption: 12px;
+  --radius-xs: 6px;
+  --spacing-xs: var(--space-xs);
+  --spacing-sm: var(--space-sm);
+  --spacing-md: 12px;
+  --spacing-lg: 20px;
+  --spacing-xl: 28px;
+  --spacing-xxl: 36px;
+}
+
+body.light-mode {
+  --color-primary: #007AFF;
+  --color-primary-light: rgba(0, 122, 255, 0.12);
+  --color-primary-dark: #0051D5;
+  --color-success: #34C759;
+  --color-warning: #FF9500;
+  --color-danger: #FF3B30;
+  --color-info: #5AC8FA;
+
+  --surface-base: rgba(255, 255, 255, 0.85);
+  --surface-muted: rgba(255, 255, 255, 0.65);
+  --surface-elevated: rgba(255, 255, 255, 0.58);
+  --surface-strong: rgba(255, 255, 255, 0.45);
+  --surface-popover: rgba(255, 255, 255, 0.75);
+  --surface-border: rgba(255, 255, 255, 0.6);
+
+  --glass-bg-light: rgba(255, 255, 255, 0.22);
+  --glass-bg-medium: rgba(255, 255, 255, 0.3);
+  --glass-bg-strong: rgba(255, 255, 255, 0.4);
+  --glass-highlight: rgba(255, 255, 255, 0.65);
+  --glass-border: rgba(255, 255, 255, 0.35);
+  --glass-border-subtle: rgba(255, 255, 255, 0.25);
+
+  --text-primary: rgba(9, 24, 53, 0.92);
+  --text-secondary: rgba(27, 41, 75, 0.72);
+  --text-tertiary: rgba(27, 41, 75, 0.56);
+  --text-placeholder: rgba(27, 41, 75, 0.45);
+  --divider-color: rgba(255, 255, 255, 0.35);
+  --border-color: rgba(190, 194, 208, 0.45);
+
+  --gradient-background: var(--gradient-light);
   --gradient-primary-start: #667eea;
   --gradient-primary-end: #764ba2;
   --gradient-secondary-start: #f093fb;
   --gradient-secondary-end: #f5576c;
-  
-  /* Typography */
-  --font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Segoe UI', Roboto, sans-serif;
-  --font-size-large: 34px;
-  --font-size-title-1: 28px;
-  --font-size-title-2: 22px;
-  --font-size-title-3: 20px;
-  --font-size-headline: 17px;
-  --font-size-body: 16px;
-  --font-size-callout: 16px;
-  --font-size-subheadline: 15px;
-  --font-size-footnote: 13px;
-  --font-size-caption: 12px;
-  
-  /* Shadows */
-  --shadow-small: 0 2px 4px rgba(0, 0, 0, 0.08);
-  --shadow-medium: 0 4px 12px rgba(0, 0, 0, 0.12);
-  --shadow-large: 0 12px 24px rgba(0, 0, 0, 0.15);
-  
-  /* Spacing */
-  --spacing-xs: 4px;
-  --spacing-sm: 8px;
-  --spacing-md: 12px;
-  --spacing-lg: 16px;
-  --spacing-xl: 24px;
-  --spacing-xxl: 32px;
-  
-  /* Border Radius */
-  --radius-xs: 4px;
-  --radius-sm: 8px;
-  --radius-md: 12px;
-  --radius-lg: 16px;
-  --radius-xl: 20px;
-  
-  /* Backdrop */
-  --backdrop-filter: blur(20px) saturate(180%);
-  --backdrop-intensity: 0.8;
+
+  --bg-primary: rgba(255, 255, 255, 0.7);
+  --bg-secondary: rgba(255, 255, 255, 0.55);
+  --bg-tertiary: rgba(255, 255, 255, 0.35);
+
+  /* Legacy aliases */
+  --glass-light: var(--glass-bg-light);
+  --glass-light-secondary: var(--glass-bg-medium);
+  --glass-light-tertiary: var(--glass-bg-strong);
+  --border-glass: var(--glass-border);
+  --border-glass-subtle: var(--glass-border-subtle);
 }
 
-/* iOS 26 Design Token Layer - Dark Mode */
 body.dark-mode {
-  /* Primary Colors */
-  --primary-color: #0A84FF;
-  --secondary-color: #5AC8FA;
-  --tertiary-color: #FFD60A;
-  --destructive-color: #FF453A;
-  
-  /* Semantic Colors */
-  --bg-primary: #1C1C1E;
-  --bg-secondary: #2C2C2E;
-  --bg-tertiary: #3A3A3C;
-  --text-primary: #FFFFFF;
-  --text-secondary: #EBEBF0;
-  --text-tertiary: #8E8E93;
-  --border-color: rgba(255, 255, 255, 0.1);
-  
-  /* Glass/Frosted Colors */
-  --glass-light: rgba(0, 0, 0, 0.3);
-  --glass-light-secondary: rgba(0, 0, 0, 0.25);
-  --glass-light-tertiary: rgba(0, 0, 0, 0.2);
-  --glass-highlight: rgba(255, 255, 255, 0.2);
-  --border-glass: rgba(255, 255, 255, 0.15);
-  --border-glass-subtle: rgba(255, 255, 255, 0.1);
-  
-  /* Beautiful Dark Mode Gradients */
-  --gradient-background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
-  --gradient-primary: linear-gradient(135deg, #667eea, #764ba2);
-  --gradient-secondary: linear-gradient(135deg, #f093fb, #f5576c);
-  --gradient-tertiary: linear-gradient(135deg, #4c1d95, #7c3aed);
-  
-  /* Gradient Color Stops for Radial Blobs */
-  --gradient-primary-start: #667eea;
-  --gradient-primary-end: #764ba2;
-  --gradient-secondary-start: #4c1d95;
-  --gradient-secondary-end: #7c3aed;
-  
-  /* Typography */
-  --font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Segoe UI', Roboto, sans-serif;
-  --font-size-large: 34px;
-  --font-size-title-1: 28px;
-  --font-size-title-2: 22px;
-  --font-size-title-3: 20px;
-  --font-size-headline: 17px;
-  --font-size-body: 16px;
-  --font-size-callout: 16px;
-  --font-size-subheadline: 15px;
-  --font-size-footnote: 13px;
-  --font-size-caption: 12px;
-  
-  /* Shadows */
-  --shadow-small: 0 2px 4px rgba(0, 0, 0, 0.3);
-  --shadow-medium: 0 4px 12px rgba(0, 0, 0, 0.4);
-  --shadow-large: 0 12px 24px rgba(0, 0, 0, 0.5);
-  
-  /* Spacing */
-  --spacing-xs: 4px;
-  --spacing-sm: 8px;
-  --spacing-md: 12px;
-  --spacing-lg: 16px;
-  --spacing-xl: 24px;
-  --spacing-xxl: 32px;
-  
-  /* Border Radius */
-  --radius-xs: 4px;
-  --radius-sm: 8px;
-  --radius-md: 12px;
-  --radius-lg: 16px;
-  --radius-xl: 20px;
-  
-  /* Backdrop */
-  --backdrop-filter: blur(20px) saturate(180%);
-  --backdrop-intensity: 0.9;
+  --color-primary: #0A84FF;
+  --color-primary-light: rgba(10, 132, 255, 0.18);
+  --color-primary-dark: #0060DF;
+  --color-success: #30D158;
+  --color-warning: #FFD60A;
+  --color-danger: #FF453A;
+  --color-info: #64D2FF;
+
+  --surface-base: rgba(16, 16, 28, 0.82);
+  --surface-muted: rgba(30, 30, 45, 0.72);
+  --surface-elevated: rgba(32, 35, 58, 0.63);
+  --surface-strong: rgba(35, 38, 65, 0.54);
+  --surface-popover: rgba(45, 48, 78, 0.72);
+  --surface-border: rgba(255, 255, 255, 0.24);
+
+  --glass-bg-light: rgba(5, 14, 28, 0.42);
+  --glass-bg-medium: rgba(8, 18, 36, 0.55);
+  --glass-bg-strong: rgba(10, 20, 40, 0.65);
+  --glass-highlight: rgba(255, 255, 255, 0.24);
+  --glass-border: rgba(255, 255, 255, 0.2);
+  --glass-border-subtle: rgba(255, 255, 255, 0.12);
+
+  --text-primary: rgba(242, 246, 255, 0.94);
+  --text-secondary: rgba(219, 229, 255, 0.76);
+  --text-tertiary: rgba(189, 200, 230, 0.62);
+  --text-placeholder: rgba(160, 172, 206, 0.5);
+  --divider-color: rgba(255, 255, 255, 0.25);
+  --border-color: rgba(255, 255, 255, 0.24);
+
+  --gradient-background: var(--gradient-dark);
+  --gradient-primary-start: #4c1d95;
+  --gradient-primary-end: #7c3aed;
+  --gradient-secondary-start: #16213e;
+  --gradient-secondary-end: #0f3460;
+
+  --bg-primary: rgba(15, 18, 34, 0.75);
+  --bg-secondary: rgba(19, 23, 42, 0.62);
+  --bg-tertiary: rgba(22, 26, 48, 0.52);
+
+  /* Legacy aliases */
+  --glass-light: var(--glass-bg-light);
+  --glass-light-secondary: var(--glass-bg-medium);
+  --glass-light-tertiary: var(--glass-bg-strong);
+  --border-glass: var(--glass-border);
+  --border-glass-subtle: var(--glass-border-subtle);
 }
