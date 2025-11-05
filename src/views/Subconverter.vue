@@ -112,6 +112,88 @@
                       </div>
                     </template>
 
+                    <!-- 高级选项内容 -->
+                    <div class="advanced-content">
+                      <el-form-item label="包含节点">
+                        <el-input v-model="form.includeRemarks" placeholder="包含节点关键字，用|分隔"></el-input>
+                      </el-form-item>
+
+                      <el-form-item label="排除节点">
+                        <el-input v-model="form.excludeRemarks" placeholder="排除节点关键字，用|分隔"></el-input>
+                      </el-form-item>
+
+                      <el-form-item label="节点命名">
+                        <el-input v-model="form.rename" placeholder="节点重命名规则"></el-input>
+                      </el-form-item>
+
+                      <el-form-item label="更新间隔">
+                        <el-input v-model.number="form.interval" placeholder="订阅更新间隔（天）"></el-input>
+                      </el-form-item>
+
+                      <el-form-item label="规则选项">
+                        <el-checkbox v-model="form.emoji">使用 Emoji</el-checkbox>
+                        <el-checkbox v-model="form.nodeList">输出节点列表</el-checkbox>
+                        <el-checkbox v-model="form.udp">启用 UDP</el-checkbox>
+                        <el-checkbox v-model="form.tfo">启用 TCP Fast Open</el-checkbox>
+                        <el-checkbox v-model="form.sort">节点排序</el-checkbox>
+                        <el-checkbox v-model="form.expand">展开规则</el-checkbox>
+                        <el-checkbox v-model="form.scv">跳过证书验证</el-checkbox>
+                        <el-checkbox v-model="form.fdn">过滤非法节点</el-checkbox>
+                      </el-form-item>
+                    </div>
+                  </el-collapse-item>
+                </el-collapse>
+              </el-form-item>
+            </div>
+
+            <!-- 生成按钮 -->
+            <el-form-item>
+              <el-button type="primary" @click="makeUrl" :loading="loading2" class="glass-button">
+                <i class="el-icon-magic-stick"></i>
+                生成订阅链接
+              </el-button>
+              <el-button type="success" @click="makeShortUrl" :loading="loading1" class="glass-button">
+                <i class="el-icon-link"></i>
+                生成短链接
+              </el-button>
+            </el-form-item>
+
+            <!-- 结果显示 -->
+            <div v-if="customSubUrl" class="result-section">
+              <el-form-item label="订阅链接">
+                <el-input v-model="customSubUrl" readonly>
+                  <template slot="append">
+                    <el-button @click="copyToClipboard(customSubUrl)" icon="el-icon-document-copy">
+                      复制
+                    </el-button>
+                  </template>
+                </el-input>
+              </el-form-item>
+
+              <el-form-item label="短链接" v-if="customShortSubUrl">
+                <el-input v-model="customShortSubUrl" readonly>
+                  <template slot="append">
+                    <el-button @click="copyToClipboard(customShortSubUrl)" icon="el-icon-document-copy">
+                      复制
+                    </el-button>
+                  </template>
+                </el-input>
+              </el-form-item>
+            </div>
+          </el-form>
+        </section>
+
+        <!-- 底部信息 -->
+        <footer class="glass-footer">
+          <div class="footer-content">
+            <p>基于 SubConverter 技术构建 | iOS 26 玻璃界面设计</p>
+          </div>
+        </footer>
+      </div>
+    </div>
+  </div>
+</template>
+
 <script>
 const project = process.env.VUE_APP_PROJECT
 const configScriptBackend = process.env.VUE_APP_CONFIG_UPLOAD_BACKEND + '/api.php'
@@ -763,6 +845,13 @@ export default {
     },
     onCopy() {
       this.$message.success("已复制");
+    },
+    copyToClipboard(text) {
+      this.$copyText(text).then(() => {
+        this.$message.success("复制成功");
+      }).catch(() => {
+        this.$message.error("复制失败");
+      });
     },
     goToProject() {
       window.open(project);
