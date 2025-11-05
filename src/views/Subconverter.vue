@@ -132,7 +132,7 @@ export default {
     return {
       backendVersion: "",
       currentTheme: "light-mode",
-      activeName: 'first'
+      activeName: 'first',
       // 是否为 PC 端
       isPC: true,
       btnBoolean: false,
