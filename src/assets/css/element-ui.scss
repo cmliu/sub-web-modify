@@ -685,12 +685,18 @@
 }
 
 .el-collapse-item__content {
-  background: var(--glass-light-secondary) !important;
-  backdrop-filter: blur(25px) !important;
+  background: rgba(255, 255, 255, 0.18) !important;
+  backdrop-filter: blur(30px) saturate(200%) !important;
   padding: var(--spacing-xxl) var(--spacing-xl) !important;
   color: var(--text-primary) !important;
-  border-top: 1px solid var(--border-glass-subtle) !important;
-  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.05) !important;
+  border-top: 1px solid var(--border-glass) !important;
+  border: 1px solid var(--border-glass) !important;
+  border-radius: 12px !important;
+  margin: 8px 16px 16px 16px !important;
+  box-shadow: 
+    inset 0 2px 4px var(--glass-highlight),
+    inset 0 -2px 4px rgba(0, 0, 0, 0.05),
+    0 4px 16px rgba(31, 38, 135, 0.1) !important;
 }
 
 /* Advanced toggle styling */
@@ -1032,28 +1038,33 @@
 .el-checkbox__inner {
   width: 20px !important;
   height: 20px !important;
-  border-radius: 6px !important;
-  background: var(--glass-light-secondary) !important;
-  backdrop-filter: blur(15px) !important;
-  border: 2px solid var(--border-glass-subtle) !important;
+  border-radius: 12px !important;
+  background: rgba(255, 255, 255, 0.14) !important;
+  backdrop-filter: blur(20px) saturate(180%) !important;
+  border: 1px solid var(--border-glass) !important;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
   box-shadow: 
     inset 0 1px 2px rgba(0, 0, 0, 0.05),
-    0 1px 3px rgba(0, 0, 0, 0.05) !important;
+    0 2px 8px rgba(31, 38, 135, 0.12) !important;
 }
 
 .el-checkbox__inner:hover {
   border-color: var(--primary-color) !important;
-  background: var(--glass-light) !important;
-  transform: scale(1.05) !important;
+  background: rgba(255, 255, 255, 0.22) !important;
+  transform: translateY(-2px) scale(1.05) !important;
+  box-shadow: 
+    inset 0 1px 2px rgba(0, 0, 0, 0.05),
+    0 6px 16px rgba(31, 38, 135, 0.18) !important;
 }
 
 .el-checkbox__input.is-checked .el-checkbox__inner {
   background: linear-gradient(135deg, var(--primary-color), rgba(10, 132, 255, 0.9)) !important;
   border-color: var(--primary-color) !important;
   box-shadow: 
-    0 2px 8px rgba(0, 122, 255, 0.4),
-    inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
+    0 4px 12px rgba(0, 122, 255, 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3),
+    inset 0 -1px 2px rgba(0, 0, 0, 0.1) !important;
+  transform: scale(1.02) !important;
 }
 
 .el-checkbox__input.is-checked .el-checkbox__inner::after {
@@ -1077,8 +1088,9 @@
   color: var(--text-primary) !important;
   font-weight: 500 !important;
   font-size: var(--font-size-body) !important;
-  padding-left: var(--spacing-sm) !important;
+  padding-left: 12px !important;
   transition: color 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  line-height: 1.4 !important;
 }
 
 .el-checkbox__input.is-checked + .el-checkbox__label {
@@ -1087,29 +1099,57 @@
 }
 
 .el-checkbox__input.is-disabled .el-checkbox__inner {
-  background: var(--glass-light-tertiary) !important;
+  background: rgba(255, 255, 255, 0.08) !important;
   border-color: var(--border-glass-subtle) !important;
-  opacity: 0.6 !important;
+  opacity: 0.5 !important;
+  box-shadow: none !important;
 }
 
 .el-checkbox__input.is-disabled .el-checkbox__inner::after {
   border-color: var(--text-tertiary) !important;
+  opacity: 0.7 !important;
 }
 
 .el-checkbox__input.is-disabled + .el-checkbox__label {
   color: var(--text-tertiary) !important;
+  opacity: 0.7 !important;
 }
 
 /* Rule Options Button Group */
 .rule-options-group {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--spacing-sm);
+  gap: var(--spacing-md);
   padding: var(--spacing-md) 0;
+  background: rgba(255, 255, 255, 0.06) !important;
+  border-radius: 12px !important;
+  padding: var(--spacing-lg) !important;
+  border: 1px solid var(--border-glass-subtle) !important;
+  backdrop-filter: blur(15px) !important;
 }
 
 .rule-options-group .el-checkbox {
   margin: 0 !important;
+  padding: 4px 8px !important;
+  border-radius: 8px !important;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.rule-options-group .el-checkbox:hover {
+  background: rgba(255, 255, 255, 0.08) !important;
+  transform: translateY(-1px) !important;
+}
+
+/* Focus-visible support for accessibility */
+.el-checkbox:focus-visible {
+  outline: none !important;
+}
+
+.el-checkbox:focus-visible .el-checkbox__inner {
+  box-shadow: 
+    0 0 0 3px rgba(0, 122, 255, 0.15),
+    inset 0 1px 2px rgba(0, 0, 0, 0.05),
+    0 2px 8px rgba(31, 38, 135, 0.12) !important;
 }
 
 /* ============================================
@@ -1283,6 +1323,55 @@ body.dark-mode {
   .el-textarea__inner {
     font-size: var(--font-size-body) !important;
   }
+}
+
+/* ============================================
+   DARK MODE ENHANCEMENTS
+   ============================================ */
+
+body.dark-mode .el-collapse-item__content {
+  background: rgba(0, 0, 0, 0.32) !important;
+  border-color: var(--glass-border) !important;
+  box-shadow: 
+    inset 0 2px 4px rgba(255, 255, 255, 0.08),
+    inset 0 -2px 4px rgba(0, 0, 0, 0.15),
+    0 4px 16px rgba(0, 0, 0, 0.25) !important;
+}
+
+body.dark-mode .el-checkbox__inner {
+  background: rgba(0, 0, 0, 0.28) !important;
+  border-color: var(--glass-border) !important;
+  box-shadow: 
+    inset 0 1px 2px rgba(255, 255, 255, 0.08),
+    0 2px 8px rgba(0, 0, 0, 0.15) !important;
+}
+
+body.dark-mode .el-checkbox__inner:hover {
+  background: rgba(0, 0, 0, 0.38) !important;
+  box-shadow: 
+    inset 0 1px 2px rgba(255, 255, 255, 0.1),
+    0 6px 16px rgba(0, 0, 0, 0.25) !important;
+}
+
+body.dark-mode .rule-options-group {
+  background: rgba(0, 0, 0, 0.18) !important;
+  border-color: var(--glass-border-subtle) !important;
+}
+
+body.dark-mode .rule-options-group .el-checkbox:hover {
+  background: rgba(0, 0, 0, 0.25) !important;
+}
+
+body.dark-mode .el-checkbox__input.is-disabled .el-checkbox__inner {
+  background: rgba(0, 0, 0, 0.15) !important;
+  border-color: rgba(255, 255, 255, 0.12) !important;
+}
+
+body.dark-mode .el-checkbox:focus-visible .el-checkbox__inner {
+  box-shadow: 
+    0 0 0 3px rgba(10, 132, 255, 0.18),
+    inset 0 1px 2px rgba(255, 255, 255, 0.08),
+    0 2px 8px rgba(0, 0, 0, 0.15) !important;
 }
 
 /* ============================================
