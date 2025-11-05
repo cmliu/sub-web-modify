@@ -41,7 +41,7 @@
             </el-form-item>
 
             <el-form-item label="生成类型">
-              <el-select v-model="form.clientType" filterable placeholder="请选择客户端类型">
+              <el-select v-model="form.clientType" filterable placeholder="请选择客户端类型" disabled>
                 <el-option
                   v-for="(v, k) in options.clientTypes"
                   :key="k"
@@ -49,6 +49,7 @@
                   :value="v">
                 </el-option>
               </el-select>
+              <div class="form-helper-text">通过生成操作自动填充</div>
             </el-form-item>
 
             <el-form-item label="后端地址">
@@ -57,7 +58,7 @@
                 allow-create
                 filterable
                 placeholder="可输入自定义后端地址"
-                @change="selectChanged">
+                disabled>
                 <el-option
                   v-for="(v, k) in options.customBackend"
                   :key="k"
@@ -65,6 +66,7 @@
                   :value="v">
                 </el-option>
               </el-select>
+              <div class="form-helper-text">通过生成操作自动填充</div>
             </el-form-item>
 
             <el-form-item label="短链选择">
@@ -72,7 +74,8 @@
                 v-model="form.shortType"
                 allow-create
                 filterable
-                placeholder="可输入其他可用短链服务">
+                placeholder="可输入其他可用短链服务"
+                disabled>
                 <el-option
                   v-for="(v, k) in options.shortTypes"
                   :key="k"
@@ -80,6 +83,7 @@
                   :value="v">
                 </el-option>
               </el-select>
+              <div class="form-helper-text">通过生成操作自动填充</div>
             </el-form-item>
 
             <el-form-item label="远程配置">
@@ -87,7 +91,8 @@
                 v-model="form.remoteConfig"
                 allow-create
                 filterable
-                placeholder="请选择远程配置">
+                placeholder="请选择远程配置"
+                disabled>
                 <el-option-group v-for="group in options.remoteConfig" :key="group.label" :label="group.label">
                   <el-option
                     v-for="item in group.options"
@@ -97,6 +102,7 @@
                   </el-option>
                 </el-option-group>
               </el-select>
+              <div class="form-helper-text">通过生成操作自动填充</div>
             </el-form-item>
 
             <div class="advanced-panel">
@@ -182,7 +188,7 @@
             </el-form-item>
 
             <!-- 结果显示 -->
-            <div v-if="customSubUrl" class="result-section">
+            <div v-if="showSubscribeResult" class="result-section">
               <el-form-item label="订阅链接">
                 <el-input v-model="customSubUrl" readonly>
                   <template slot="append">
@@ -192,8 +198,10 @@
                   </template>
                 </el-input>
               </el-form-item>
+            </div>
 
-              <el-form-item label="短链接" v-if="customShortSubUrl">
+            <div v-if="showShortResult" class="result-section">
+              <el-form-item label="短链接">
                 <el-input v-model="customShortSubUrl" readonly>
                   <template slot="append">
                     <el-button @click="copyToClipboard(customShortSubUrl)" icon="el-icon-document-copy">
@@ -834,7 +842,9 @@ export default {
       filterConfig: filterConfigSample,
       scriptConfig: scriptConfigSample,
       sampleConfig: remoteConfigSample,
-      isAdvancedDrawerOpen: false
+      isAdvancedDrawerOpen: false,
+      showSubscribeResult: false,
+      showShortResult: false
     };
   },
   created() {
@@ -1087,6 +1097,7 @@ export default {
       }
       this.$copyText(this.customSubUrl);
       this.$message.success("定制订阅已复制到剪贴板");
+      this.showSubscribeResult = true;
     }, 300),
     makeShortUrl() {
       if (!this.customSubUrl) {
@@ -1130,6 +1141,7 @@ export default {
               this.customShortSubUrl = shortUrl;
               this.$copyText(shortUrl);
               this.$message.success("短链接已复制到剪贴板");
+              this.showShortResult = true;
             } else {
               // Fallback: copy the original long URL
               this.$copyText(this.customSubUrl);
