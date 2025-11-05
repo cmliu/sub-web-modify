@@ -1,259 +1,117 @@
 <template>
-  <div>
-    <el-row class="layout-shell">
-      <el-col>
-        <el-card>
-          <div slot="header" class="layout-header">
-            <div class="layout-header-title">订 阅 转 换</div>
+  <div class="subconverter-page">
+    <button class="theme-toggle-glass" type="button" @click="change" aria-label="切换主题">
+      <i :class="currentTheme === 'dark-mode' ? 'el-icon-sunny' : 'el-icon-moon'"></i>
+    </button>
+
+    <div class="app-container">
+      <header class="glass-header glass-card">
+        <div class="header-content">
+          <h1 class="header-title">订阅转换</h1>
+          <p class="header-subtitle">全新的 iOS 26 大玻璃界面，保留全部转换能力与高级功能</p>
+        </div>
+        <div class="header-meta">
+          <el-tag v-if="backendVersion" size="medium" effect="dark" class="version-tag">
+            后端版本：{{ backendVersion }}
+          </el-tag>
+          <el-tag v-else size="medium" effect="dark" class="version-tag">
+            正在检测后端版本…
+          </el-tag>
+          <el-button type="default" class="header-link-button" @click="openDownload">
+            <i class="el-icon-download"></i>
+            下载工具合集
+          </el-button>
+        </div>
+      </header>
+
+      <div class="glass-main">
+        <section class="form-section glass-card">
+          <div class="section-header">
+            <h2 class="section-title">参数配置</h2>
+            <p class="section-subtitle">填写订阅来源与转换参数，系统将自动构建最优输出</p>
           </div>
-          <el-container>
-            <el-form :model="form" label-width="80px" label-position="left" class="layout-form-container">
-              <el-form-item label="订阅链接:">
-                <el-input v-model="form.sourceSubUrl" type="textarea" rows="3"
-                  placeholder="支持各种订阅链接或单节点链接，多个链接每行一个或用 | 分隔" />
-              </el-form-item>
-              <el-form-item label="生成类型:">
-                <el-select v-model="form.clientType" class="layout-select-full">
-                  <el-option v-for="(v, k) in options.clientTypes" :key="k" :label="k" :value="v"></el-option>
-                </el-select>
-              </el-form-item>
-              <el-form-item label="后端地址:">
-                <el-select v-model="form.customBackend" allow-create filterable @change="selectChanged"
-                  placeholder="可输入自己的后端" class="layout-select-full">
-                  <el-option v-for="(v, k) in options.customBackend" :key="k" :label="k" :value="v"></el-option>
-                </el-select>
-              </el-form-item>
-              <el-form-item label="短链选择:">
-                <el-select v-model="form.shortType" allow-create filterable placeholder="可输入其他可用短链API"
-                  class="layout-select-full">
-                  <el-option v-for="(v, k) in options.shortTypes" :key="k" :label="k" :value="v"></el-option>
-                </el-select>
-              </el-form-item>
-              <el-form-item label="远程配置:">
-                <el-select v-model="form.remoteConfig" allow-create filterable placeholder="请选择" class="layout-select-full">
-                  <el-option-group v-for="group in options.remoteConfig" :key="group.label" :label="group.label">
-                    <el-option v-for="item in group.options" :key="item.value" :label="item.label"
-                      :value="item.value"></el-option>
-                  </el-option-group>
-                </el-select>
-              </el-form-item>
+
+          <el-form :model="form" label-width="108px" label-position="left" class="form-stack">
+            <el-form-item label="订阅链接">
+              <el-input
+                v-model="form.sourceSubUrl"
+                type="textarea"
+                :rows="3"
+                class="text-wrap"
+                placeholder="支持各种订阅链接或单节点链接，多个链接使用换行或 | 分隔">
+              </el-input>
+            </el-form-item>
+
+            <el-form-item label="生成类型">
+              <el-select v-model="form.clientType" filterable placeholder="请选择客户端类型">
+                <el-option
+                  v-for="(v, k) in options.clientTypes"
+                  :key="k"
+                  :label="k"
+                  :value="v">
+                </el-option>
+              </el-select>
+            </el-form-item>
+
+            <el-form-item label="后端地址">
+              <el-select
+                v-model="form.customBackend"
+                allow-create
+                filterable
+                placeholder="可输入自定义后端地址"
+                @change="selectChanged">
+                <el-option
+                  v-for="(v, k) in options.customBackend"
+                  :key="k"
+                  :label="k"
+                  :value="v">
+                </el-option>
+              </el-select>
+            </el-form-item>
+
+            <el-form-item label="短链选择">
+              <el-select
+                v-model="form.shortType"
+                allow-create
+                filterable
+                placeholder="可输入其他可用短链服务">
+                <el-option
+                  v-for="(v, k) in options.shortTypes"
+                  :key="k"
+                  :label="k"
+                  :value="v">
+                </el-option>
+              </el-select>
+            </el-form-item>
+
+            <el-form-item label="远程配置">
+              <el-select
+                v-model="form.remoteConfig"
+                allow-create
+                filterable
+                placeholder="请选择远程配置">
+                <el-option-group v-for="group in options.remoteConfig" :key="group.label" :label="group.label">
+                  <el-option
+                    v-for="item in group.options"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value">
+                  </el-option>
+                </el-option-group>
+              </el-select>
+            </el-form-item>
+
+            <div class="advanced-panel">
               <el-form-item label-width="0px">
                 <el-collapse>
                   <el-collapse-item>
-                    <template slot="title">
-                      <el-form-item label="高级功能:" class="layout-advanced-section">
-                        <el-button type="limr" class="layout-advanced-button" icon="el-icon-more-outline">点击显示/隐藏
-                        </el-button>
-                      </el-form-item>
+                    <template #title>
+                      <div class="advanced-toggle">
+                        <i class="el-icon-setting"></i>
+                        高级功能
+                      </div>
                     </template>
-                    <el-form-item label="包含节点:">
-                      <el-input v-model="form.includeRemarks" placeholder="要保留的节点，支持正则" />
-                    </el-form-item>
-                    <el-form-item label="排除节点:">
-                      <el-input v-model="form.excludeRemarks" placeholder="要排除的节点，支持正则" />
-                    </el-form-item>
-                    <el-form-item label="节点命名:">
-                      <el-input v-model="form.rename" placeholder="举例：`a@b``1@2`，|符可用\转义" />
-                    </el-form-item>
-                    <el-form-item label="远程设备:">
-                      <el-input v-model="form.devid" placeholder="用于设置QuantumultX的远程设备ID" />
-                    </el-form-item>
-                    <el-form-item label="更新间隔:">
-                      <el-input v-model="form.interval" placeholder="返用于设置托管配置更新间隔，单位为天" />
-                    </el-form-item>
-                    <el-form-item label="订阅命名:">
-                      <el-input v-model="form.filename" placeholder="返回的订阅文件名，可以在支持文件名的客户端中显示出来" />
-                    </el-form-item>
-                    <el-form-item class="eldiy" label-width="0px">
-                      <el-row type="flex">
-                        <el-col>
-                          <el-checkbox v-model="form.nodeList" label="仅输出节点信息" border></el-checkbox>
-                        </el-col>
-                        <el-popover placement="bottom" v-model="form.extraset">
-                          <el-row :gutter="10">
-                            <el-col :span="12">
-                              <el-checkbox v-model="form.emoji" label="Emoji"></el-checkbox>
-                            </el-col>
-                            <el-col :span="12">
-                              <el-checkbox v-model="form.insert" label="插入默认节点"></el-checkbox>
-                            </el-col>
-                          </el-row>
-                          <el-row :gutter="10">
-                            <el-col :span="12">
-                              <el-checkbox v-model="form.udp" label="启用 UDP"></el-checkbox>
-                            </el-col>
-                            <el-col :span="12">
-                              <el-checkbox v-model="form.xudp" label="启用 XUDP"></el-checkbox>
-                            </el-col>
-                          </el-row>
-                          <el-row :gutter="10">
-                            <el-col :span="12">
-                              <el-checkbox v-model="form.tfo" label="启用 TFO"></el-checkbox>
-                            </el-col>
-                            <el-col :span="12">
-                              <el-checkbox v-model="form.sort" label="基础节点排序"></el-checkbox>
-                            </el-col>
-                          </el-row>
-                          <el-row :gutter="10">
-                            <el-col :span="12">
-                              <el-checkbox v-model="form.tpl.clash.doh" label="Clash.DoH"></el-checkbox>
-                            </el-col>
-                            <el-col :span="12">
-                              <el-checkbox v-model="form.appendType" label="插入节点类型"></el-checkbox>
-                            </el-col>
-                          </el-row>
-                          <el-row :gutter="10">
-                            <el-col :span="12">
-                              <el-checkbox v-model="form.tpl.surge.doh" label="Surge.DoH"></el-checkbox>
-                            </el-col>
-                            <el-col :span="12">
-                              <el-checkbox v-model="form.tls13" label="开启TLS_1.3"></el-checkbox>
-                            </el-col>
-                          </el-row>
-                          <el-row :gutter="10">
-                            <el-col :span="12">
-                              <el-checkbox v-model="form.expand" label="展开规则全文"></el-checkbox>
-                            </el-col>
-                            <el-col :span="12">
-                              <el-checkbox v-model="form.new_name" label="Clash新字段名"></el-checkbox>
-                            </el-col>
-                          </el-row>
-                          <el-row :gutter="10">
-                            <el-col :span="12">
-                              <el-checkbox v-model="form.scv" label="跳过证书验证"></el-checkbox>
-                            </el-col>
-                            <el-col :span="12">
-                              <el-checkbox v-model="form.fdn" label="过滤不支持节点"></el-checkbox>
-                            </el-col>
-                          </el-row>
-                          <el-row :gutter="10">
-                            <el-col :span="12">
-                              <div class="layout-popover-content">
-                                <el-checkbox v-model="form.tpl.singbox.ipv6" label="Sing-Box支持IPV6"></el-checkbox>
-                              </div>
-                            </el-col>
-                          </el-row>
-                          <el-button slot="reference">更多选项</el-button>
-                        </el-popover>
-                      </el-row>
-                    </el-form-item>
-                  </el-collapse-item>
-                </el-collapse>
-              </el-form-item>
-              <div class="layout-divider-spacing"></div>
-              <el-divider content-position="center">
-                <el-button type="zhuti" @click="change">
-                  <i id="rijian" class="el-icon-sunny"></i>
-                  <i id="yejian" class="el-icon-moon"></i>
-                </el-button>
-              </el-divider>
-              <el-form-item label="定制订阅:">
-                <el-input class="copy-content" disabled v-model="customSubUrl">
-                  <el-button slot="append" v-clipboard:copy="customSubUrl" v-clipboard:success="onCopy" ref="copy-btn"
-                    icon="el-icon-document-copy">复制
-                  </el-button>
-                </el-input>
-              </el-form-item>
-              <el-form-item label="订阅短链:">
-                <el-input class="copy-content" v-model="customShortSubUrl" placeholder="输入自定义短链接后缀，点击生成短链接可反复生成">
-                  <el-button slot="append" v-clipboard:copy="customShortSubUrl" v-clipboard:success="onCopy"
-                    ref="copy-btn" icon="el-icon-document-copy">复制
-                  </el-button>
-                </el-input>
-              </el-form-item>
-              <el-form-item label-width="0px" class="layout-form-item-center layout-form-item-spacing">
-                <el-button class="layout-button" type="danger" @click="makeUrl"
-                  :disabled="form.sourceSubUrl.length === 0 || btnBoolean">生成订阅链接
-                </el-button>
-                <el-button class="layout-button" type="danger" @click="makeShortUrl" :loading="loading1"
-                  :disabled="customSubUrl.length === 0">生成短链接
-                </el-button>
-              </el-form-item>
-              <el-form-item label-width="0px" class="layout-form-item-center">
-                <el-button class="layout-button" type="primary" @click="dialogUploadConfigVisible = true"
-                  icon="el-icon-upload" :loading="loading2">自定义配置
-                </el-button>
-                <el-button class="layout-button" type="primary" @click="dialogLoadConfigVisible = true"
-                  icon="el-icon-copy-document" :loading="loading3">从URL解析
-                </el-button>
-              </el-form-item>
-            </el-form>
-          </el-container>
-        </el-card>
-      </el-col>
-    </el-row>
-    <el-dialog :visible.sync="dialogUploadConfigVisible" :show-close="false" :close-on-click-modal="false"
-      :close-on-press-escape="false" width="80%">
-      <el-tabs v-model="activeName" type="card">
-        <el-tab-pane label="远程配置上传" name="first">
-          <el-link type="danger" :href="sampleConfig" class="layout-link-spacing" target="_blank" icon="el-icon-info">
-            参考案例
-          </el-link>
-          <el-form label-position="left">
-            <el-form-item prop="uploadConfig">
-              <el-input v-model="uploadConfig" type="textarea" :autosize="{ minRows: 15, maxRows: 15 }"
-                maxlength="50000" show-word-limit></el-input>
-            </el-form-item>
-          </el-form>
-          <div class="layout-dialog-footer">
-            <el-button type="primary" @click="uploadConfig = ''; dialogUploadConfigVisible = false">取 消</el-button>
-            <el-button type="primary" @click="confirmUploadConfig" :disabled="uploadConfig.length === 0">确 定
-            </el-button>
-          </div>
-        </el-tab-pane>
-        <el-tab-pane label="JS排序节点" name="second">
-          <el-link type="success" :href="scriptConfig" class="layout-link-spacing" target="_blank" icon="el-icon-info">
-            参考案例
-          </el-link>
-          <el-form label-position="left">
-            <el-form-item prop="uploadScript">
-              <el-input v-model="uploadScript" placeholder="本功能暂停使用，如有兴趣，自行去我的GitHub参考sub-web-api项目部署！" type="textarea"
-                :autosize="{ minRows: 15, maxRows: 15 }" maxlength="50000" show-word-limit></el-input>
-            </el-form-item>
-          </el-form>
-          <div class="layout-dialog-footer">
-            <el-button type="primary" @click="uploadScript = ''; dialogUploadConfigVisible = false">取 消</el-button>
-            <el-button type="primary" @click="confirmUploadScript" :disabled="uploadScript.length === 0">确 定
-            </el-button>
-          </div>
-        </el-tab-pane>
-        <el-tab-pane label="JS筛选节点" name="third">
-          <el-link type="warning" :href="filterConfig" class="layout-link-spacing" target="_blank" icon="el-icon-info">
-            参考案例
-          </el-link>
-          <el-form label-position="left">
-            <el-form-item prop="uploadFilter">
-              <el-input v-model="uploadFilter" placeholder="本功能暂停使用，如有兴趣，自行去我的GitHub参考sub-web-api项目部署！" type="textarea"
-                :autosize="{ minRows: 15, maxRows: 15 }" maxlength="50000" show-word-limit></el-input>
-            </el-form-item>
-          </el-form>
-          <div class="layout-dialog-footer">
-            <el-button type="primary" @click="uploadFilter = ''; dialogUploadConfigVisible = false">取 消</el-button>
-            <el-button type="primary" @click="confirmUploadScript" :disabled="uploadFilter.length === 0">确 定
-            </el-button>
-          </div>
-        </el-tab-pane>
-      </el-tabs>
-    </el-dialog>
-    <el-dialog :visible.sync="dialogLoadConfigVisible" :show-close="false" :close-on-click-modal="false"
-      :close-on-press-escape="false" width="80%">
-      <div slot="title">
-        可以从生成的长/短链接中解析信息,填入页面中去
-      </div>
-      <el-form label-position="left">
-        <el-form-item prop="uploadConfig">
-          <el-input v-model="loadConfig" type="textarea" :autosize="{ minRows: 15, maxRows: 15 }" maxlength="5000"
-            show-word-limit></el-input>
-        </el-form-item>
-      </el-form>
-      <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="loadConfig = ''; dialogLoadConfigVisible = false">取 消</el-button>
-        <el-button type="primary" @click="confirmLoadConfig" :disabled="loadConfig.length === 0">确 定
-        </el-button>
-      </div>
-    </el-dialog>
-  </div>
-</template>
+
 <script>
 const project = process.env.VUE_APP_PROJECT
 const configScriptBackend = process.env.VUE_APP_CONFIG_UPLOAD_BACKEND + '/api.php'
@@ -273,7 +131,8 @@ export default {
   data() {
     return {
       backendVersion: "",
-      activeName: 'first',
+      currentTheme: "light-mode",
+      activeName: 'first'
       // 是否为 PC 端
       isPC: true,
       btnBoolean: false,
@@ -823,6 +682,7 @@ export default {
       
       // Initialize theme first
       this.anhei();
+      this.currentTheme = document.body.className || "light-mode";
       
       // Then get backend version
       this.getBackendVersion();
@@ -862,34 +722,37 @@ export default {
       const getLocalTheme = window.localStorage.getItem("localTheme");
       const lightMode = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)');
       const darkMode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)');
-      
+      let applied = '';
+
       if (getLocalTheme && getLocalTheme !== null && getLocalTheme !== "undefined" && getLocalTheme !== "") {
-        document.body.className = getLocalTheme;
-      } //读取localstorage，优先级最高！
-      else {
+        applied = getLocalTheme;
+      } else {
         if (new Date().getHours() >= 19 || new Date().getHours() < 7) {
-          document.body.className = 'dark-mode';
+          applied = 'dark-mode';
         } else {
-          document.body.className = 'light-mode';
-        } //根据当前时间来判断，用来对付QQ等不支持媒体变量查询的浏览器
+          applied = 'light-mode';
+        }
         if (lightMode && lightMode.matches) {
-          document.body.className = 'light-mode';
+          applied = 'light-mode';
         }
         if (darkMode && darkMode.matches) {
-          document.body.className = 'dark-mode';
-        } //根据窗口主题来判断当前主题！
+          applied = 'dark-mode';
+        }
       }
+
+      document.body.className = applied;
+      this.currentTheme = applied || 'light-mode';
     },
     change() {
-      var zhuti = document.body.className;
+      const zhuti = document.body.className;
       if (zhuti === 'light-mode') {
         document.body.className = 'dark-mode';
         window.localStorage.setItem('localTheme', 'dark-mode');
-      }
-      if (zhuti === 'dark-mode') {
+      } else {
         document.body.className = 'light-mode';
         window.localStorage.setItem('localTheme', 'light-mode');
       }
+      this.currentTheme = document.body.className || 'light-mode';
     },
     tanchuang() {
       this.$alert(`<div style="text-align:center;font-size:15px"><strong><span style="font-size:20px;color:red">apiurl.v1.mk已被蔷，请更换最新的url.v1.mk</span></strong></br><strong><span style="font-size:20px">本站官方TG交流群：</span><span><a href="https://t.me/feiyangdigital" target="_blank" style="color:red;font-size:20px;text-decoration:none">点击加入</a></span></strong></br><strong><span style="font-size:20px">IEPL高端机场（<span style="color:blue">原生支持奈飞非自制剧、Disney Plus、HBO等各种流媒体，支持Chat-GPT和ISP住宅IP助力Tiktok等跨境贸易使用</span>）：</span><span><a href="https://www.mcwy.org" style="color:red;font-size:20px;text-decoration:none">点击注册</a></span></strong></br><strong><span style="font-size:20px">奈飞、ChatGPT合租（<span style="color:blue">优惠码：feiyang</span>）：</span><span><a href="https://hezu.v1.mk/" style="color:red;font-size:20px;text-decoration:none">点击上车</a></span></strong></br><strong><span style="font-size:20px">115蓝光4K原盘内部资源群：</span><span><a href="https://115.metshop.top" target="_blank" style="color:red;font-size:20px;text-decoration:none">点击查看</a></span></strong></br>本站服务器赞助机场-牧场物语，是一家拥有BGP中继+IEPL企业级内网专线的高端机场，适合各个价位要求的用户，牧场物语采用最新的奈飞非自制剧解决方案，出口随机更换IP，确保尽可能的每个用户可以用上独立IP，以此来稳定解决奈飞非自制剧的封锁，并推出7*24小时奈飞非自制剧节点自动检测系统，用户再也不用自己手动一个个的乱试节点了，目前牧场的新加坡，台湾等节区域点均可做到24H稳定非自制剧观看，支持Chat-GPT和ISP住宅IP助力Tiktok等跨境贸易使用！</br></div>`, '信息面板', {
@@ -912,6 +775,9 @@ export default {
     },
     gotoYouTuBe() {
       window.open(yglink);
+    },
+    openDownload() {
+      window.open(downld);
     },
     makeUrl() {
       if (this.form.sourceSubUrl === "" || this.form.clientType === "") {

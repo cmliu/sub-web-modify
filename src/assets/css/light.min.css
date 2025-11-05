@@ -1,391 +1,98 @@
-/* Light Mode Theme Styles */
-* {
-  touch-action: manipulation;
-}
-
-html {
-  margin: 0;
-  padding: 0;
-}
-
+/* Light mode refinements for iOS 26 glass interface */
 body.light-mode {
   color: var(--text-primary);
-  background-color: var(--bg-primary);
 }
 
-body.light-mode #app .el-row:not(.el-row--flex) {
-  margin: 0 auto !important;
-  padding: 16px;
-  max-width: 1032px;
+body.light-mode .el-form-item__label,
+body.light-mode .el-checkbox,
+body.light-mode .el-radio,
+body.light-mode .el-popover,
+body.light-mode .el-select,
+body.light-mode .el-table {
+  color: var(--text-secondary);
 }
 
-/* Element UI Input Count */
-body.light-mode .el-input__count {
-  color: #000 !important;
-  background: rgba(255, 255, 255, 0.7) !important;
+body.light-mode .el-divider {
+  background: rgba(255, 255, 255, 0.35);
 }
 
-/* Element UI Select Dropdown */
-body.light-mode .el-select-dropdown {
-  max-width: 80%;
-}
-
-/* Form Styling */
-body.light-mode .eldiy .el-form-item__content {
-  line-height: 44px !important;
-}
-
-body.light-mode .el-checkbox.is-bordered.el-checkbox--small .el-checkbox__label {
-  line-height: 20px !important;
-}
-
-/* Divider */
 body.light-mode .el-divider__text {
-  padding: 0 !important;
-  border: 1px solid rgba(0, 0, 0, 0.4);
-  border-radius: 3px;
+  background: var(--glass-bg-medium);
+  border-radius: var(--radius-button);
+  padding: 6px 16px;
+  color: var(--text-secondary);
 }
 
-/* Link Styles */
-body.light-mode .el-link.is-underline:hover:after {
-  border-bottom: 0 !important;
+body.light-mode .el-dialog,
+body.light-mode .el-message-box,
+body.light-mode .el-popover {
+  background: var(--surface-base) !important;
+  backdrop-filter: blur(24px) saturate(180%);
+  border: 1px solid var(--surface-border) !important;
+  box-shadow: var(--shadow-glass);
 }
 
-body.light-mode .el-link.el-link--primary {
-  color: #333 !important;
-}
-
-body.light-mode .el-link.el-link--primary:hover {
-  color: #000 !important;
-}
-
-body.light-mode .el-link.el-link--default:after,
-body.light-mode .el-link.el-link--primary.is-underline:hover:after,
-body.light-mode .el-link.el-link--primary:after {
-  border-color: #000 !important;
-}
-
-/* Button Styling */
-body.light-mode .el-button--zhuti {
-  font-size: 14px !important;
-  border: 0 !important;
-  width: 54px !important;
-  padding: 0 0 !important;
-}
-
-body.light-mode .el-button--zhuti:active,
-body.light-mode .el-button--zhuti:focus,
-body.light-mode .el-button--zhuti:hover {
-  color: #000 !important;
-  background-color: #fff !important;
-}
-
-body.light-mode .el-row span .el-button {
-  background: 0 0 !important;
-  border: 1px solid #000 !important;
-  color: #000 !important;
-}
-
-body.light-mode .el-row span .el-button:focus,
-body.light-mode .el-row span .el-button:hover {
-  color: #fff !important;
-  background: rgba(0, 0, 0, 0.88) !important;
-}
-
-body.light-mode .dialog-footer .el-button {
-  background: 0 0 !important;
-  border: 1px solid #000 !important;
-  color: #000 !important;
-}
-
-body.light-mode .dialog-footer .el-button:focus,
-body.light-mode .dialog-footer .el-button:hover {
-  color: #fff !important;
-  background: #303133 !important;
-  border: 1px solid #303133 !important;
-}
-
-body.light-mode .dialog-footer .el-button--primary {
-  background-color: #303133 !important;
-  border-color: #303133 !important;
-  color: #fff !important;
-}
-
-body.light-mode .dialog-footer .el-button--primary:focus,
-body.light-mode .dialog-footer .el-button--primary:hover {
-  background: #666 !important;
-  border-color: #666 !important;
-}
-
-body.light-mode .dialog-footer .el-button--primary.is-disabled,
-body.light-mode .dialog-footer .el-button--primary.is-disabled:active,
-body.light-mode .dialog-footer .el-button--primary.is-disabled:focus,
-body.light-mode .dialog-footer .el-button--primary.is-disabled:hover {
-  background: #999 !important;
-  border-color: #999 !important;
-  color: #fff !important;
-}
-
-body.light-mode .el-form-item:last-child .el-button--primary {
-  background-color: #303133 !important;
-  border-color: #303133 !important;
-}
-
-body.light-mode .el-form-item:last-child .el-button--primary:focus,
-body.light-mode .el-form-item:last-child .el-button--primary:hover {
-  background: #666 !important;
-  border-color: #666 !important;
-}
-
-body.light-mode .el-form-item:last-child .el-button--primary.is-disabled {
-  background: #999 !important;
-  border-color: #999 !important;
-}
-
-/* Card Styling */
-body.light-mode .el-card {
-  background: var(--glass-light) !important;
-  backdrop-filter: var(--backdrop-filter) !important;
-  border: 1px solid var(--border-color) !important;
-}
-
-body.light-mode .el-card__header {
-  position: relative;
-  color: var(--text-primary);
+body.light-mode .el-dialog__header,
+body.light-mode .el-dialog__body,
+body.light-mode .el-dialog__footer {
   background: transparent;
+  color: var(--text-secondary);
 }
 
-body.light-mode .el-card__body {
-  background: var(--glass-light);
-  color: #000;
+body.light-mode .el-dialog__title,
+body.light-mode .el-message-box__title {
+  color: var(--text-primary);
+  font-weight: var(--font-weight-semibold);
 }
 
-/* Collapse Styling */
+body.light-mode .el-input__count,
+body.light-mode .el-form-item__label span {
+  color: var(--text-tertiary) !important;
+}
+
+body.light-mode .el-tabs__item.is-active,
+body.light-mode .el-tabs__item:hover {
+  color: var(--color-primary) !important;
+}
+
+body.light-mode .el-link {
+  color: var(--color-primary);
+}
+
+body.light-mode .el-link:hover {
+  color: var(--color-primary-dark);
+}
+
+body.light-mode .el-notification,
+body.light-mode .el-message {
+  background: var(--surface-elevated) !important;
+  border-color: var(--surface-border) !important;
+  color: var(--text-primary);
+  box-shadow: var(--shadow-soft);
+}
+
+body.light-mode .el-popover.el-popper .popper__arrow {
+  border-bottom-color: var(--surface-border) !important;
+}
+
 body.light-mode .el-collapse {
-  border-top: none !important;
-  border-bottom: none !important;
+  border: none !important;
+  background: transparent !important;
 }
 
 body.light-mode .el-collapse-item {
-  border-bottom: none !important;
+  border: none !important;
 }
 
-body.light-mode .el-collapse-item__wrap {
-  background: 0 0 !important;
-  border-bottom: none !important;
+body.light-mode .el-tag {
+  background: rgba(255, 255, 255, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  color: var(--text-secondary);
 }
 
-body.light-mode .el-collapse-item__header {
-  background: 0 0 !important;
-  border-bottom: none !important;
-  height: auto !important;
-}
-
-body.light-mode .el-collapse-item__arrow {
-  display: none !important;
-}
-
-body.light-mode .el-collapse-item__content {
-  padding-bottom: 0 !important;
-}
-
-body.light-mode .el-collapse-item .el-button--limr {
-  background: rgba(255, 255, 255, 0.5) !important;
-  border-radius: 4px !important;
-  height: 32px !important;
-}
-
-body.light-mode .el-collapse-item .el-button--limr:focus,
-body.light-mode .el-collapse-item .el-button--limr:hover,
-body.light-mode .el-collapse-item .el-button--limr:active {
-  color: #606266 !important;
-  border-color: #dcdfe6 !important;
-}
-
-/* Tabs Styling */
-body.light-mode .el-tabs--card > .el-tabs__header .el-tabs__item.is-active {
-  border-bottom-color: transparent;
-}
-
-/* Form Item Styling */
-body.light-mode .el-form-item__label,
-body.light-mode .el-input-group__append,
-body.light-mode .el-input__inner,
-body.light-mode .el-radio,
-body.light-mode .el-select .el-input .el-select__caret,
-body.light-mode .el-textarea__inner {
-  color: #000 !important;
-}
-
-body.light-mode .el-input__inner,
-body.light-mode .el-textarea__inner {
-  background: rgba(255, 255, 255, 0.5) !important;
-}
-
-body.light-mode .el-input.is-active .el-input__inner,
-body.light-mode .el-input__inner:focus,
-body.light-mode .el-select .el-input.is-focus .el-input__inner,
-body.light-mode .el-textarea__inner:focus {
-  border-color: #999 !important;
-}
-
-body.light-mode .el-input.is-disabled .el-input__inner {
-  border: none;
-}
-
-body.light-mode .el-input__inner::-webkit-input-placeholder,
-body.light-mode .el-textarea__inner::-webkit-input-placeholder {
-  color: #777 !important;
-}
-
-body.light-mode .el-input__inner:-moz-placeholder,
-body.light-mode .el-textarea__inner:-moz-placeholder {
-  color: #777 !important;
-}
-
-body.light-mode .el-input__inner::-moz-placeholder,
-body.light-mode .el-textarea__inner::-moz-placeholder {
-  color: #777 !important;
-}
-
-body.light-mode .el-input__inner:-ms-input-placeholder,
-body.light-mode .el-textarea__inner:-ms-input-placeholder {
-  color: #777 !important;
-}
-
-/* Divider Styling */
-body.light-mode .el-divider {
-  background: rgba(0, 0, 0, 0.2) !important;
-}
-
-/* Checkbox Styling */
-body.light-mode .el-checkbox.is-bordered,
-body.light-mode .el-checkbox__inner {
-  border: 1px solid #000 !important;
-}
-
-body.light-mode .el-checkbox {
-  color: #000 !important;
-}
-
-body.light-mode .el-checkbox.is-bordered.is-checked {
-  border-color: #000 !important;
-  background: rgba(0, 0, 0, 0.88) !important;
-  color: #fff !important;
-}
-
-body.light-mode .el-checkbox__input.is-checked .el-checkbox__inner,
-body.light-mode .el-checkbox__input.is-indeterminate .el-checkbox__inner {
-  background-color: #000 !important;
-}
-
-body.light-mode .el-checkbox__input.is-checked + .el-checkbox__label {
-  color: #000 !important;
-}
-
-body.light-mode .el-row--flex .el-checkbox__input.is-checked + .el-checkbox__label {
-  color: #fff !important;
-}
-
-body.light-mode .el-row--flex .el-checkbox__input.is-checked .el-checkbox__inner,
-body.light-mode .el-row--flex .el-checkbox__input.is-indeterminate .el-checkbox__inner {
-  background-color: #000 !important;
-  border-color: #fff !important;
-}
-
-body.light-mode .el-row--flex .el-checkbox__inner:hover {
-  border-color: #000 !important;
-}
-
-body.light-mode .el-row--flex .el-checkbox__input.is-focus .el-checkbox__inner {
-  border-color: #fff !important;
-}
-
-/* Radio Styling */
-body.light-mode .el-radio__inner {
-  border: 1px solid #999 !important;
-}
-
-body.light-mode .el-radio__inner:hover {
-  border-color: #000 !important;
-}
-
-body.light-mode .el-radio__input.is-checked + .el-radio__label {
-  color: #000 !important;
-}
-
-body.light-mode .el-radio__input.is-checked .el-radio__inner {
-  border-color: #000 !important;
-  background: #000 !important;
-}
-
-body.light-mode .el-radio:focus:not(.is-focus):not(:active):not(.is-disabled) .el-radio__inner {
-  box-shadow: none !important;
-}
-
-/* Flex Row Styling */
-body.light-mode .el-row--flex {
-  align-items: center;
-  flex-wrap: wrap;
-  justify-content: space-between;
-}
-
-body.light-mode .el-row--flex .el-col-24 {
-  width: auto !important;
-  margin: 5px 0;
-}
-
-/* Select Styling */
-body.light-mode .el-select-group__title {
-  color: #999 !important;
-  background: rgba(0, 0, 0, 0.1);
-  font-weight: 600;
-}
-
-body.light-mode .el-select-dropdown__item.selected {
-  background: #333 !important;
-  color: #fff !important;
-}
-
-/* Input Group */
-body.light-mode .el-input-group__append button.el-button {
-  border-color: transparent !important;
-  background-color: #303133 !important;
-  color: #fff !important;
-}
-
-/* Notification Styling */
-body.light-mode .el-notification,
-body.light-mode .el-message--error,
-body.light-mode .el-message--success,
-body.light-mode .el-message--warning {
-  background-color: rgba(255, 255, 255, 0.7) !important;
-  border-color: #fff !important;
-}
-
-body.light-mode .el-message-box__headerbtn .el-message-box__close,
-body.light-mode .el-notification__closeBtn,
-body.light-mode .el-notification__title,
-body.light-mode .el-notification__content,
-body.light-mode .el-message .el-icon-error,
-body.light-mode .el-message .el-icon-success,
-body.light-mode .el-notification .el-icon-warning,
-body.light-mode .el-message .el-icon-warning,
-body.light-mode .el-message--error .el-message__content,
-body.light-mode .el-message--success .el-message__content,
-body.light-mode .el-message--warning .el-message__content {
-  color: #000 !important;
-}
-
-/* Popover Styling */
-body.light-mode .el-popover.el-popper .el-row:focus,
-body.light-mode .el-popover.el-popper .popper__arrow {
-  outline: 0;
-}
-
-/* Responsive */
-@media (max-width: 460px) {
-  .msgbox {
-    width: 80% !important;
-  }
+body.light-mode .el-alert,
+body.light-mode .el-result {
+  background: var(--surface-elevated);
+  border-color: var(--surface-border);
+  color: var(--text-secondary);
 }

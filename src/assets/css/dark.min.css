@@ -1,422 +1,96 @@
-/* Dark Mode Theme Styles */
+/* Dark mode refinements for iOS 26 glass interface */
 body.dark-mode {
   color: var(--text-primary);
-  background-color: var(--bg-primary);
+  background-color: rgba(10, 14, 28, 0.9);
 }
 
-/* Tabs */
-body.dark-mode .el-tabs__item:hover,
-body.dark-mode .el-tabs__item.is-active {
-  color: #409eff;
-}
-
-body.dark-mode .el-tabs__item,
-body.dark-mode .el-dialog__title {
-  color: #fff;
-}
-
-/* Card Styling */
-body.dark-mode .el-card {
-  background: var(--glass-light) !important;
-  backdrop-filter: var(--backdrop-filter) !important;
-  border: 1px solid var(--border-color) !important;
-}
-
-/* Popover */
+body.dark-mode .el-form-item__label,
+body.dark-mode .el-checkbox,
+body.dark-mode .el-radio,
+body.dark-mode .el-select,
+body.dark-mode .el-table,
 body.dark-mode .el-popover {
-  background: #000 !important;
+  color: var(--text-secondary);
 }
 
-/* Dialog */
-body.dark-mode .el-dialog {
-  border: 1px solid #313131 !important;
+body.dark-mode .el-divider {
+  background: rgba(255, 255, 255, 0.2);
 }
 
-body.dark-mode .el-message-box__title,
-body.dark-mode .el-message-box__content {
-  color: #fff !important;
+body.dark-mode .el-divider__text {
+  background: rgba(22, 26, 48, 0.6);
+  border-radius: var(--radius-button);
+  padding: 6px 16px;
+  color: var(--text-secondary);
 }
 
-body.dark-mode .el-collapse-item__content {
-  padding-bottom: 0 !important;
+body.dark-mode .el-dialog,
+body.dark-mode .el-message-box,
+body.dark-mode .el-popover {
+  background: var(--surface-elevated) !important;
+  backdrop-filter: blur(26px) saturate(200%);
+  border: 1px solid var(--surface-border) !important;
+  box-shadow: var(--shadow-glass);
 }
 
-body.dark-mode .el-message-box {
-  background-color: #000 !important;
-}
-
+body.dark-mode .el-dialog__header,
 body.dark-mode .el-dialog__body,
-body.dark-mode .el-dialog__footer,
-body.dark-mode .el-dialog__header {
-  background-color: #000 !important;
-  color: #fff !important;
+body.dark-mode .el-dialog__footer {
+  background: transparent;
+  color: var(--text-secondary);
 }
 
-/* Input Count */
-body.dark-mode .el-input__count {
-  color: #fff !important;
-  background: rgba(128, 128, 128, 0.7) !important;
+body.dark-mode .el-dialog__title,
+body.dark-mode .el-message-box__title {
+  color: var(--text-primary);
+  font-weight: var(--font-weight-semibold);
 }
 
-/* Message Box */
-body.dark-mode .el-message-box__headerbtn .el-message-box__close {
-  color: #fff !important;
+body.dark-mode .el-input__count,
+body.dark-mode .el-form-item__label span {
+  color: var(--text-tertiary) !important;
 }
 
-/* Textarea */
-body.dark-mode .el-textarea {
-  background-color: rgba(255, 255, 255, 0) !important;
-  color: #fff !important;
+body.dark-mode .el-tabs__item.is-active,
+body.dark-mode .el-tabs__item:hover {
+  color: var(--color-primary) !important;
 }
 
-/* Notifications and Messages */
-body.dark-mode .el-notification__closeBtn,
-body.dark-mode .el-notification__title,
-body.dark-mode .el-notification__content,
-body.dark-mode .el-message .el-icon-error,
-body.dark-mode .el-message .el-icon-success,
-body.dark-mode .el-notification .el-icon-warning,
-body.dark-mode .el-message .el-icon-warning,
-body.dark-mode .el-message--error .el-message__content,
-body.dark-mode .el-message--success .el-message__content,
-body.dark-mode .el-message--warning .el-message__content {
-  color: #fff !important;
+body.dark-mode .el-link {
+  color: var(--color-primary);
+}
+
+body.dark-mode .el-link:hover {
+  color: #5aa8ff;
 }
 
 body.dark-mode .el-notification,
-body.dark-mode .el-message--error,
-body.dark-mode .el-message--success,
-body.dark-mode .el-message--warning {
-  background-color: rgba(0, 0, 0, 0.7) !important;
-  border-color: #fff !important;
+body.dark-mode .el-message {
+  background: var(--surface-strong) !important;
+  border-color: var(--surface-border) !important;
+  color: var(--text-primary);
+  box-shadow: var(--shadow-soft);
 }
 
-/* Button Styling */
-body.dark-mode .el-button--zhuti {
-  color: #fff !important;
-  font-size: 14px !important;
-  border: 0 !important;
-  width: 54px !important;
-  padding: 0 0 !important;
-  background-color: #000 !important;
-}
-
-body.dark-mode .el-button--zhuti:active,
-body.dark-mode .el-button--zhuti:focus,
-body.dark-mode .el-button--zhuti:hover {
-  color: #fff !important;
-}
-
-body.dark-mode,
-body.dark-mode .el-button--danger,
-body.dark-mode .el-button--primary,
-body.dark-mode .el-button--success,
-body.dark-mode .el-button--warning {
-  background-color: #000 !important;
-}
-
-/* Collapse */
-body.dark-mode .el-collapse-item .el-button--limr {
-  color: #fff !important;
-  background: rgba(255, 255, 255, 0.5) !important;
-  border-radius: 4px !important;
-  height: 32px !important;
-}
-
-body.dark-mode .el-collapse-item .el-button--limr:focus,
-body.dark-mode .el-collapse-item .el-button--limr:hover,
-body.dark-mode .el-collapse-item .el-button--limr:active {
-  color: #fff !important;
-  border-color: #dcdfe6 !important;
-}
-
-body.dark-mode .el-button--limr:focus,
-body.dark-mode .el-button--limr:hover {
-  color: #fff !important;
-  border-color: #dcdfe6 !important;
-}
-
-body.dark-mode .el-collapse-item__wrap {
-  background: 0 0 !important;
-  border-bottom: none !important;
-}
-
-body.dark-mode .el-collapse {
-  border-top: none !important;
-  border-bottom: none !important;
-}
-
-body.dark-mode .el-collapse-item__header {
-  background: 0 0 !important;
-  border-bottom: none !important;
-  height: auto !important;
-}
-
-body.dark-mode .el-collapse-item__arrow {
-  display: none !important;
-}
-
-/* Card Header and Body */
-body.dark-mode .el-card__header {
-  background: rgba(0, 0, 0, 0.8) !important;
-  position: relative;
-  color: #fff;
-}
-
-body.dark-mode .el-card__body {
-  background: rgba(0, 0, 0, 0.8);
-  color: #000;
-}
-
-/* Form Items */
-body.dark-mode .el-checkbox,
-body.dark-mode .el-form-item__label,
-body.dark-mode .el-input-group__append,
-body.dark-mode .el-input__inner,
-body.dark-mode .el-radio,
-body.dark-mode .el-select .el-input .el-select__caret,
-body.dark-mode .el-textarea__inner {
-  color: #fff !important;
-}
-
-/* Divider */
-body.dark-mode .el-divider {
-  background: rgba(255, 255, 255, 0.5) !important;
-}
-
-body.dark-mode .el-divider__text {
-  background-color: #000 !important;
-  color: #fff !important;
-}
-
-/* Input and Textarea */
-body.dark-mode .el-input__inner,
-body.dark-mode .el-textarea__inner {
-  background: rgba(255, 255, 255, 0.5) !important;
-}
-
-body.dark-mode .el-input.is-active .el-input__inner,
-body.dark-mode .el-input__inner:focus,
-body.dark-mode .el-select .el-input.is-focus .el-input__inner,
-body.dark-mode .el-textarea__inner:focus {
-  border-color: #999 !important;
-}
-
-/* Checkbox */
-body.dark-mode .el-checkbox.is-bordered,
-body.dark-mode .el-checkbox__inner {
-  border: 1px solid #fff !important;
-}
-
-body.dark-mode .el-checkbox.is-bordered.is-checked {
-  border-color: #fff !important;
-}
-
-body.dark-mode .el-checkbox__input.is-checked .el-checkbox__inner,
-body.dark-mode .el-checkbox__input.is-indeterminate .el-checkbox__inner {
-  background-color: #000 !important;
-}
-
-body.dark-mode .el-checkbox__input.is-checked + .el-checkbox__label {
-  color: #fff !important;
-}
-
-body.dark-mode .el-row--flex .el-checkbox__input.is-checked + .el-checkbox__label {
-  color: #fff !important;
-}
-
-body.dark-mode .el-row--flex .el-checkbox__input.is-checked .el-checkbox__inner,
-body.dark-mode .el-row--flex .el-checkbox__input.is-indeterminate .el-checkbox__inner {
-  background-color: #000 !important;
-  border-color: #fff !important;
-}
-
-body.dark-mode .el-row--flex .el-checkbox__inner:hover {
-  border-color: #000 !important;
-}
-
-body.dark-mode .el-row--flex .el-checkbox__input.is-focus .el-checkbox__inner {
-  border-color: #fff !important;
-}
-
-body.dark-mode .el-checkbox.is-bordered.is-checked {
-  background: rgba(0, 0, 0, 0.88) !important;
-  color: #fff !important;
-}
-
-/* Radio */
-body.dark-mode .el-radio__input.is-checked + .el-radio__label {
-  color: #000 !important;
-}
-
-body.dark-mode .el-radio__input.is-checked .el-radio__inner {
-  border-color: #000 !important;
-  background: #000 !important;
-}
-
-body.dark-mode .el-radio:focus:not(.is-focus):not(:active):not(.is-disabled) .el-radio__inner {
-  box-shadow: none !important;
-}
-
-body.dark-mode .el-radio__inner:hover {
-  border-color: #000 !important;
-}
-
-body.dark-mode .el-radio__inner {
-  border: 1px solid #999 !important;
-}
-
-/* Buttons in Rows */
-body.dark-mode .el-row span .el-button {
-  background: 0 0 !important;
-  border: 1px solid #fff !important;
-  color: #fff !important;
-}
-
-body.dark-mode .el-row span .el-button:focus,
-body.dark-mode .el-row span .el-button:hover {
-  color: #fff !important;
-  background: rgba(0, 0, 0, 0.88) !important;
-}
-
-/* Divider Text */
-body.dark-mode .el-divider__text {
-  border: 1px solid rgba(0, 0, 0, 0.4);
-  border-radius: 3px;
-}
-
-/* Select Dropdown */
-body.dark-mode .el-select-dropdown__item.selected {
-  background: #333 !important;
-  color: #fff !important;
-}
-
-body.dark-mode .el-input.is-disabled .el-input__inner {
-  border: none;
-}
-
-/* Primary Button */
-body.dark-mode .el-form-item:last-child .el-button--primary {
-  background-color: #303133 !important;
-  border-color: #303133 !important;
-}
-
-body.dark-mode .el-form-item:last-child .el-button--primary:focus,
-body.dark-mode .el-form-item:last-child .el-button--primary:hover {
-  background: #666 !important;
-  border-color: #666 !important;
-}
-
-body.dark-mode .el-form-item:last-child .el-button--primary.is-disabled {
-  background: #999 !important;
-  border-color: #999 !important;
-}
-
-/* Flex Row */
-body.dark-mode .el-row--flex {
-  align-items: center;
-  flex-wrap: wrap;
-  justify-content: space-between;
-}
-
-body.dark-mode .el-row--flex .el-col-24 {
-  width: auto !important;
-  margin: 5px 0;
-}
-
-/* Select Group Title */
-body.dark-mode .el-select-group__title {
-  color: #999 !important;
-  background: rgba(0, 0, 0, 0.1);
-  font-weight: 600;
-}
-
-/* Input Group Append */
-body.dark-mode .el-input-group__append button.el-button {
-  border-color: #303133 !important;
-  background-color: #303133 !important;
-  color: #fff !important;
-}
-
-body.dark-mode .el-input-group__append,
-body.dark-mode .el-input-group__prepend {
-  border-color: #303133 !important;
-  background-color: #303133 !important;
-}
-
-/* Input Placeholder */
-body.dark-mode .el-input__inner::-webkit-input-placeholder,
-body.dark-mode .el-textarea__inner::-webkit-input-placeholder {
-  color: rgba(255, 255, 255, 0.6) !important;
-}
-
-body.dark-mode .el-input__inner:-moz-placeholder,
-body.dark-mode .el-textarea__inner:-moz-placeholder {
-  color: rgba(255, 255, 255, 0.6) !important;
-}
-
-body.dark-mode .el-input__inner::-moz-placeholder,
-body.dark-mode .el-textarea__inner::-moz-placeholder {
-  color: rgba(255, 255, 255, 0.6) !important;
-}
-
-body.dark-mode .el-input__inner:-ms-input-placeholder,
-body.dark-mode .el-textarea__inner:-ms-input-placeholder {
-  color: rgba(255, 255, 255, 0.6) !important;
-}
-
-/* Popover and Arrow */
-body.dark-mode .el-popover.el-popper .el-row:focus,
 body.dark-mode .el-popover.el-popper .popper__arrow {
-  outline: 0;
+  border-bottom-color: rgba(36, 44, 72, 0.9) !important;
 }
 
-/* Dialog Footer Buttons */
-body.dark-mode .dialog-footer .el-button {
-  background: 0 0 !important;
-  border: 1px solid #000 !important;
-  color: #000 !important;
+body.dark-mode .el-collapse,
+body.dark-mode .el-collapse-item {
+  border: none !important;
+  background: transparent !important;
 }
 
-body.dark-mode .dialog-footer .el-button:focus,
-body.dark-mode .dialog-footer .el-button:hover {
-  color: #fff !important;
-  background: #303133 !important;
-  border: 1px solid #303133 !important;
+body.dark-mode .el-tag {
+  background: rgba(30, 38, 75, 0.65);
+  border: 1px solid rgba(124, 144, 255, 0.35);
+  color: var(--text-secondary);
 }
 
-body.dark-mode .dialog-footer .el-button--primary {
-  background-color: #303133 !important;
-  border-color: #303133 !important;
-  color: #fff !important;
-}
-
-body.dark-mode .dialog-footer .el-button--primary:focus,
-body.dark-mode .dialog-footer .el-button--primary:hover {
-  background: #666 !important;
-  border-color: #666 !important;
-}
-
-body.dark-mode .dialog-footer .el-button--primary.is-disabled,
-body.dark-mode .dialog-footer .el-button--primary.is-disabled:active,
-body.dark-mode .dialog-footer .el-button--primary.is-disabled:focus,
-body.dark-mode .dialog-footer .el-button--primary.is-disabled:hover {
-  background: #999 !important;
-  border-color: #999 !important;
-  color: #fff !important;
-}
-
-/* Links */
-body.dark-mode .el-link.el-link--primary {
-  color: #fff !important;
-}
-
-body.dark-mode .el-link.el-link--primary:hover {
-  color: #fff !important;
-}
-
-body.dark-mode .el-link.el-link--default:after,
-body.dark-mode .el-link.el-link--primary.is-underline:hover:after,
-body.dark-mode .el-link.el-link--primary:after {
-  border-color: #000 !important;
+body.dark-mode .el-alert,
+body.dark-mode .el-result {
+  background: rgba(18, 24, 44, 0.68);
+  border-color: rgba(124, 144, 255, 0.3);
+  color: var(--text-secondary);
 }
