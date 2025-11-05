@@ -81,7 +81,7 @@
                   :value="v">
                 </el-option>
               </el-select>
-              <div class="form-helper-text" v-if="form.shortType && form.shortType.includes('v1.mk')">该服务可能需要token</div>
+              <div class="form-helper-text" v-if="form.shortType && form.shortType.includes('v1.mk')"></div>
             </el-form-item>
 
             <el-form-item label="远程配置">
@@ -852,7 +852,7 @@ export default {
       form: {
         sourceSubUrl: "",
         clientType: "",
-        customBackend: "https://url.v1.mk",
+        customBackend: "https://subapi.990032.xyz",
         shortType: "https://v1.mk/short",
         remoteConfig: "https://raw.githubusercontent.com/cmliu/ACL4SSR/main/Clash/config/ACL4SSR_Online.ini",
         excludeRemarks: "",
