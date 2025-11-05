@@ -58,7 +58,7 @@ sed -n '372,376p' src/views/Subconverter.vue
 
 # Verify helper text
 sed -n '84,86p' src/views/Subconverter.vue
-# Expected: "注意：若生成失败（CORS/限流/服务异常）..."
+# Expected: "注意：若生成失败请切换其他短链！"
 
 # Verify adapter usage
 sed -n '1254,1259p' src/views/Subconverter.vue
@@ -124,7 +124,7 @@ wc -l src/utils/shortlink-adapter.js
 #### Helper Text
 - [ ] Select any short-link provider
 - [ ] Expected: Helper text appears below dropdown
-- [ ] Expected: Text reads "注意：若生成失败（CORS/限流/服务异常），系统将自动回退复制原始链接"
+- [ ] Expected: Text reads "注意：若生成失败请切换其他短链！"
 
 #### Result Display
 - [ ] Generate short link successfully

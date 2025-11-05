@@ -110,7 +110,7 @@ catch (error) {
 #### Added Helper Text:
 ```html
 <div class="form-helper-text" v-if="form.shortType">
-  注意：若生成失败（CORS/限流/服务异常），系统将自动回退复制原始链接
+  注意：若生成失败请切换其他短链！
 </div>
 ```
 
