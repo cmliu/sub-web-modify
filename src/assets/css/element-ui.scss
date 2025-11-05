@@ -49,6 +49,15 @@
   font-family: var(--font-family) !important;
 }
 
+/* Form Helper Text */
+.form-helper-text {
+  font-size: 12px;
+  color: var(--text-secondary);
+  margin-top: 4px;
+  line-height: 1.4;
+  opacity: 0.8;
+}
+
 .el-form-item {
   margin-bottom: var(--spacing-lg) !important;
 }
@@ -521,6 +530,36 @@
 .el-dialog__wrapper {
   backdrop-filter: blur(4px) !important;
   background: rgba(0, 0, 0, 0.3) !important;
+}
+
+/* Config Management Dialog */
+.config-management {
+  padding: var(--spacing-md) 0;
+}
+
+.config-management .el-tabs__content {
+  padding: var(--spacing-lg) 0;
+}
+
+.config-management .el-form-item {
+  margin-bottom: var(--spacing-lg) !important;
+}
+
+.config-management .el-textarea__inner {
+  background: var(--glass-light-secondary) !important;
+  border: 1px solid var(--border-glass) !important;
+  color: var(--text-primary) !important;
+  backdrop-filter: blur(10px) !important;
+  border-radius: var(--radius-md) !important;
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace !important;
+  font-size: 13px !important;
+  line-height: 1.5 !important;
+}
+
+.config-management .el-textarea__inner:focus {
+  border-color: var(--primary-color) !important;
+  box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.1) !important;
+  background: var(--glass-light) !important;
 }
 
 /* ============================================
@@ -1290,6 +1329,22 @@ body.dark-mode {
 
   .el-select-dropdown__item.selected {
     background: linear-gradient(135deg, rgba(10, 132, 255, 0.25), rgba(0, 122, 255, 0.3)) !important;
+  }
+
+  /* Dark mode config management dialog */
+  .config-management .el-textarea__inner {
+    background: rgba(0, 0, 0, 0.4) !important;
+    border-color: rgba(255, 255, 255, 0.15) !important;
+    color: var(--text-primary) !important;
+  }
+
+  .config-management .el-textarea__inner:focus {
+    background: rgba(0, 0, 0, 0.5) !important;
+    border-color: rgba(10, 132, 255, 0.6) !important;
+    box-shadow: 
+      0 0 0 4px rgba(10, 132, 255, 0.15),
+      inset 0 1px 2px rgba(255, 255, 255, 0.1),
+      0 4px 12px rgba(10, 132, 255, 0.2) !important;
   }
 
   /* Dark mode collapse styling */
