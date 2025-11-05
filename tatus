@@ -1,0 +1,180 @@
+[33mfd33db9[m[33m ([m[1;31morigin/feat/ios26-glass-ui-fix-copy-remove-video-optimize[m[33m)[m feat(ui): comprehensive iOS 26 glass UI redesign and major visual overhaul
+[1mdiff --git a/src/assets/css/element-ui.scss b/src/assets/css/element-ui.scss[m
+[1mindex bcbf58b..2e7191f 100755[m
+[1m--- a/src/assets/css/element-ui.scss[m
+[1m+++ b/src/assets/css/element-ui.scss[m
+[36m@@ -9,30 +9,41 @@[m
+ }[m
+ [m
+ /* ============================================[m
+[31m-   CARD COMPONENT[m
+[32m+[m[32m   CARD COMPONENT - BIG GLASS EFFECT[m
+    ============================================ */[m
+ [m
+ .el-card {[m
+   background: var(--glass-light) !important;[m
+[31m-  backdrop-filter: var(--backdrop-filter) !important;[m
+[31m-  border: 1px solid var(--border-color) !important;[m
+[31m-  border-radius: var(--radius-lg) !important;[m
+[31m-  box-shadow: var(--shadow-small) !important;[m
+[31m-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;[m
+[32m+[m[32m  backdrop-filter: blur(30px) saturate(200%) !important;[m
+[32m+[m[32m  border: 1.5px solid var(--border-glass) !important;[m
+[32m+[m[32m  border-radius: 24px !important;[m
+[32m+[m[32m  box-shadow:[m[41m [m
+[32m+[m[32m    0 8px 32px rgba(31, 38, 135, 0.2),[m
+[32m+[m[32m    inset 0 2px 4px var(--glass-highlight),[m
+[32m+[m[32m    inset 0 -2px 4px rgba(0, 0, 0, 0.05) !important;[m
+[32m+[m[32m  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;[m
+[32m+[m[32m  padding: 8px !important;[m
+ }[m
+ [m
+ .el-card:hover {[m
+[31m-  box-shadow: var(--shadow-medium) !important;[m
+[32m+[m[32m  transform: translateY(-4px) !important;[m
+[32m+[m[32m  box-shadow:[m[41m [m
+[32m+[m[32m    0 16px 48px rgba(31, 38, 135, 0.3),[m
+[32m+[m[32m    inset 0 2px 4px rgba(255, 255, 255, 0.6),[m
+[32m+[m[32m    inset 0 -2px 4px rgba(0, 0, 0, 0.05) !important;[m
+   border-color: var(--primary-color) !important;[m
+ }[m
+ [m
+ .el-card__header {[m
+[31m-  padding: var(--spacing-lg) !important;[m
+[31m-  border-bottom: 1px solid var(--border-color) !important;[m
+[32m+[m[32m  padding: var(--spacing-xl) var(--spacing-xxl) !important;[m
+[32m+[m[32m  border-bottom: 1px solid var(--border-glass) !important;[m
+[32m+[m[32m  background: linear-gradient(180deg, var(--glass-light-secondary) 0%, transparent 100%) !important;[m
+[32m+[m[32m  border-radius: 20px 20px 0 0 !important;[m
+[32m+[m[32m  backdrop-filter: blur(10px) !important;[m
+ }[m
+ [m
+ .el-card__body {[m
+[31m-  padding: var(--spacing-lg) !important;[m
+[32m+[m[32m  padding: var(--spacing-xxl) !important;[m
+ }[m
+ [m
+ /* ============================================[m
+[36m@@ -63,31 +74,40 @@[m
+ [m
+ .el-input__inner,[m
+ .el-textarea__inner {[m
+[31m-  background: var(--glass-light-secondary) !important;[m
+[31m-  backdrop-filter: var(--backdrop-filter) !important;[m
+[31m-  border: 1px solid var(--border-color) !important;[m
+[32m+[m[32m  background: rgba(255, 255, 255, 0.12) !important;[m
+[32m+[m[32m  backdrop-filter: blur(20px) saturate(180%) !important;[m
+[32m+[m[32m  border: 1px solid var(--border-glass-subtle) !important;[m
+   border-radius: var(--radius-md) !important;[m
+   color: var(--text-primary) !important;[m
+[31m-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;[m
+[32m+[m[32m  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;[m
+   font-family: var(--font-family) !important;[m
+[32m+[m[32m  box-shadow:[m[41m [m
+[32m+[m[32m    inset 0 1px 2px rgba(0, 0, 0, 0.05),[m
+[32m+[m[32m    0 1px 3px rgba(0, 0, 0, 0.05) !important;[m
+ }[m
+ [m
+ .el-input__inner::placeholder,[m
+ .el-textarea__inner::placeholder {[m
+   color: var(--text-tertiary) !important;[m
+[32m+[m[32m  opacity: 0.8 !important;[m
+ }[m
+ [m
+ .el-input__inner:focus,[m
+ .el-textarea__inner:focus {[m
+[31m-  background: var(--glass-light) !important;[m
+[31m-  border-color: var(--primary-color) !important;[m
+[31m-  box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.1) !important;[m
+[32m+[m[32m  background: rgba(255, 255, 255, 0.2) !important;[m
+[32m+[m[32m  border-color: rgba(0, 122, 255, 0.5) !important;[m
+[32m+[m[32m  box-shadow:[m[41m [m
+[32m+[m[32m    0 0 0 4px rgba(0, 122, 255, 0.1),[m
+[32m+[m[32m    inset 0 1px 2px rgba(255, 255, 255, 0.3),[m
+[32m+[m[32m    0 4px 12px rgba(0, 122, 255, 0.15) !important;[m
+   outline: none !important;[m
+[32m+[m[32m  transform: translateY(-1px) !important;[m
+ }[m
+ [m
+ .el-input__inner:hover,[m
+ .el-textarea__inner:hover {[m
+[31m-  border-color: var(--primary-color) !important;[m
+[32m+[m[32m  border-color: rgba(0, 122, 255, 0.3) !important;[m
+[32m+[m[32m  background: rgba(255, 255, 255, 0.15) !important;[m
+ }[m
+ [m
+ .el-input__suffix-inner {[m
+[36m@@ -106,6 +126,67 @@[m
+   border-color: var(--primary-color) !important;[m
+ }[m
+ [m
+[32m+[m[32m/* ============================================[m
+[32m+[m[32m   INPUT GROUP APPEND (COPY BUTTONS)[m
+[32m+[m[32m   ============================================ */[m
+[32m+[m
+[32m+[m[32m.el-input-group__append {[m
+[32m+[m[32m  background: linear-gradient(135deg, rgba(0, 122, 255, 0.15), rgba(10, 132, 255, 0.2)) !important;[m
+[32m+[m[32m  backdrop-filter: blur(20px) saturate(180%) !important;[m
+[32m+[m[32m  border: 1px solid rgba(0, 122, 255, 0.3) !important;[m
+[32m+[m[32m  border-left: none !important;[m
+[32m+[m[32m  border-radius: 0 var(--radius-md) var(--radius-md) 0 !important;[m
+[32m+[m[32m  padding: 0 !important;[m
+[32m+[m[32m  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;[m
+[32m+[m[32m  box-shadow:[m[41m [m
+[32m+[m[32m    inset 0 1px 0 rgba(255, 255, 255, 0.2),[m
+[32m+[m[32m    0 2px 8px rgba(0, 122, 255, 0.1) !important;[m
+[32m+[m[32m}[m
+[32m+[m
+[32m+[m[32m.el-input-group__append:hover {[m
+[32m+[m[32m  background: linear-gradient(135deg, rgba(0, 122, 255, 0.25), rgba(10, 132, 255, 0.3)) !important;[m
+[32m+[m[32m  border-color: rgba(0, 122, 255, 0.5) !important;[m
+[32m+[m[32m  box-shadow:[m[41m [m
+[32m+[m[32m    inset 0 1px 0 rgba(255, 255, 255, 0.3),[m
+[32m+[m[32m    0 4px 12px rgba(0, 122, 255, 0.2) !important;[m
+[32m+[m[32m  transform: translateY(-1px) !important;[m
+[32m+[m[32m}[m
+[32m+[m
+[32m+[m[32m.el-input-group__append:active {[m
+[32m+[m[32m  transform: translateY(0) scale(0.98) !important;[m
+[32m+[m[32m}[m
+[32m+[m
+[32m+[m[32m.el-input-group__append .el-button {[m
+[32m+[m[32m  background: transparent !important;[m
+[32m+[m[32m  border: none !important;[m
+[32m+[m[32m  color: var(--primary-color) !important;[m
+[32m+[m[32m  font-weight: 600 !important;[m
+[32m+[m[32m  padding: 12px 20px !important;[m
+[32m+[m[32m  margin: 0 !important;[m
+[32m+[m[32m  box-shadow: none !important;[m
+[32m+[m[32m  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;[m
+[32m+[m[32m}[m
+[32m+[m
+[32m+[m[32m.el-input-group__append .el-button:hover {[m
+[32m+[m[32m  color: #0057cc !important;[m
+[32m+[m[32m  background: transparent !important;[m
+[32m+[m[32m  transform: scale(1.05) !important;[m
+[32m+[m[32m}[m
+[32m+[m
+[32m+[m[32m.el-input-group__append .el-button:active {[m
+[32m+[m[32m  transform: scale(0.95) !important;[m
+[32m+[m[32m}[m
+[32m+[m
+[32m+[m[32m.el-input-group__append .el-button i {[m
+[32m+[m[32m  font-size: 16px !important;[m
+[32m+[m[32m  margin-right: 6px !important;[m
+[32m+[m[32m}[m
+[32m+[m
+[32m+[m[32m.el-input-group--append .el-input__inner {[m
+[32m+[m[32m  border-right: none !important;[m
+[32m+[m[32m  border-radius: var(--radius-md) 0 0 var(--radius-md) !important;[m
+[32m+[m[32m}[m
+[32m+[m
+ /* ============================================[m
+    SELECT COMPONENT[m
+    ============================================ */[m
+[36m@@ -125,29 +206,36 @@[m
+ [m
+ .el-select-dropdown {[m
+   background: var(--glass-light) !important;[m
+[31m-  backdrop-filter: var(--backdrop-filter) !important;[m
+[31m-  border: 1px solid var(--border-color) !important;
