@@ -11,6 +11,13 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
+# Yarn files - enforce npm only
+yarn.lock
+.yarn/
+.yarnrc
+.yarnrc.yml
+.pnp.*
+
 # Editor directories and files
 .idea
 .vscode
