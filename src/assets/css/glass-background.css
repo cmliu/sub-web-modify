@@ -1,7 +1,6 @@
 /* Glass Background - Gradient + Blob */
 body {
   position: relative;
-  overflow: hidden;
   /* Fallback values in case CSS variables aren't loaded */
   --bg-primary: #FFFFFF;
   --bg-secondary: #F5F5F5;
@@ -20,11 +19,11 @@ body::before {
   left: 0;
   right: 0;
   bottom: 0;
-  background: var(--bg-primary);
-  z-index: -2;
+  background: var(--gradient-background);
+  z-index: -3;
 }
 
-/* Animated gradient blob background */
+/* Animated gradient blob - primary */
 body::after {
   content: '';
   position: fixed;
@@ -32,12 +31,28 @@ body::after {
   right: -50%;
   width: 200%;
   height: 200%;
-  background: var(--gradient-primary);
-  opacity: 0.1;
+  background: radial-gradient(circle, var(--gradient-primary-start) 0%, var(--gradient-primary-end) 50%, transparent 70%);
+  opacity: 0.6;
+  filter: blur(80px);
+  z-index: -2;
+  pointer-events: none;
+  animation: gradient-shift 15s ease-in-out infinite;
+}
+
+/* Floating orb - secondary accent */
+.glass-orb-secondary {
+  content: '';
+  position: fixed;
+  bottom: -30%;
+  left: -30%;
+  width: 150%;
+  height: 150%;
+  background: radial-gradient(circle, var(--gradient-secondary-start) 0%, var(--gradient-secondary-end) 40%, transparent 60%);
+  opacity: 0.4;
   filter: blur(100px);
   z-index: -1;
   pointer-events: none;
-  animation: gradient-shift 15s ease-in-out infinite;
+  animation: gradient-shift-reverse 20s ease-in-out infinite;
 }
 
 @keyframes gradient-shift {
@@ -58,6 +73,24 @@ body::after {
   }
 }
 
+@keyframes gradient-shift-reverse {
+  0% {
+    transform: translate(0, 0) rotate(360deg);
+  }
+  25% {
+    transform: translate(10%, 10%) rotate(270deg);
+  }
+  50% {
+    transform: translate(20%, 0) rotate(180deg);
+  }
+  75% {
+    transform: translate(10%, -10%) rotate(90deg);
+  }
+  100% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+}
+
 /* Hide the old canvas background */
 #canvas-show,
 .canvas-wrap,
@@ -69,22 +102,29 @@ body::after {
 .glass-surface {
   background: var(--glass-light);
   backdrop-filter: var(--backdrop-filter);
-  border: 1px solid var(--border-color);
+  border: 1px solid var(--border-glass);
   border-radius: var(--radius-lg);
+  box-shadow: 
+    var(--shadow-medium),
+    inset 0 1px 0 var(--glass-highlight);
 }
 
 .glass-surface-secondary {
   background: var(--glass-light-secondary);
   backdrop-filter: var(--backdrop-filter);
-  border: 1px solid var(--border-color);
+  border: 1px solid var(--border-glass);
   border-radius: var(--radius-md);
+  box-shadow: 
+    var(--shadow-small),
+    inset 0 1px 0 var(--glass-highlight);
 }
 
 .glass-surface-tertiary {
   background: var(--glass-light-tertiary);
   backdrop-filter: var(--backdrop-filter);
-  border: 1px solid rgba(128, 128, 128, 0.1);
+  border: 1px solid var(--border-glass-subtle);
   border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-small);
 }
 
 .glass-input {

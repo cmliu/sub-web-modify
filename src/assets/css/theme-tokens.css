@@ -16,14 +16,24 @@ body.light-mode {
   --border-color: rgba(0, 0, 0, 0.1);
   
   /* Glass/Frosted Colors */
-  --glass-light: rgba(255, 255, 255, 0.8);
-  --glass-light-secondary: rgba(255, 255, 255, 0.6);
-  --glass-light-tertiary: rgba(255, 255, 255, 0.4);
+  --glass-light: rgba(255, 255, 255, 0.15);
+  --glass-light-secondary: rgba(255, 255, 255, 0.1);
+  --glass-light-tertiary: rgba(255, 255, 255, 0.08);
+  --glass-highlight: rgba(255, 255, 255, 0.5);
+  --border-glass: rgba(255, 255, 255, 0.3);
+  --border-glass-subtle: rgba(255, 255, 255, 0.2);
   
-  /* Gradients */
-  --gradient-primary: linear-gradient(135deg, #FF6B9D, #00B4DB);
-  --gradient-secondary: linear-gradient(135deg, #667EEA, #764BA2);
-  --gradient-tertiary: linear-gradient(135deg, #F093FB, #F5576C);
+  /* Beautiful iOS-style Gradients */
+  --gradient-background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+  --gradient-primary: linear-gradient(135deg, #667eea, #764ba2);
+  --gradient-secondary: linear-gradient(135deg, #f093fb, #f5576c);
+  --gradient-tertiary: linear-gradient(135deg, #4facfe, #00f2fe);
+  
+  /* Gradient Color Stops for Radial Blobs */
+  --gradient-primary-start: #667eea;
+  --gradient-primary-end: #764ba2;
+  --gradient-secondary-start: #f093fb;
+  --gradient-secondary-end: #f5576c;
   
   /* Typography */
   --font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Segoe UI', Roboto, sans-serif;
@@ -81,14 +91,24 @@ body.dark-mode {
   --border-color: rgba(255, 255, 255, 0.1);
   
   /* Glass/Frosted Colors */
-  --glass-light: rgba(255, 255, 255, 0.1);
-  --glass-light-secondary: rgba(255, 255, 255, 0.08);
-  --glass-light-tertiary: rgba(255, 255, 255, 0.06);
+  --glass-light: rgba(0, 0, 0, 0.3);
+  --glass-light-secondary: rgba(0, 0, 0, 0.25);
+  --glass-light-tertiary: rgba(0, 0, 0, 0.2);
+  --glass-highlight: rgba(255, 255, 255, 0.2);
+  --border-glass: rgba(255, 255, 255, 0.15);
+  --border-glass-subtle: rgba(255, 255, 255, 0.1);
   
-  /* Gradients */
-  --gradient-primary: linear-gradient(135deg, #667EEA, #764BA2);
-  --gradient-secondary: linear-gradient(135deg, #F093FB, #F5576C);
-  --gradient-tertiary: linear-gradient(135deg, #4C1D95, #7C3AED);
+  /* Beautiful Dark Mode Gradients */
+  --gradient-background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+  --gradient-primary: linear-gradient(135deg, #667eea, #764ba2);
+  --gradient-secondary: linear-gradient(135deg, #f093fb, #f5576c);
+  --gradient-tertiary: linear-gradient(135deg, #4c1d95, #7c3aed);
+  
+  /* Gradient Color Stops for Radial Blobs */
+  --gradient-primary-start: #667eea;
+  --gradient-primary-end: #764ba2;
+  --gradient-secondary-start: #4c1d95;
+  --gradient-secondary-end: #7c3aed;
   
   /* Typography */
   --font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Segoe UI', Roboto, sans-serif;

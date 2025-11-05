@@ -4,18 +4,7 @@
       <el-col>
         <el-card>
           <div slot="header" class="layout-header">
-            <div class="layout-header-icons-left">
-              <svg-icon class="gayhub" icon-class="github" @click="goToProject" />
-              <svg-icon class="dianbao" icon-class="telegram" @click="gotoTgChannel" />
-            </div>
             <div class="layout-header-title">订 阅 转 换</div>
-            <div class="layout-header-icons-right">
-              <!--
-                <svg-icon class="bilibili" icon-class="bilibili"
-                @click="gotoBiliBili" /> -->
-              <svg-icon class="youguan" icon-class="youtube" @click="gotoYouTuBe" />
-              <svg-icon class="channel" icon-class="telegram" @click="gotoTgChannel" />
-            </div>
           </div>
           <el-container>
             <el-form :model="form" label-width="80px" label-position="left" class="layout-form-container">
