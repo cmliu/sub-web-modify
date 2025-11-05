@@ -157,6 +157,11 @@
   gap: var(--space-lg);
 }
 
+.result-section {
+  margin-top: var(--space-lg);
+  padding: 0;
+}
+
 .input-with-copy {
   display: flex;
   width: 100%;
