@@ -9,30 +9,41 @@
 }
 
 /* ============================================
-   CARD COMPONENT
+   CARD COMPONENT - BIG GLASS EFFECT
    ============================================ */
 
 .el-card {
   background: var(--glass-light) !important;
-  backdrop-filter: var(--backdrop-filter) !important;
-  border: 1px solid var(--border-color) !important;
-  border-radius: var(--radius-lg) !important;
-  box-shadow: var(--shadow-small) !important;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  backdrop-filter: blur(30px) saturate(200%) !important;
+  border: 1.5px solid var(--border-glass) !important;
+  border-radius: 24px !important;
+  box-shadow: 
+    0 8px 32px rgba(31, 38, 135, 0.2),
+    inset 0 2px 4px var(--glass-highlight),
+    inset 0 -2px 4px rgba(0, 0, 0, 0.05) !important;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  padding: 8px !important;
 }
 
 .el-card:hover {
-  box-shadow: var(--shadow-medium) !important;
+  transform: translateY(-4px) !important;
+  box-shadow: 
+    0 16px 48px rgba(31, 38, 135, 0.3),
+    inset 0 2px 4px rgba(255, 255, 255, 0.6),
+    inset 0 -2px 4px rgba(0, 0, 0, 0.05) !important;
   border-color: var(--primary-color) !important;
 }
 
 .el-card__header {
-  padding: var(--spacing-lg) !important;
-  border-bottom: 1px solid var(--border-color) !important;
+  padding: var(--spacing-xl) var(--spacing-xxl) !important;
+  border-bottom: 1px solid var(--border-glass) !important;
+  background: linear-gradient(180deg, var(--glass-light-secondary) 0%, transparent 100%) !important;
+  border-radius: 20px 20px 0 0 !important;
+  backdrop-filter: blur(10px) !important;
 }
 
 .el-card__body {
-  padding: var(--spacing-lg) !important;
+  padding: var(--spacing-xxl) !important;
 }
 
 /* ============================================
@@ -63,31 +74,40 @@
 
 .el-input__inner,
 .el-textarea__inner {
-  background: var(--glass-light-secondary) !important;
-  backdrop-filter: var(--backdrop-filter) !important;
-  border: 1px solid var(--border-color) !important;
+  background: rgba(255, 255, 255, 0.12) !important;
+  backdrop-filter: blur(20px) saturate(180%) !important;
+  border: 1px solid var(--border-glass-subtle) !important;
   border-radius: var(--radius-md) !important;
   color: var(--text-primary) !important;
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
   font-family: var(--font-family) !important;
+  box-shadow: 
+    inset 0 1px 2px rgba(0, 0, 0, 0.05),
+    0 1px 3px rgba(0, 0, 0, 0.05) !important;
 }
 
 .el-input__inner::placeholder,
 .el-textarea__inner::placeholder {
   color: var(--text-tertiary) !important;
+  opacity: 0.8 !important;
 }
 
 .el-input__inner:focus,
 .el-textarea__inner:focus {
-  background: var(--glass-light) !important;
-  border-color: var(--primary-color) !important;
-  box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.1) !important;
+  background: rgba(255, 255, 255, 0.2) !important;
+  border-color: rgba(0, 122, 255, 0.5) !important;
+  box-shadow: 
+    0 0 0 4px rgba(0, 122, 255, 0.1),
+    inset 0 1px 2px rgba(255, 255, 255, 0.3),
+    0 4px 12px rgba(0, 122, 255, 0.15) !important;
   outline: none !important;
+  transform: translateY(-1px) !important;
 }
 
 .el-input__inner:hover,
 .el-textarea__inner:hover {
-  border-color: var(--primary-color) !important;
+  border-color: rgba(0, 122, 255, 0.3) !important;
+  background: rgba(255, 255, 255, 0.15) !important;
 }
 
 .el-input__suffix-inner {
@@ -104,6 +124,67 @@
 .el-input-number__decrease:hover {
   background: var(--glass-light) !important;
   border-color: var(--primary-color) !important;
+}
+
+/* ============================================
+   INPUT GROUP APPEND (COPY BUTTONS)
+   ============================================ */
+
+.el-input-group__append {
+  background: linear-gradient(135deg, rgba(0, 122, 255, 0.15), rgba(10, 132, 255, 0.2)) !important;
+  backdrop-filter: blur(20px) saturate(180%) !important;
+  border: 1px solid rgba(0, 122, 255, 0.3) !important;
+  border-left: none !important;
+  border-radius: 0 var(--radius-md) var(--radius-md) 0 !important;
+  padding: 0 !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  box-shadow: 
+    inset 0 1px 0 rgba(255, 255, 255, 0.2),
+    0 2px 8px rgba(0, 122, 255, 0.1) !important;
+}
+
+.el-input-group__append:hover {
+  background: linear-gradient(135deg, rgba(0, 122, 255, 0.25), rgba(10, 132, 255, 0.3)) !important;
+  border-color: rgba(0, 122, 255, 0.5) !important;
+  box-shadow: 
+    inset 0 1px 0 rgba(255, 255, 255, 0.3),
+    0 4px 12px rgba(0, 122, 255, 0.2) !important;
+  transform: translateY(-1px) !important;
+}
+
+.el-input-group__append:active {
+  transform: translateY(0) scale(0.98) !important;
+}
+
+.el-input-group__append .el-button {
+  background: transparent !important;
+  border: none !important;
+  color: var(--primary-color) !important;
+  font-weight: 600 !important;
+  padding: 12px 20px !important;
+  margin: 0 !important;
+  box-shadow: none !important;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.el-input-group__append .el-button:hover {
+  color: #0057cc !important;
+  background: transparent !important;
+  transform: scale(1.05) !important;
+}
+
+.el-input-group__append .el-button:active {
+  transform: scale(0.95) !important;
+}
+
+.el-input-group__append .el-button i {
+  font-size: 16px !important;
+  margin-right: 6px !important;
+}
+
+.el-input-group--append .el-input__inner {
+  border-right: none !important;
+  border-radius: var(--radius-md) 0 0 var(--radius-md) !important;
 }
 
 /* ============================================
@@ -125,29 +206,36 @@
 
 .el-select-dropdown {
   background: var(--glass-light) !important;
-  backdrop-filter: var(--backdrop-filter) !important;
-  border: 1px solid var(--border-color) !important;
-  border-radius: var(--radius-md) !important;
-  box-shadow: var(--shadow-large) !important;
+  backdrop-filter: blur(30px) saturate(200%) !important;
+  border: 1.5px solid var(--border-glass) !important;
+  border-radius: var(--radius-lg) !important;
+  box-shadow: 
+    0 12px 40px rgba(0, 0, 0, 0.15),
+    inset 0 1px 0 var(--glass-highlight) !important;
   max-width: 90vw !important;
+  padding: 8px !important;
 }
 
 .el-select-dropdown__item {
   color: var(--text-primary) !important;
   padding: var(--spacing-md) var(--spacing-lg) !important;
   line-height: 1.5 !important;
+  border-radius: var(--radius-sm) !important;
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  margin: 2px 0 !important;
 }
 
 .el-select-dropdown__item:hover {
-  background: rgba(0, 122, 255, 0.1) !important;
+  background: linear-gradient(135deg, rgba(0, 122, 255, 0.15), rgba(10, 132, 255, 0.2)) !important;
   color: var(--primary-color) !important;
+  transform: translateX(4px) !important;
 }
 
 .el-select-dropdown__item.selected {
   color: var(--primary-color) !important;
-  background: rgba(0, 122, 255, 0.15) !important;
-  font-weight: 500 !important;
+  background: linear-gradient(135deg, rgba(0, 122, 255, 0.2), rgba(10, 132, 255, 0.25)) !important;
+  font-weight: 600 !important;
+  box-shadow: 0 2px 8px rgba(0, 122, 255, 0.2) !important;
 }
 
 .el-option-group__title {
@@ -168,25 +256,40 @@
   border: none !important;
 }
 
-/* Primary Button */
+/* Primary Button - Enhanced Glass Effect */
 .el-button--primary {
-  background: var(--primary-color) !important;
+  background: linear-gradient(135deg, rgba(0, 122, 255, 0.9), rgba(10, 132, 255, 0.95)) !important;
+  backdrop-filter: blur(20px) saturate(180%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.3) !important;
   color: #fff !important;
-  box-shadow: 0 4px 12px rgba(0, 122, 255, 0.3) !important;
+  border-radius: 14px !important;
+  box-shadow: 
+    0 4px 16px rgba(0, 122, 255, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4) !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.3px !important;
 }
 
 .el-button--primary:hover {
-  background: #0057cc !important;
-  box-shadow: 0 6px 16px rgba(0, 122, 255, 0.4) !important;
+  background: linear-gradient(135deg, rgba(0, 87, 204, 0.95), rgba(0, 122, 255, 1)) !important;
+  box-shadow: 
+    0 8px 24px rgba(0, 122, 255, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5) !important;
+  transform: translateY(-2px) scale(1.02) !important;
 }
 
 .el-button--primary:active {
-  background: #0047a8 !important;
+  background: linear-gradient(135deg, rgba(0, 71, 168, 1), rgba(0, 87, 204, 1)) !important;
+  transform: translateY(0) scale(0.98) !important;
+  box-shadow: 
+    0 2px 8px rgba(0, 122, 255, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
 }
 
 .el-button--primary.is-disabled {
   background: rgba(0, 122, 255, 0.5) !important;
   box-shadow: none !important;
+  transform: none !important;
 }
 
 /* Success Button */
@@ -221,20 +324,34 @@
   background: #cc7700 !important;
 }
 
-/* Danger Button */
+/* Danger Button - Enhanced Glass Effect */
 .el-button--danger {
-  background: var(--destructive-color) !important;
+  background: linear-gradient(135deg, rgba(255, 59, 48, 0.9), rgba(255, 69, 58, 0.95)) !important;
+  backdrop-filter: blur(20px) saturate(180%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.3) !important;
   color: #fff !important;
-  box-shadow: 0 4px 12px rgba(255, 59, 48, 0.3) !important;
+  border-radius: 14px !important;
+  box-shadow: 
+    0 4px 16px rgba(255, 59, 48, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4) !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.3px !important;
 }
 
 .el-button--danger:hover {
-  background: #e62e1f !important;
-  box-shadow: 0 6px 16px rgba(255, 59, 48, 0.4) !important;
+  background: linear-gradient(135deg, rgba(230, 46, 31, 0.95), rgba(255, 59, 48, 1)) !important;
+  box-shadow: 
+    0 8px 24px rgba(255, 59, 48, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5) !important;
+  transform: translateY(-2px) scale(1.02) !important;
 }
 
 .el-button--danger:active {
-  background: #cc1f0f !important;
+  background: linear-gradient(135deg, rgba(204, 31, 15, 1), rgba(230, 46, 31, 1)) !important;
+  transform: translateY(0) scale(0.98) !important;
+  box-shadow: 
+    0 2px 8px rgba(255, 59, 48, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
 }
 
 /* Info Button */
@@ -279,43 +396,62 @@
 }
 
 /* ============================================
-   CHECKBOX COMPONENT
+   CHECKBOX COMPONENT - GLASS CHECKBOXES
    ============================================ */
 
 .el-checkbox__input.is-checked .el-checkbox__inner {
-  background: var(--primary-color) !important;
+  background: linear-gradient(135deg, var(--primary-color), rgba(10, 132, 255, 0.95)) !important;
   border-color: var(--primary-color) !important;
+  box-shadow: 
+    0 2px 8px rgba(0, 122, 255, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
 }
 
 .el-checkbox__inner {
-  border: 1.5px solid var(--border-color) !important;
+  border: 1.5px solid var(--border-glass) !important;
   border-radius: var(--radius-sm) !important;
   background: var(--glass-light-secondary) !important;
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  backdrop-filter: blur(10px) !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.05) !important;
 }
 
 .el-checkbox__inner:hover {
   border-color: var(--primary-color) !important;
+  background: var(--glass-light) !important;
+  transform: scale(1.05) !important;
 }
 
 .el-checkbox:hover .el-checkbox__inner {
   border-color: var(--primary-color) !important;
+  background: var(--glass-light) !important;
 }
 
 .el-checkbox.is-bordered {
-  border: 1px solid var(--border-color) !important;
+  border: 1px solid var(--border-glass) !important;
   border-radius: var(--radius-md) !important;
   padding: var(--spacing-sm) var(--spacing-md) !important;
   background: var(--glass-light-secondary) !important;
+  backdrop-filter: blur(15px) !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
 }
 
 .el-checkbox.is-bordered.is-checked {
-  background: rgba(0, 122, 255, 0.1) !important;
+  background: linear-gradient(135deg, rgba(0, 122, 255, 0.15), rgba(10, 132, 255, 0.2)) !important;
   border-color: var(--primary-color) !important;
+  box-shadow: 
+    0 2px 8px rgba(0, 122, 255, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
+}
+
+.el-checkbox.is-bordered:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
 }
 
 .el-checkbox__label {
   color: var(--text-primary) !important;
+  font-weight: 500 !important;
 }
 
 /* ============================================
@@ -342,45 +478,63 @@
 }
 
 /* ============================================
-   DIALOG COMPONENT
+   DIALOG COMPONENT - ENHANCED GLASS MODAL
    ============================================ */
 
 .el-dialog {
-  border: 1px solid var(--border-color) !important;
-  border-radius: var(--radius-lg) !important;
+  border: 1.5px solid var(--border-glass) !important;
+  border-radius: 24px !important;
   background: var(--glass-light) !important;
-  backdrop-filter: var(--backdrop-filter) !important;
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15) !important;
+  backdrop-filter: blur(30px) saturate(200%) !important;
+  box-shadow: 
+    0 20px 60px rgba(0, 0, 0, 0.25),
+    inset 0 2px 4px var(--glass-highlight),
+    inset 0 -2px 4px rgba(0, 0, 0, 0.05) !important;
+  overflow: hidden !important;
 }
 
 .el-dialog__header {
-  border-bottom: 1px solid var(--border-color) !important;
-  background: transparent !important;
+  border-bottom: 1px solid var(--border-glass) !important;
+  background: linear-gradient(180deg, var(--glass-light-secondary) 0%, transparent 100%) !important;
+  backdrop-filter: blur(10px) !important;
+  padding: var(--spacing-xl) var(--spacing-xxl) !important;
 }
 
 .el-dialog__title {
   color: var(--text-primary) !important;
-  font-weight: 600 !important;
-  font-size: var(--font-size-headline) !important;
+  font-weight: 700 !important;
+  font-size: var(--font-size-title-3) !important;
+  letter-spacing: 0.3px !important;
 }
 
 .el-dialog__close {
   color: var(--text-tertiary) !important;
+  font-size: 20px !important;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
 }
 
 .el-dialog__close:hover {
   color: var(--primary-color) !important;
+  transform: scale(1.2) !important;
 }
 
 .el-dialog__body {
   background: transparent !important;
   color: var(--text-primary) !important;
+  padding: var(--spacing-xxl) !important;
 }
 
 .el-dialog__footer {
-  border-top: 1px solid var(--border-color) !important;
-  background: transparent !important;
+  border-top: 1px solid var(--border-glass) !important;
+  background: linear-gradient(0deg, var(--glass-light-secondary) 0%, transparent 100%) !important;
+  backdrop-filter: blur(10px) !important;
   text-align: right !important;
+  padding: var(--spacing-xl) var(--spacing-xxl) !important;
+}
+
+.el-dialog__wrapper {
+  backdrop-filter: blur(8px) !important;
+  background: rgba(0, 0, 0, 0.4) !important;
 }
 
 /* ============================================
@@ -444,17 +598,18 @@
 }
 
 /* ============================================
-   COLLAPSE COMPONENT
+   COLLAPSE COMPONENT - GLASS ACCORDION
    ============================================ */
 
 .el-collapse {
-  border: 1px solid var(--border-color) !important;
-  border-radius: var(--radius-md) !important;
+  border: 1.5px solid var(--border-glass) !important;
+  border-radius: var(--radius-lg) !important;
   background: transparent !important;
+  overflow: hidden !important;
 }
 
 .el-collapse-item {
-  border-bottom: 1px solid var(--border-color) !important;
+  border-bottom: 1px solid var(--border-glass-subtle) !important;
 }
 
 .el-collapse-item:last-child {
@@ -462,54 +617,67 @@
 }
 
 .el-collapse-item__header {
-  height: 48px !important;
-  line-height: 48px !important;
+  height: 56px !important;
+  line-height: 56px !important;
   background: var(--glass-light-secondary) !important;
+  backdrop-filter: blur(15px) !important;
   color: var(--text-primary) !important;
   border: none !important;
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  font-weight: 500 !important;
+  padding: 0 var(--spacing-lg) !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
 }
 
 .el-collapse-item__header:hover {
-  background: var(--glass-light) !important;
+  background: linear-gradient(135deg, var(--glass-light) 0%, var(--glass-light-secondary) 100%) !important;
   color: var(--primary-color) !important;
+  transform: translateX(4px) !important;
 }
 
 .el-collapse-item.is-active .el-collapse-item__header {
-  background: rgba(0, 122, 255, 0.05) !important;
+  background: linear-gradient(135deg, rgba(0, 122, 255, 0.1), rgba(10, 132, 255, 0.15)) !important;
   border-color: var(--primary-color) !important;
+  font-weight: 600 !important;
 }
 
 .el-collapse-item__arrow {
   color: var(--text-tertiary) !important;
-  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  font-size: 14px !important;
 }
 
 .el-collapse-item.is-active .el-collapse-item__arrow {
   color: var(--primary-color) !important;
+  transform: scale(1.2) !important;
 }
 
 .el-collapse-item__content {
-  background: var(--glass-light-secondary) !important;
-  padding: var(--spacing-lg) !important;
+  background: var(--glass-light-tertiary) !important;
+  backdrop-filter: blur(10px) !important;
+  padding: var(--spacing-xl) !important;
   color: var(--text-primary) !important;
+  border-top: 1px solid var(--border-glass-subtle) !important;
 }
 
 /* ============================================
-   POPOVER COMPONENT
+   POPOVER COMPONENT - GLASS POPUP
    ============================================ */
 
 .el-popover {
   background: var(--glass-light) !important;
-  backdrop-filter: var(--backdrop-filter) !important;
-  border: 1px solid var(--border-color) !important;
-  border-radius: var(--radius-md) !important;
-  box-shadow: var(--shadow-large) !important;
+  backdrop-filter: blur(30px) saturate(200%) !important;
+  border: 1.5px solid var(--border-glass) !important;
+  border-radius: var(--radius-lg) !important;
+  box-shadow: 
+    0 12px 40px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 var(--glass-highlight) !important;
   color: var(--text-primary) !important;
+  padding: var(--spacing-md) !important;
 }
 
 .popper.popover-inner {
   background: var(--glass-light) !important;
+  backdrop-filter: blur(30px) saturate(200%) !important;
 }
 
 /* ============================================
@@ -596,56 +764,79 @@
 }
 
 /* ============================================
-   DIVIDER COMPONENT
+   DIVIDER COMPONENT - GLASS DIVIDER
    ============================================ */
 
 .el-divider {
-  border-top-color: var(--border-color) !important;
+  border-top: 1px solid !important;
+  border-image: linear-gradient(
+    90deg, 
+    transparent 0%, 
+    var(--border-glass) 20%, 
+    var(--border-glass) 80%, 
+    transparent 100%
+  ) 1 !important;
+  opacity: 0.6 !important;
 }
 
 .el-divider__text {
-  padding: 0 var(--spacing-md) !important;
-  background: transparent !important;
-  color: var(--text-secondary) !important;
-  border: 1px solid var(--border-color) !important;
-  border-radius: var(--radius-sm) !important;
+  padding: var(--spacing-sm) var(--spacing-lg) !important;
+  background: var(--glass-light-secondary) !important;
+  backdrop-filter: blur(15px) !important;
+  color: var(--text-primary) !important;
+  font-weight: 500 !important;
+  border: 1px solid var(--border-glass) !important;
+  border-radius: var(--radius-md) !important;
+  box-shadow: 
+    0 2px 8px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
 }
 
 /* ============================================
-   MESSAGE BOX & NOTIFICATION
+   MESSAGE BOX & NOTIFICATION - GLASS ALERTS
    ============================================ */
 
 .el-message-box {
   background: var(--glass-light) !important;
-  backdrop-filter: var(--backdrop-filter) !important;
-  border: 1px solid var(--border-color) !important;
-  border-radius: var(--radius-lg) !important;
-  box-shadow: var(--shadow-large) !important;
+  backdrop-filter: blur(30px) saturate(200%) !important;
+  border: 1.5px solid var(--border-glass) !important;
+  border-radius: var(--radius-xl) !important;
+  box-shadow: 
+    0 16px 48px rgba(0, 0, 0, 0.2),
+    inset 0 2px 4px var(--glass-highlight) !important;
+  overflow: hidden !important;
 }
 
 .el-message-box__title {
   color: var(--text-primary) !important;
-  font-weight: 600 !important;
+  font-weight: 700 !important;
+  font-size: var(--font-size-title-3) !important;
 }
 
 .el-message-box__content {
   color: var(--text-secondary) !important;
+  line-height: 1.6 !important;
 }
 
 .el-message {
   background: var(--glass-light) !important;
-  backdrop-filter: var(--backdrop-filter) !important;
-  border: 1px solid var(--border-color) !important;
-  border-radius: var(--radius-md) !important;
-  box-shadow: var(--shadow-large) !important;
+  backdrop-filter: blur(25px) saturate(200%) !important;
+  border: 1px solid var(--border-glass) !important;
+  border-radius: var(--radius-lg) !important;
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.15),
+    inset 0 1px 0 var(--glass-highlight) !important;
+  padding: var(--spacing-lg) var(--spacing-xl) !important;
 }
 
 .el-notification {
   background: var(--glass-light) !important;
-  backdrop-filter: var(--backdrop-filter) !important;
-  border: 1px solid var(--border-color) !important;
-  border-radius: var(--radius-lg) !important;
-  box-shadow: var(--shadow-large) !important;
+  backdrop-filter: blur(30px) saturate(200%) !important;
+  border: 1.5px solid var(--border-glass) !important;
+  border-radius: var(--radius-xl) !important;
+  box-shadow: 
+    0 12px 40px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 var(--glass-highlight) !important;
 }
 
 .el-notification__title {
@@ -817,6 +1008,56 @@
   background: rgba(255, 59, 48, 0.1) !important;
   border-color: rgba(255, 59, 48, 0.3) !important;
   color: var(--destructive-color) !important;
+}
+
+/* ============================================
+   DARK MODE SPECIFIC ENHANCEMENTS
+   ============================================ */
+
+body.dark-mode {
+  .el-input__inner,
+  .el-textarea__inner {
+    background: rgba(0, 0, 0, 0.3) !important;
+    border-color: rgba(255, 255, 255, 0.15) !important;
+  }
+
+  .el-input__inner:focus,
+  .el-textarea__inner:focus {
+    background: rgba(0, 0, 0, 0.4) !important;
+    border-color: rgba(10, 132, 255, 0.6) !important;
+    box-shadow: 
+      0 0 0 4px rgba(10, 132, 255, 0.15),
+      inset 0 1px 2px rgba(255, 255, 255, 0.1),
+      0 4px 12px rgba(10, 132, 255, 0.2) !important;
+  }
+
+  .el-input-group__append {
+    background: linear-gradient(135deg, rgba(10, 132, 255, 0.2), rgba(0, 122, 255, 0.3)) !important;
+    border-color: rgba(10, 132, 255, 0.4) !important;
+  }
+
+  .el-input-group__append:hover {
+    background: linear-gradient(135deg, rgba(10, 132, 255, 0.3), rgba(0, 122, 255, 0.4)) !important;
+    border-color: rgba(10, 132, 255, 0.6) !important;
+  }
+
+  .el-card {
+    box-shadow: 
+      0 8px 32px rgba(0, 0, 0, 0.5),
+      inset 0 2px 4px rgba(255, 255, 255, 0.1),
+      inset 0 -2px 4px rgba(0, 0, 0, 0.2) !important;
+  }
+
+  .el-card:hover {
+    box-shadow: 
+      0 16px 48px rgba(0, 0, 0, 0.6),
+      inset 0 2px 4px rgba(255, 255, 255, 0.15),
+      inset 0 -2px 4px rgba(0, 0, 0, 0.2) !important;
+  }
+
+  .el-select-dropdown__item.selected {
+    background: linear-gradient(135deg, rgba(10, 132, 255, 0.25), rgba(0, 122, 255, 0.3)) !important;
+  }
 }
 
 /* ============================================
