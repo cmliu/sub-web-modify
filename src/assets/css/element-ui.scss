@@ -1574,3 +1574,21 @@ body.performance-mode .el-input-group__append {
 body.performance-mode .el-select-dropdown {
   backdrop-filter: blur(8px) !important;
 }
+
+/* ============================================
+   FORM HELPER TEXT
+   ============================================ */
+
+.form-helper-text {
+  font-size: 12px;
+  color: var(--text-secondary);
+  margin-top: 4px;
+  margin-left: 2px;
+  opacity: 0.8;
+  font-style: italic;
+}
+
+body.dark-mode .form-helper-text {
+  color: var(--text-secondary);
+  opacity: 0.7;
+}
