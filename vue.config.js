@@ -5,6 +5,9 @@ function resolve(dir) {
 }
 
 module.exports = {
+  publicPath: '/',
+  outputDir: 'dist',
+  
   css: {
     loaderOptions: {
       less: {
