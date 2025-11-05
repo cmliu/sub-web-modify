@@ -175,11 +175,21 @@
 
             <!-- 生成按钮 -->
             <el-form-item>
-              <el-button type="primary" @click="makeUrl" :loading="loading2" class="glass-button">
+              <el-button
+                type="primary"
+                @click="onGenerateSubscribe"
+                :loading="subscribeLoading"
+                :disabled="subscribeLoading || !canGenerateSubscribe"
+                class="glass-button">
                 <i class="el-icon-magic-stick"></i>
                 生成订阅链接
               </el-button>
-              <el-button type="success" @click="makeShortUrl" :loading="loading1" class="glass-button">
+              <el-button
+                type="success"
+                @click="onGenerateShortlink"
+                :loading="shortLoading"
+                :disabled="shortLoading || !canGenerateShortlink"
+                class="glass-button">
                 <i class="el-icon-link"></i>
                 生成短链接
               </el-button>
@@ -360,7 +370,7 @@
 </template>
 
 <script>
-import { debounce, throttle, isLowEndDevice, autoEnablePerformanceMode, PerformanceMonitor } from '@/utils/performance';
+import { autoEnablePerformanceMode, PerformanceMonitor } from '@/utils/performance';
 
 const project = process.env.VUE_APP_PROJECT
 const configScriptBackend = process.env.VUE_APP_CONFIG_UPLOAD_BACKEND + '/api.php'
@@ -887,7 +897,8 @@ export default {
           }
         }
       },
-      loading1: false,
+      subscribeLoading: false,
+      shortLoading: false,
       loading2: false,
       loading3: false,
       customSubUrl: "",
@@ -910,6 +921,18 @@ export default {
       customBackendInput: "",
       dialogManageConfigVisible: false
     };
+  },
+  computed: {
+    canGenerateSubscribe() {
+      return Boolean(
+        this.form.sourceSubUrl &&
+        this.form.sourceSubUrl.trim() &&
+        this.form.clientType
+      );
+    },
+    canGenerateShortlink() {
+      return Boolean(this.customSubUrl && this.customSubUrl.trim());
+    }
   },
   created() {
     document.title = "在线订阅转换工具";
@@ -974,9 +997,7 @@ export default {
     }
   },
   methods: {
-    selectChanged: debounce(function() {
-      this.getBackendVersion();
-    }, 300),
+
     getUrlParam() {
       let query = window.location.search.substring(1);
       let vars = query.split('&');
@@ -1067,181 +1088,240 @@ export default {
     gotoYouTuBe() {
       window.open(yglink);
     },
-    makeUrl: debounce(function() {
-      if (this.form.sourceSubUrl === "" || this.form.clientType === "") {
-        this.$message.error("订阅链接与客户端为必填项");
-        return false;
+    async onGenerateSubscribe() {
+      if (this.subscribeLoading) {
+        return;
       }
-      let backend =
-        this.form.customBackend === ""
-          ? defaultBackend
-          : this.form.customBackend;
-      let sourceSub = this.form.sourceSubUrl;
-      sourceSub = sourceSub.replace(/(\n|\r|\n\r)/g, "|");
-      this.customSubUrl =
-        backend +
-        "/sub?target=" +
-        this.form.clientType +
-        "&url=" +
-        encodeURIComponent(sourceSub) +
-        "&insert=" +
-        this.form.insert;
-      if (this.form.remoteConfig !== "") {
-        this.customSubUrl +=
-          "&config=" + encodeURIComponent(this.form.remoteConfig);
+
+      const rawSource = this.form.sourceSubUrl ? this.form.sourceSubUrl.trim() : "";
+      if (!rawSource) {
+        this.$message.error("订阅链接不能为空");
+        return;
       }
-      if (this.form.excludeRemarks !== "") {
-        this.customSubUrl +=
-          "&exclude=" + encodeURIComponent(this.form.excludeRemarks);
+      if (!this.form.clientType) {
+        this.$message.error("请选择客户端类型");
+        return;
       }
-      if (this.form.includeRemarks !== "") {
-        this.customSubUrl +=
-          "&include=" + encodeURIComponent(this.form.includeRemarks);
+
+      let backend = "";
+      if (this.form.customBackend && this.form.customBackend.trim()) {
+        backend = this.form.customBackend.trim();
+      } else if (defaultBackend && defaultBackend.trim()) {
+        backend = defaultBackend.trim();
       }
-      if (this.form.filename !== "") {
-        this.customSubUrl +=
-          "&filename=" + encodeURIComponent(this.form.filename);
+
+      if (!backend) {
+        this.$message.error("后端地址不可用，请先选择或配置后端");
+        return;
       }
-      if (this.form.rename !== "") {
-        this.customSubUrl +=
-          "&rename=" + encodeURIComponent(this.form.rename);
+
+      if (!/^https?:\/\//i.test(backend)) {
+        this.$message.error("后端地址不合法，请检查后重新输入");
+        return;
       }
-      if (this.form.interval !== "") {
-        this.customSubUrl +=
-          "&interval=" + encodeURIComponent(this.form.interval * 86400);
-      }
-      if (this.form.devid !== "") {
-        this.customSubUrl +=
-          "&dev_id=" + encodeURIComponent(this.form.devid);
-      }
-      if (this.form.appendType) {
-        this.customSubUrl +=
-          "&append_type=" + this.form.appendType.toString();
-      }
-      if (this.form.tls13) {
-        this.customSubUrl +=
-          "&tls13=" + this.form.tls13.toString();
-      }
-      if (this.form.sort) {
-        this.customSubUrl +=
-          "&sort=" + this.form.sort.toString();
-      }
-      this.customSubUrl +=
-        "&emoji=" +
-        this.form.emoji.toString() +
-        "&list=" +
-        this.form.nodeList.toString() +
-        "&xudp=" +
-        this.form.xudp.toString() +
-        "&udp=" +
-        this.form.udp.toString() +
-        "&tfo=" +
-        this.form.tfo.toString() +
-        "&expand=" +
-        this.form.expand.toString() +
-        "&scv=" +
-        this.form.scv.toString() +
-        "&fdn=" +
-        this.form.fdn.toString();
-      if (this.form.clientType.includes("surge")) {
-        if (this.form.tpl.surge.doh === true) {
-          this.customSubUrl += "&surge.doh=true";
+
+      const backendBase = backend.replace(/\/+$/, "");
+
+      this.subscribeLoading = true;
+      this.showSubscribeResult = false;
+      this.showShortResult = false;
+      this.customShortSubUrl = "";
+
+      try {
+        const normalizedSource = this.form.sourceSubUrl
+          .split(/\r?\n/)
+          .map(item => item.trim())
+          .filter(item => item.length > 0)
+          .join("|") || "";
+
+        let customUrl =
+          `${backendBase}/sub?target=${this.form.clientType}` +
+          `&url=${encodeURIComponent(normalizedSource)}` +
+          `&insert=${this.form.insert}`;
+
+        if (this.form.remoteConfig && this.form.remoteConfig.trim()) {
+          customUrl += `&config=${encodeURIComponent(this.form.remoteConfig.trim())}`;
         }
-      }
-      if (this.form.clientType === "clash") {
-        if (this.form.tpl.clash.doh === true) {
-          this.customSubUrl += "&clash.doh=true";
+        if (this.form.excludeRemarks && this.form.excludeRemarks.trim()) {
+          customUrl += `&exclude=${encodeURIComponent(this.form.excludeRemarks.trim())}`;
         }
-        this.customSubUrl += "&new_name=" + this.form.new_name.toString();
-      }
-      if (this.form.clientType === "singbox") {
-        if (this.form.tpl.singbox.ipv6 === true) {
-          this.customSubUrl += "&singbox.ipv6=1";
+        if (this.form.includeRemarks && this.form.includeRemarks.trim()) {
+          customUrl += `&include=${encodeURIComponent(this.form.includeRemarks.trim())}`;
         }
+        if (this.form.filename && this.form.filename.trim()) {
+          customUrl += `&filename=${encodeURIComponent(this.form.filename.trim())}`;
+        }
+        if (this.form.rename && this.form.rename.trim()) {
+          customUrl += `&rename=${encodeURIComponent(this.form.rename.trim())}`;
+        }
+        if (this.form.interval !== "" && this.form.interval !== null) {
+          const intervalValue = Number(this.form.interval);
+          if (!Number.isNaN(intervalValue)) {
+            customUrl += `&interval=${encodeURIComponent(intervalValue * 86400)}`;
+          }
+        }
+        if (this.form.devid && this.form.devid.trim()) {
+          customUrl += `&dev_id=${encodeURIComponent(this.form.devid.trim())}`;
+        }
+        if (this.form.appendType) {
+          customUrl += `&append_type=${this.form.appendType.toString()}`;
+        }
+        if (this.form.tls13) {
+          customUrl += `&tls13=${this.form.tls13.toString()}`;
+        }
+        if (this.form.sort) {
+          customUrl += `&sort=${this.form.sort.toString()}`;
+        }
+
+        customUrl +=
+          `&emoji=${this.form.emoji.toString()}` +
+          `&list=${this.form.nodeList.toString()}` +
+          `&xudp=${this.form.xudp.toString()}` +
+          `&udp=${this.form.udp.toString()}` +
+          `&tfo=${this.form.tfo.toString()}` +
+          `&expand=${this.form.expand.toString()}` +
+          `&scv=${this.form.scv.toString()}` +
+          `&fdn=${this.form.fdn.toString()}`;
+
+        if (this.form.clientType.includes("surge") && this.form.tpl.surge.doh === true) {
+          customUrl += "&surge.doh=true";
+        }
+        if (this.form.clientType === "clash") {
+          if (this.form.tpl.clash.doh === true) {
+            customUrl += "&clash.doh=true";
+          }
+          customUrl += `&new_name=${this.form.new_name.toString()}`;
+        }
+        if (this.form.clientType === "singbox" && this.form.tpl.singbox.ipv6 === true) {
+          customUrl += "&singbox.ipv6=1";
+        }
+
+        this.customSubUrl = customUrl;
+        this.showSubscribeResult = true;
+
+        try {
+          await this.$copyText(this.customSubUrl);
+          this.$message.success("定制订阅已复制到剪贴板");
+        } catch (copyError) {
+          if (process.env.NODE_ENV !== 'production') {
+            console.warn("订阅链接自动复制失败:", copyError);
+          }
+          this.$message.warning("订阅链接已生成，请手动复制");
+        }
+      } catch (error) {
+        if (process.env.NODE_ENV !== 'production') {
+          console.error("生成订阅链接失败:", error);
+        }
+        this.$message.error("生成订阅链接失败，请稍后重试");
+      } finally {
+        this.subscribeLoading = false;
       }
-      this.$copyText(this.customSubUrl);
-      this.$message.success("定制订阅已复制到剪贴板");
-      this.showSubscribeResult = true;
-    }, 300),
-    makeShortUrl() {
-      if (!this.customSubUrl) {
+    },
+    async makeUrl() {
+      return this.onGenerateSubscribe();
+    },
+    async onGenerateShortlink() {
+      if (this.shortLoading) {
+        return;
+      }
+      if (!this.canGenerateShortlink) {
         this.$message.error("请先生成订阅链接");
         return;
       }
 
-      let duan =
-        this.form.shortType === ""
-          ? shortUrlBackend
-          : this.form.shortType;
-      this.loading1 = true;
-      
+      const provider = (this.form.shortType && this.form.shortType.trim()) || (shortUrlBackend && shortUrlBackend.trim());
+      if (!provider) {
+        this.$message.error("短链服务未配置，请先选择服务");
+        return;
+      }
+      if (!/^https?:\/\//i.test(provider)) {
+        this.$message.error("短链服务地址不合法，请检查后重新输入");
+        return;
+      }
+
+      this.shortLoading = true;
+      this.showShortResult = false;
+      this.customShortSubUrl = "";
+
       try {
-        // Use proper URL encoding instead of btoa for better compatibility
-        let data = new FormData();
-        data.append("longUrl", encodeURIComponent(this.customSubUrl));
-        
-        if (this.customShortSubUrl.trim() != "") {
-          data.append("shortKey", this.customShortSubUrl.trim().indexOf("http") < 0 ? this.customShortSubUrl.trim() : "");
+        const payload = new FormData();
+        payload.append("longUrl", this.customSubUrl);
+
+        const response = await this.$axios.post(provider, payload, {
+          headers: {
+            "Content-Type": "multipart/form-data"
+          },
+          timeout: 10000
+        });
+
+        let shortUrl = "";
+        if (response && response.data && typeof response.data === "object") {
+          shortUrl = response.data.ShortUrl || response.data.shortUrl || response.data.url || response.data.data || response.data.short || "";
+        } else if (response && typeof response.data === "string") {
+          shortUrl = response.data;
         }
-        
-        this.$axios
-          .post(duan, data, {
-            headers: {
-              "Content-Type": "multipart/form-data"
-            },
-            timeout: 10000 // 10 second timeout
-          })
-          .then(res => {
-            // Handle different response formats
-            let shortUrl = "";
-            if (res.data && typeof res.data === 'object') {
-              // Try different possible response formats
-              shortUrl = res.data.ShortUrl || res.data.shortUrl || res.data.url || res.data.data || "";
-            } else if (typeof res.data === 'string') {
-              shortUrl = res.data;
+
+        if (shortUrl && /^https?:\/\//i.test(shortUrl)) {
+          this.customShortSubUrl = shortUrl;
+          this.showShortResult = true;
+          try {
+            await this.$copyText(shortUrl);
+            this.$message.success("短链接已复制到剪贴板");
+          } catch (copyError) {
+            if (process.env.NODE_ENV !== 'production') {
+              console.warn("短链接自动复制失败:", copyError);
             }
-            
-            if (shortUrl && shortUrl.startsWith('http')) {
-              this.customShortSubUrl = shortUrl;
-              this.$copyText(shortUrl);
-              this.$message.success("短链接已复制到剪贴板");
-              this.showShortResult = true;
-            } else {
-              // Fallback: copy the original long URL
-              this.$copyText(this.customSubUrl);
-              this.$message.warning("短链接生成失败，已复制原始订阅链接");
-            }
-          })
-          .catch(error => {
-            console.error('Short URL generation error:', error);
-            // Fallback: copy the original long URL
-            this.$copyText(this.customSubUrl);
-            
-            // Provide more specific error messages
-            if (error.response) {
-              const status = error.response.status;
-              if (status === 429) {
-                this.$message.warning("请求过于频繁，已复制原始订阅链接");
-              } else if (status >= 500) {
-                this.$message.warning("短链服务暂时不可用，已复制原始订阅链接");
-              } else {
-                this.$message.warning("短链接生成失败，已复制原始订阅链接");
-              }
-            } else if (error.code === 'ECONNABORTED') {
-              this.$message.warning("请求超时，已复制原始订阅链接");
-            } else {
-              this.$message.warning("网络连接失败，已复制原始订阅链接");
-            }
-          })
-          .finally(() => {
-            this.loading1 = false;
-          });
+            this.$message.warning("短链接已生成，请手动复制");
+          }
+        } else {
+          await this.handleShortlinkFallback("短链接生成失败");
+        }
       } catch (error) {
-        console.error('Error in makeShortUrl:', error);
-        // Fallback: copy the original long URL
-        this.$copyText(this.customSubUrl);
-        this.$message.warning("生成短链时出错，已复制原始订阅链接");
-        this.loading1 = false;
+        if (process.env.NODE_ENV !== 'production') {
+          console.error("短链接生成失败:", error);
+        }
+
+        let fallbackMessage = "短链接生成失败";
+        if (error && error.response && error.response.status) {
+          const status = error.response.status;
+          if (status === 429) {
+            fallbackMessage = "请求过于频繁";
+          } else if (status >= 500) {
+            fallbackMessage = "短链服务暂时不可用";
+          }
+        } else if (error && error.code === "ECONNABORTED") {
+          fallbackMessage = "短链服务请求超时";
+        } else {
+          fallbackMessage = "短链服务连接失败";
+        }
+
+        await this.handleShortlinkFallback(fallbackMessage);
+      } finally {
+        this.shortLoading = false;
+      }
+    },
+    async makeShortUrl() {
+      return this.onGenerateShortlink();
+    },
+    async handleShortlinkFallback(reason) {
+      if (!this.customSubUrl) {
+        return;
+      }
+
+      this.customShortSubUrl = this.customSubUrl;
+      this.showShortResult = true;
+
+      const successMessage = `${reason}，已复制原始订阅链接`;
+      const failureMessage = `${reason}，请手动复制原始订阅链接`;
+
+      try {
+        await this.$copyText(this.customSubUrl);
+        this.$message.warning(successMessage);
+      } catch (copyError) {
+        if (process.env.NODE_ENV !== 'production') {
+          console.warn("原始订阅链接复制失败:", copyError);
+        }
+        this.$message.warning(failureMessage);
       }
     },
     confirmUploadConfig() {
