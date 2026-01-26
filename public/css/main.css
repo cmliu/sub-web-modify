@@ -329,7 +329,11 @@ body {
     font-size: 14px;
     line-height: 1.42857143;
     color: #333;
-    background-color: #fff
+    background-color: #fff;
+    background-image: url(https://lsky.coisini.us.kg/i/OQpJFM3nbu/696f9a616352b.jpg);
+    background-repeat: no-repeat;
+    background-position: right;
+    background-size: contain;
 }
 
 input,
